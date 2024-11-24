@@ -1,0 +1,87 @@
+/* Body Styling */
+body {
+    background-color: #f8f9fa; /* Light background */
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Contact Section Styling */
+  .contact-section {
+    background-color: #fff; /* White background for the section */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 2rem;
+  }
+  
+  .contact-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    padding-top: 1.5rem;
+  }
+  
+  .contact-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    margin: 0;
+  }
+  
+  .contact-header p {
+    font-size: 1rem;
+    color: #555;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    margin: 0;
+  }
+  
+  .form-label {
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  .form-control {
+    border-radius: 20px;
+    border: 1px solid #333;
+  }
+  
+  .btn-submit {
+    background-color: #001f54; /* Navy button */
+    color: #fff;
+    border-radius: 25px;
+    font-weight: bold;
+    padding: 0.5rem 2rem;
+    border: none;
+  }
+  
+  .btn-submit:hover {
+    background-color: #003580;
+  }
+  
+  /* Ensure consistent layout with Features
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  } */
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .col-md-6 {
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .contact-us {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+  }

@@ -1,0 +1,22 @@
+/* src/pages/SignUp.css */
+.password-requirements ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .password-requirements li {
+    margin: 5px 0;
+  }
+  
+  .text-success {
+    color: green;
+  }
+  
+  .text-danger {
+    color: red;
+  }
+  
+  .password-requirements {
+    margin-top: 10px;
+  }
+  

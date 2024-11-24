@@ -1,0 +1,212 @@
+.home-container {
+  font-family: "Arial", sans-serif;
+  /* color: #333; */
+  padding-top: 20px;
+  padding-bottom: 20px;
+  /* max-width: 1200px; */
+  margin: 0 auto;
+}
+
+.home-page-img {
+  height: 32rem;
+  width: 42rem;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 20px;
+  /* background: rgb(17, 50, 103); */
+  border-radius: 1rem !important;
+  /* padding: 1rem; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-left: 0.5rem !important;
+  padding-left: 0.5rem !important;
+}
+
+.flex-right {
+text-align: left;  /* Aligns items to the right */
+}
+
+
+.header-section h1 {
+  font-size: 2.8rem;
+  /* color: #99bfff; Theme yellow for a bright, welcoming effect */
+  font-weight: 700;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.header-section h3 {
+  font-size: 1.75rem;
+  color: #333; /* Darker neutral color to complement the yellow */
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.header-section p {
+  font-size: 1.1rem;
+  color: #666; /* Subtle gray for a softer feel */
+  line-height: 1.6;
+  /* max-width: 800px; */
+  /* margin: 0 auto 10px; */
+  transition: color 0.3s ease;
+  max-width: 35rem; /* Restrict the maximum width */
+  line-height: 1.6; /* Optional: Improve readability */
+  /* margin: 0 auto; */
+}
+
+.header-section p:hover {
+  color: #99bfff; /* Theme yellow on hover for consistency */
+}
+
+.how-it-works {
+  margin-bottom: 40px;
+}
+
+.how-it-works h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.step {
+  background-color: #99bfff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 30%;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, #ffdc80, #99bfff);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+}
+
+.step:hover::before {
+  opacity: 1;
+}
+
+.step:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background-color: #ffe680;
+}
+
+.step h3 {
+  font-size: 1.5rem;
+  color: black;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.step:hover h3 {
+  color: #333;
+}
+
+.step p {
+  font-size: 1rem;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.step:hover p {
+  color: #333;
+}
+
+.step svg {
+  color: black; /* Theme color for icons */
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.step:hover svg {
+  color: white; /* Slightly darker shade on hover */
+}
+
+.step h3 {
+  margin-top: 0;
+}
+
+.features-section {
+  margin-bottom: 40px;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.features-section ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.features-section li {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.features-section li strong {
+  color: #99bfff;
+}
+
+/* Typing Effect */
+/* Typing Effect */
+.typing {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 4px solid black; /* Blinking cursor */
+  width: 0;
+  animation: 
+    typing 4s steps(30, end) 1s forwards, 
+    blink 0.75s step-end 4s; /* Stops blinking after typing finishes */
+}
+
+/* Typing Animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+    border: none;
+  }
+}
+
+/* Blinking Cursor Animation */
+@keyframes blink {
+  50% {
+    border-color: transparent; /* Blinks off */
+  }
+  100% {
+    border-color: black; /* Blinks on */
+  }
+}
