@@ -111,7 +111,7 @@ const Navbar = ({
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link custom-nav-link" to="/browse">
+                  <Link className="nav-link custom-nav-link" to="/plan">
                     Plan a Trip
                   </Link>
                 </li>

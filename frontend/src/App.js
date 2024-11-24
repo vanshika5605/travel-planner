@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 // import Profile from './components/Profile';
-// import Browse from './components/Browse';
+import Plan from './components/Plan';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 // import SignUp from './components/SignUp';
@@ -58,9 +58,9 @@ const App = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} userData={userData} mode="edit"/>} />
-            <Route path="/browse" element={<Browse isLoggedIn={isLoggedIn} userId={userId}/>} />
-            <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn}
+            {/* <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} userData={userData} mode="edit"/>} /> */}
+            <Route path="/plan" element={<Plan isLoggedIn={isLoggedIn} userId={userId}/>} />
+            {/* <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             userId={userId}
             setUserId={setUserId}/>} /> */}
