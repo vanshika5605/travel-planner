@@ -1,4 +1,4 @@
-package com.dgoil.travelPlanner.Respository;
+package com.dgoil.travelPlanner.Repository;
 
 import com.dgoil.travelPlanner.Model.FeaturesList;
 import org.springframework.data.mongodb.repository.MongoRepository;
