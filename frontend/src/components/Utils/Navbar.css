@@ -1,0 +1,134 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
+  backdrop-filter: blur(
+    10px
+  ); /* Optional: adds a blur effect to the background */
+  z-index: 1000; /* Ensures it stays above other content */
+}
+
+.navbar-brand h1 {
+  font-size: 1.5rem;
+  color: white;
+  margin: 0;
+}
+
+.custom-nav-link {
+  color: white !important;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 500;
+}
+
+.navbar-links a:hover {
+  color: lightyellow;
+}
+
+/* Add styles for the buttons */
+.navbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+/* Login button style */
+.login-button {
+  color: #007bff;
+  border: 2px solid #007bff;
+  background: transparent;
+}
+
+.login-button:hover {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Sign Up button style */
+.signup-button {
+  color: #fff;
+  background: #007bff;
+  border: 2px solid #007bff;
+}
+
+.signup-button:hover {
+  background: #0056b3; /* Darker shade on hover */
+  border-color: #0056b3;
+}
+
+.custom-nav {
+  max-width: none !important;
+  /* background-color: black; */
+  background: rgb(3, 79, 91);
+  padding: 0.75rem;
+  border-radius: 1rem;
+    margin-left: 0.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-right: 0.5rem !important;
+
+}
+
+.custom-btn {
+  color: white !important;
+  border-color: white !important;
+}
+
+.custom-btn:hover,
+/* .custom-btn:focus, */
+.custom-btn:focus-visible {
+  background: lightyellow !important;
+  color: black !important;
+}
+
+.custom-filled-btn {
+  color: black !important;
+  /* border-color: black !important; */
+  border: none !important;
+  background: #99bfff !important;
+}
+
+.custom-filled-btn:hover,
+/* .custom-filled-btn:focus, */
+.custom-filled-btn:focus-visible {
+  background: lightyellow !important;
+  color: black !important;
+}
+
+.logo-class {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 0.5rem;
+  margin-right: 10px;
+}
+
+.highlight-class {
+  color: #99bfff;
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+
+.non-highlight-class {
+  color: white;
+  font-size: 1rem;
+
+}
+
+.welcome-msg {
+  margin-right: 1rem;
+}
+
+.main-app-name {
+  color: white;
+  font-size: 1.5rem;
+}

@@ -1,0 +1,181 @@
+
+  /* Take a Break Section */
+  .take-a-break {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .image-grid-wrapper {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    gap: 12rem;
+    grid-template-columns: 1fr 4fr 1fr;
+  }
+  
+  .image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    width: 20%;
+    /* max-width: 200px; */
+  }
+
+  .grid-1 {
+    display: grid;
+  }
+
+  .grid-2 {
+    padding-top: 2.5rem;
+  }
+
+  .grid-3 {
+    padding-top: 5rem;
+  }
+  
+  .image-grid.left {
+    justify-content: flex-end;
+  }
+  
+  .image-item {
+    width: 5rem;
+    height: 5rem;
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem;
+    margin: 0.2rem;
+  }
+  
+  .text-content {
+    text-align: center;
+  }
+  
+  .take-a-break h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .take-a-break .subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: #555;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .cta-button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    border: 1 px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    /* text-transform: uppercase; */
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: rgb(3, 79, 91);
+    color: white;
+  }
+  
+  /* Editor's Choice Section */
+  .editors-choice {
+    margin-top: 4rem;
+  }
+  
+  .editors-choice h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .card {
+    position: relative;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  
+  .card a {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+  
+  .card-large {
+    height: 300px;
+  }
+  
+  .card-medium {
+    height: 250px;
+  }
+  
+  .card-small {
+    height: 150px;
+  }
+  
+  /* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+    float: left;
+    width: 75% !important;
+  }
+  
+  /* Right column */
+  .rightcolumn {
+    float: left;
+    width: 25% !important;
+    padding-left: 20px;
+  }
+  
+  /* Fake image */
+  .fakeimg {
+    background-color: #aaa;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Add a card effect for articles */
+  .card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {
+      width: 100%;
+      padding: 0;
+    }
+}

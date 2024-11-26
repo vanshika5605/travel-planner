@@ -1,0 +1,70 @@
+.features {
+    padding: 0px !important;
+    margin: 0px !important;
+    margin-top: 5rem !important;
+    display: grid;
+    grid-template-columns: 1fr; /* Change to single column for small screens */
+    grid-gap: 2rem;
+    background-color: #589ea8;
+  }
+  
+  /* Adjust layout on larger screens */
+  @media (min-width: 768px) {
+    .features {
+      grid-template-columns: 1fr 1fr; /* 2 columns on larger screens */
+    }
+  }
+  
+  /* Left Div Adjustments */
+  .left-div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    /* margin-left: 1.5rem; Adjust left margin */
+    padding-top: 1.5rem; /* Space from top */
+  }
+  
+  .left-div h1 {
+    font-size: 2.5rem; /* Adjust font size */
+    font-weight: bold;
+    color: white;
+    padding-left: 2rem; /* Space from left */
+    padding-top: 1rem; /* Space from top */
+    margin: 0;
+  }
+  
+  /* Right Div Adjustments */
+  .right-div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-right: 2rem;
+  }
+  
+  /* Accordion Customizations */
+  .custom-accordion-item {
+    border-top: 1px solid black !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    background-color: #589ea8 !important;
+  }
+  
+  .custom-accordion-header .accordion-button {
+    background-color: #589ea8 !important;
+    color: black !important;
+    border: none;
+  }
+  
+  .custom-accordion-header .accordion-button:hover {
+    background-color: #589ea8 !important;
+    color: #000 !important;
+  }
+  
+  .custom-accordion-button {
+    font-size: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    padding-top: 1.5rem !important;
+    width: 40rem !important;
+  }
+  
