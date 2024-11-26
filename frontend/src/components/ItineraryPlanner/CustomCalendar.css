@@ -1,0 +1,61 @@
+.holiday {
+  background-color: orange !important;
+  border-radius: 50%;
+}
+.holiday:hover {
+  background-color: #ffa726 !important;
+}
+.weekend {
+  color: orange !important;
+}
+.long-weekend {
+  background-color: lightblue !important;
+  border-radius: 50%;
+}
+.long-weekend:hover {
+  background-color: #87ceeb !important;
+}
+.custom-today {
+  font-weight: bold;
+  color: black !important;
+}
+
+/* Ensure hover applies to the entire tile */
+.react-calendar__tile.holiday:hover {
+  background-color: #ffa726 !important;
+}
+.react-calendar__tile.long-weekend:hover {
+  background-color: #87ceeb !important;
+}
+
+/* Override react-calendar default today styles */
+.react-calendar__tile--now {
+  background-color: transparent !important;
+  border: none !important;
+}
+.react-calendar__tile--now:hover {
+  background-color: transparent !important;
+}
+
+/* Legend styles */
+.legend-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 4px;
+}
+.legend-box.long-weekend {
+  background-color: lightblue;
+}
+.legend-box.holiday {
+  background-color: orange;
+}
+.legend-box.weekend {
+  background-color: transparent;
+  border: 1px solid orange;
+}
+.legend-box.today {
+  background-color: transparent;
+  border: 1px solid black;
+}

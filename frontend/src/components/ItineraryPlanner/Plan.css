@@ -179,3 +179,13 @@
       padding: 0;
     }
 }
+
+/* Highlight holidays with red background */
+.holiday {
+  background-color: red !important;
+}
+
+/* Highlight long weekends with green background */
+.long-weekend {
+  background-color: green !important;
+}

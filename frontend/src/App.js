@@ -10,7 +10,7 @@ import Loader from './components/Utils/Loader';  // Import the loader component
 import Footer from './components/Utils/Footer';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
