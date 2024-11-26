@@ -1,16 +1,16 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 // import Profile from './components/Profile';
-import Plan from './components/Plan';
-import Navbar from './components/Navbar';
-import Home from './components/Home';
-// import SignUp from './components/SignUp';
+import Plan from './components/ItineraryPlanner/Plan';
+import Navbar from './components/Utils/Navbar';
+import Home from './components/Home/Home';
+import SignUp from './components/SignUp/SignUp';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Loader from './components/Loader';  // Import the loader component
-import Footer from './components/Footer';
+import Loader from './components/Utils/Loader';  // Import the loader component
+import Footer from './components/Utils/Footer';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
@@ -60,10 +60,10 @@ const App = () => {
             <Route path="/" element={<Home />} />
             {/* <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} userData={userData} mode="edit"/>} /> */}
             <Route path="/plan" element={<Plan isLoggedIn={isLoggedIn} userId={userId}/>} />
-            {/* <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn}
+            <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             userId={userId}
-            setUserId={setUserId}/>} /> */}
+            setUserId={setUserId}/>} />
           </Routes>
         </div>
         <div>

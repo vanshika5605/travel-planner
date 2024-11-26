@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
-import './Features.css';
+import React, { useEffect, useState } from "react";
+import "./Features.css";
+import backend from "../Utils/backend";
 
 const Features = () => {
-  const [features, setFeatures] = useState([
-    { id: 1, title: 'Feature 1', content: 'Description of Feature 1' },
-    { id: 2, title: 'Feature 2', content: 'Description of Feature 2' },
-    { id: 3, title: 'Feature 3', content: 'Description of Feature 3' },
-  ]);
+  const [features, setFeatures] = useState([]);
+
+  const getFeatureList = async () => {
+    try {
+      const response = await backend.getFeaturesList();
+      const updatedFeatures = response.data[0].features.map(
+        (feature, index) => ({
+          ...feature,
+          id: index + 1, // Add an ID (index-based or any unique identifier logic)
+        })
+      );
+      setFeatures(updatedFeatures);
+    } catch (error) {
+      console.error("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    getFeatureList();
+  }, []);
 
   return (
     <div className="features">
@@ -24,10 +40,7 @@ const Features = () => {
               key={feature.id}
             >
               <div className="custom-accordion-header">
-                <h2
-                  className="accordion-header"
-                  id={`heading-${feature.id}`}
-                >
+                <h2 className="accordion-header" id={`heading-${feature.id}`}>
                   <button
                     className="accordion-button collapsed d-flex justify-content-between align-items-center bg-white shadow-none custom-accordion-button"
                     type="button"
@@ -36,7 +49,7 @@ const Features = () => {
                     aria-expanded="false"
                     aria-controls={`collapse-${feature.id}`}
                   >
-                    <span>{feature.title}</span>
+                    <span>{feature.feature}</span>
                     <span className="toggle-icon"></span>
                   </button>
                 </h2>
@@ -48,7 +61,7 @@ const Features = () => {
                 aria-labelledby={`heading-${feature.id}`}
                 data-bs-parent="#featuresAccordion"
               >
-                <div className="accordion-body">{feature.content}</div>
+                <div className="accordion-body">{feature.description}</div>
               </div>
             </div>
           ))}
