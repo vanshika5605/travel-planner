@@ -18,7 +18,8 @@ const Plan = () => {
 
   return (
     <div>
-      {isPlanModeOn ? (<></>
+      {isPlanModeOn ? (
+        <></>
       ) : (
         <section className="take-a-break">
           <div className="image-grid-wrapper">
@@ -136,17 +137,14 @@ const Plan = () => {
         <div className="row">
           <div className="leftcolumn">
             {isPlanModeOn ? (
-        <div className="plan-mode-container">
-          {/* Back button added to plan mode section */}
-          <button 
-            className="back-button" 
-            onClick={handleGoBack}
-          >
-            ← Back to Options
-          </button>
-          <ItineraryPlannerForm formType={planModeType} />
-        </div>
-      ) : (
+              <div className="plan-mode-container">
+                {/* Back button added to plan mode section */}
+                <button className="back-button" onClick={handleGoBack}>
+                  ← Back to Options
+                </button>
+                <ItineraryPlannerForm formType={planModeType} />
+              </div>
+            ) : (
               <>
                 <div className="card quiz-section">
                   <h2>Discover Your Travel Style</h2>
@@ -155,10 +153,7 @@ const Plan = () => {
                 <div className="card">
                   <h2>Trips that'll have you trippin</h2>
                   <h5>Some popular itineraries</h5>
-                  <div 
-                    className="fakeimg" 
-                    style={{ height: "200px" }}
-                  >
+                  <div className="fakeimg" style={{ height: "200px" }}>
                     Image
                   </div>
                 </div>
@@ -172,6 +167,7 @@ const Plan = () => {
             <div className="card">
               <CurrencyConverter />
             </div>
+            <Itinerary></Itinerary>
           </div>
         </div>
       </section>
