@@ -1,6 +1,6 @@
 package com.dgoil.travelPlanner.Service;
 
-import com.dgoil.travelPlanner.Model.FeaturesList;
+import com.dgoil.travelPlanner.Model.DAO.FeaturesList;
 import com.dgoil.travelPlanner.Repository.featuresListRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
