@@ -179,3 +179,32 @@
       padding: 0;
     }
 }
+
+/* Highlight holidays with red background */
+.holiday {
+  background-color: red !important;
+}
+
+/* Highlight long weekends with green background */
+.long-weekend {
+  background-color: green !important;
+}
+
+.quiz-section {
+  display: flex;
+  align-items: center;
+}
+
+.back-button {
+  margin: 10px;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+}

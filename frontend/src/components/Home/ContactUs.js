@@ -14,7 +14,7 @@ const ContactUs = () => {
             </p>
             </div>
           </div>
-          <div className="contact-section">
+          <div className="right-div contact-section">
           <form >
             <div className="mb-3">
               <label htmlFor="firstName" className="form-label">

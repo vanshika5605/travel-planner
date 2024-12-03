@@ -1,0 +1,89 @@
+/* Container for the entire itinerary */
+.itinerary-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Title */
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Tabs styling */
+  .tabs {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  .tab.active {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Day content container */
+  .day-container {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  
+  /* Activity item styling */
+  .activity-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .activity-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .category-icon {
+    margin-right: 10px;
+    color: #5a5a5a;
+  }
+  
+  /* Note textarea styling */
+  .note-textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: none;
+  }
+  
+  /* Copy button styling */
+  .copy-button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .copy-button:hover {
+    background-color: #0056b3;
+  }
+  
