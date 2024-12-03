@@ -1,4 +1,4 @@
-package com.dgoil.travelPlanner.Controller;
+package com.dgoil.travelPlanner.Model.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ public class ApiResponse<T> {
     private T data;
     private String errorMessage;
 
-    ApiResponse(boolean success, T data, String errorMessage){
+    public ApiResponse(boolean success, T data, String errorMessage){
         this.success = success;
         this.data = data;
         this.errorMessage = errorMessage;

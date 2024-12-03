@@ -1,6 +1,6 @@
 package com.dgoil.travelPlanner.Repository;
 
-import com.dgoil.travelPlanner.Model.UserItinerary;
+import com.dgoil.travelPlanner.Model.DAO.UserItinerary;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

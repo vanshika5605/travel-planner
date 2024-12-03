@@ -1,6 +1,6 @@
 package com.dgoil.travelPlanner.Service;
 
-import com.dgoil.travelPlanner.Model.UserItinerary;
+import com.dgoil.travelPlanner.Model.DAO.UserItinerary;
 import com.dgoil.travelPlanner.Repository.userItineraryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

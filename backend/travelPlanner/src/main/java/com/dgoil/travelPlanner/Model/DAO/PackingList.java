@@ -1,17 +1,19 @@
-package com.dgoil.travelPlanner.Model;
+package com.dgoil.travelPlanner.Model.DAO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "packing_List")
+@Document(collection = "packingList")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PackingList {
+    @Id
     private String _id;
     private String email;
     private List<String> toPackList;

@@ -1,4 +1,4 @@
-package com.dgoil.travelPlanner.Model;
+package com.dgoil.travelPlanner.Model.DAO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "user_Itinerary")
+@Document(collection = "userItinerary")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

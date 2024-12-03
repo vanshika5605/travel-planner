@@ -1,6 +1,7 @@
 package com.dgoil.travelPlanner.Controller;
 
-import com.dgoil.travelPlanner.Model.UserItinerary;
+import com.dgoil.travelPlanner.Model.DAO.UserItinerary;
+import com.dgoil.travelPlanner.Model.DTO.ApiResponse;
 import com.dgoil.travelPlanner.Service.userItineraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/v1")
 public class userItineraryController {
     @Autowired
     private userItineraryService myUserItineraryService;
@@ -40,9 +42,16 @@ public class userItineraryController {
     }
 
     @PostMapping("/addItinerary/")
-    public void saveUserItinerary(@RequestBody UserItinerary userItinerary){
-        userItinerary.setTripID(tripIDGeneratorController.generateTripID());
-        myUserItineraryService.saveUserItinerary(userItinerary);
+    public ResponseEntity<ApiResponse<String>> saveUserItinerary(@RequestBody UserItinerary userItinerary){
+        try {
+            userItinerary.setTripID(tripIDGeneratorController.generateTripID());
+            myUserItineraryService.saveUserItinerary(userItinerary);
+            ApiResponse<String> response = new ApiResponse<String>(true, "Itinerary added!", null);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch(IllegalArgumentException e) {
+            ApiResponse<String> response = new ApiResponse<String>(false, "Exception thrown!", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        }
     }
 }
 

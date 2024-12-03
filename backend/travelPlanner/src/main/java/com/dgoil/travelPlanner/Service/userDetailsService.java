@@ -1,10 +1,11 @@
 package com.dgoil.travelPlanner.Service;
 
-import com.dgoil.travelPlanner.Model.UserDetails;
+import com.dgoil.travelPlanner.Model.DAO.UserDetails;
 import com.dgoil.travelPlanner.Repository.userDetailsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,17 @@ public class userDetailsService {
     @Autowired
     userDetailsRepo myUserDetailsRepo;
 
-    public void saveUser(UserDetails userDetails) {
+    public UserDetails validateUser(String email, String password){
+        return myUserDetailsRepo.findByEmail(email)
+                .filter(user -> user.getPassword().equals(password)) // Validate password
+                .orElseThrow(() -> new IllegalArgumentException("Invalid username or password"));
+    }
+
+    public void checkDuplicate(UserDetails userDetails){
+        if (myUserDetailsRepo.findByEmail(userDetails.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email is already registered.");
+        }
+        userDetails.setUpdatedAt(LocalDateTime.now());
         myUserDetailsRepo.save(userDetails);
     }
 
