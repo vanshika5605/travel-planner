@@ -4,32 +4,11 @@ import axios from "axios";
 import "./CurrencyConverter.css";
 import backend from "../Utils/backend";
 
-const CurrencyConverter = () => {
-  const [currencies, setCurrencies] = useState([]);
+const CurrencyConverter = ({currencies, rates}) => {
   const [fromCurrency, setFromCurrency] = useState(null);
   const [toCurrency, setToCurrency] = useState(null);
   const [amount, setAmount] = useState(1);
   const [convertedAmount, setConvertedAmount] = useState(null);
-  const [rates, setRates] = useState({});
-
-  // Fetch exchange rates from API
-  const fetchExchangeRates = async () => {
-    try {
-      const response = await backend.getExchangeRates();
-      setRates(response.data.rates);
-      const currencyOptions = Object.keys(response.data.rates).map((currency) => ({
-        value: currency,
-        label: currency,
-      }));
-      setCurrencies(currencyOptions);
-
-      // Set default currencies
-      setFromCurrency(currencyOptions.find((c) => c.value === "USD"));
-      setToCurrency(currencyOptions.find((c) => c.value === "EUR"));
-    } catch (error) {
-      console.error("Error fetching exchange rates:", error);
-    }
-  };
 
   // Convert the amount
   const convertCurrency = () => {
@@ -46,7 +25,8 @@ const CurrencyConverter = () => {
   };
 
   useEffect(() => {
-    fetchExchangeRates();
+    setFromCurrency(currencies.find((c) => c.value === "USD"));
+    setToCurrency(currencies.find((c) => c.value === "EUR"));
   }, []);
 
   useEffect(() => {

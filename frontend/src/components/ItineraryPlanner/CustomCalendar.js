@@ -5,47 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import backend from "../Utils/backend";
 import "./CustomCalendar.css";
 
-const CustomCalendar = () => {
-  const [holidays, setHolidays] = useState([]);
-  const [longWeekends, setLongWeekends] = useState([]);
-
-  const fetchHolidays = async () => {
-    try {
-      const response = await backend.getHolidays();
-      setHolidays(response.data);
-
-      // Determine long weekends
-      const longWeekendDates = getLongWeekends(response.data);
-      setLongWeekends(longWeekendDates);
-    } catch (error) {
-      console.error("Error fetching holidays:", error);
-    }
-  };
-
-  const getLongWeekends = (holidays) => {
-    const longWeekendDates = [];
-    holidays.forEach((holiday) => {
-      const holidayDate = new Date(holiday.date);
-      const dayOfWeek = holidayDate.getDay();
-
-      if (dayOfWeek === 5) {
-        const nextMonday = new Date(holidayDate);
-        nextMonday.setDate(holidayDate.getDate() + 3);
-        if (holidays.some((h) => new Date(h.date).toDateString() === nextMonday.toDateString())) {
-          longWeekendDates.push(holidayDate.toDateString());
-        }
-      }
-
-      if (dayOfWeek === 1) {
-        const prevFriday = new Date(holidayDate);
-        prevFriday.setDate(holidayDate.getDate() - 3);
-        if (holidays.some((h) => new Date(h.date).toDateString() === prevFriday.toDateString())) {
-          longWeekendDates.push(holidayDate.toDateString());
-        }
-      }
-    });
-    return longWeekendDates;
-  };
+const CustomCalendar = ({holidays, longWeekends}) => {
 
   const tileClassName = ({ date }) => {
     const dateStr = date.toDateString();
@@ -87,10 +47,6 @@ const CustomCalendar = () => {
       return null;
     }
   };
-
-  useEffect(() => {
-    fetchHolidays();
-  }, []);
 
   return (
     <div className="container mt-4">

@@ -6,7 +6,7 @@ import TravelStyleQuiz from "./TravelStyleQuiz";
 import Itinerary from "./Itinerary";
 import ItineraryPlannerForm from "./ItineraryPlannerForm";
 
-const Plan = () => {
+const Plan = ({holidays, longWeekends, rates, currencies}) => {
   const [isPlanModeOn, setIsPlanModeOn] = useState(false);
   const [planModeType, setPlanModeType] = useState("");
 
@@ -162,10 +162,10 @@ const Plan = () => {
           </div>
           <div className="rightcolumn">
             <div className="card">
-              <CustomCalendar />
+              <CustomCalendar holidays={holidays} longWeekends={longWeekends}/>
             </div>
             <div className="card">
-              <CurrencyConverter />
+              <CurrencyConverter rates={rates} currencies={currencies}/>
             </div>
             <Itinerary></Itinerary>
           </div>

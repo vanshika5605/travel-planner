@@ -8,7 +8,7 @@ const SignUp = (props) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    destination: '',
+    location: '',
     role: 'user',
     gender: '',
     defaultCurrency: '',
@@ -53,6 +53,7 @@ const SignUp = (props) => {
       const response = await backend.addUser(formData);
       if (response.status === 200) {
         props.setUserId(formData.email);
+        props.setUserData(formData)
         props.setIsLoggedIn(true);
         navigate("/");
       }
@@ -134,6 +135,10 @@ const SignUp = (props) => {
             )}
           </div>
         );
+      }
+
+      if(key==="role"){
+        return;
       }
 
       return (

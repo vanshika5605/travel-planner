@@ -11,7 +11,7 @@
   /* Adjust layout on larger screens */
   @media (min-width: 768px) {
     .features {
-      grid-template-columns: 1fr 1fr; /* 2 columns on larger screens */
+      grid-template-columns: 1fr 1fr; 
     }
   }
   

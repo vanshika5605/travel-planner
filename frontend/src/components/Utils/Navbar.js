@@ -4,6 +4,7 @@ import { Modal, Button, Alert } from "react-bootstrap";
 import "./Navbar.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import backend from "../Utils/backend";
 
 const Navbar = ({
   isLoggedIn,
@@ -12,7 +13,8 @@ const Navbar = ({
   setUserId,
   password,
   setPassword,
-  userData
+  userData,
+  setUserData
 }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -43,15 +45,10 @@ const Navbar = ({
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Sending login data to the backend
-        const response = await axios.post('http://localhost:5000/user/validate', {
+        const response = await backend.login({
           email: userId,
           password: password
         });
-
-      // const response = {
-      //   status: 200,
-      // };
 
       // Handle success response (status 200)
       if (response.status === 200) {
@@ -59,10 +56,10 @@ const Navbar = ({
         setIsLoggedIn(true);
         setShowLoginModal(false); // Close the modal on successful login
         navigate("/");
+        setUserData(response.data.data)
         // Handle successful login logic (e.g., redirect to dashboard or store user data)
       }
     } catch (error) {
-      // Handle error response based on status codes
       if (error.response) {
         switch (error.response.status) {
           case 401:
@@ -115,6 +112,11 @@ const Navbar = ({
                     Plan a Trip
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link custom-nav-link" to="/packing-list">
+                    Packing List Generator
+                  </Link>
+                </li>
               </>
             ) : (
               <></>
@@ -138,7 +140,7 @@ const Navbar = ({
             </div>
           ) : (
             <>
-            {/* <span className="custom-nav-link welcome-msg">Welcome {userData.name}</span> */}
+            <span className="custom-nav-link welcome-msg">Welcome <strong>{userData.name}</strong></span>
             <Button
                 className="custom-btn"
                 variant="outline-primary"
