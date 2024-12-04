@@ -26,13 +26,18 @@ const saveTrip = (formData) => {
   return axios.post(CONNECTION_URL + '/addItinerary', formData);
 }
 
+const getTrips = (email) => {
+  return axios.get(CONNECTION_URL + '/getTripDetails?email=' + email);
+}
+
 const backend = {
   getFeaturesList,
   addUser,
   login,
   getHolidays,
   getExchangeRates,
-  saveTrip
+  saveTrip,
+  getTrips
 };
 
 export default backend;
