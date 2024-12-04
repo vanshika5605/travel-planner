@@ -108,11 +108,11 @@ const Navbar = ({
                     Plan a Trip
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link custom-nav-link" to="/packing-list">
                     Packing List Generator
                   </Link>
-                </li>
+                </li> */}
               </>
             ) : (
               <></>

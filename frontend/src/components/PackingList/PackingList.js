@@ -1,40 +1,69 @@
-import React, { useMemo, useState } from "react";
-import "./PackingList.css"; // We'll create this for custom styles
+import React, { useMemo, useState, useEffect } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import "./PackingList.css";
 import NewItemModal from "./NewItemModal";
 import PrintShare from "./PrintShare";
 import TripDetailsBox from "../ItineraryPlanner/TripDetailsBox";
+import backend from "../Utils/backend";
 
 const PackingList = () => {
-  const [tripDetails, setTripDetails] = useState({
-    destination: "Maldives",
-    startDate: "2024-12-15",
-    endDate: "2024-12-22",
-    travelers: 2,
-    tripType: "Beach Vacation",
-  });
+  const { tripId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [packingList, setPackingList] = useState({
-    essentials: [
-      { id: "passport", name: "Passport", quantity: 1, packed: false },
-      { id: "wallet", name: "Wallet", quantity: 1, packed: false },
-      {
-        id: "phone-charger",
-        name: "Phone Charger",
-        quantity: 1,
-        packed: false,
-      },
-    ],
-    clothing: [
-      { id: "t-shirts", name: "T-Shirts", quantity: 3, packed: false },
-      { id: "underwear", name: "Underwear", quantity: 4, packed: false },
-      { id: "socks", name: "Socks", quantity: 3, packed: false },
-      { id: "pants", name: "Pants", quantity: 2, packed: false },
-    ],
-  });
+  // State for trip details and packing list
+  const [tripDetails, setTripDetails] = useState(
+    location.state?.tripDetails || {
+      destination: "Loading...",
+      startDate: "",
+      endDate: "",
+      travelers: 0,
+      tripType: "",
+    }
+  );
+
+  const [packingList, setPackingList] = useState(
+    location.state?.packingList || {
+      essentials: [],
+      clothing: [],
+    }
+  );
 
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
+
+  // Fetch trip details and packing list if not passed via navigation state
+  useEffect(() => {
+    const fetchTripDetails = async () => {
+      // If no trip details were passed via navigation state, fetch them
+      if (!location.state?.tripDetails) {
+        try {
+          const tripResponse = await backend.getTripDetails(tripId);
+          const tripData = await tripResponse.json();
+          setTripDetails(tripData);
+        } catch (error) {
+          console.error("Error fetching trip details:", error);
+          // Optionally show an error message or redirect
+          navigate('/trips');
+        }
+      }
+
+      // If no packing list was passed via navigation state, fetch it
+      if (!location.state?.packingList) {
+        try {
+          const packingListResponse = await backend.getPackingList(tripId);
+          const packingListData = await packingListResponse.json();
+          setPackingList(packingListData);
+        } catch (error) {
+          console.error("Error fetching packing list:", error);
+          // Optionally show an error message
+        }
+      }
+    };
+
+    fetchTripDetails();
+  }, [tripId, location.state, navigate]);
 
   const toggleItemPacked = (category, itemId) => {
     setPackingList((current) => ({
@@ -72,13 +101,23 @@ const PackingList = () => {
     return { packedCount, totalCount };
   };
 
+  const handleSaveChanges = async () => {
+    try {
+      await backend.updatePackingList(tripId, packingList);
+      // Optionally show a success message
+    } catch (error) {
+      console.error("Error saving packing list:", error);
+      // Optionally show an error message
+    }
+  };
+
   const { packedCount, totalCount } = calculatePackedItemsCount();
 
   return (
     <div className="packing-list-container">
       <div className="trip-details">
         <div className="trip-info">
-        <TripDetailsBox tripDetails={tripDetails}></TripDetailsBox>
+          <TripDetailsBox tripDetails={tripDetails} />
         </div>
       </div>
 
@@ -88,7 +127,7 @@ const PackingList = () => {
           <PrintShare
             tripDetails={tripDetails}
             packingList={packingList}
-          ></PrintShare>
+          />
         </div>
 
         {Object.entries(packingList).map(([category, items]) => (
@@ -144,14 +183,19 @@ const PackingList = () => {
           <span>
             {packedCount} of {totalCount} items packed
           </span>
-          <button className="save-btn">Save Changes</button>
+          <button 
+            className="save-btn"
+            onClick={handleSaveChanges}
+          >
+            Save Changes
+          </button>
         </div>
         <NewItemModal
           showAddItemModal={showAddItemModal}
           setShowAddItemModal={setShowAddItemModal}
           packingList={packingList}
           setPackingList={setPackingList}
-        ></NewItemModal>
+        />
       </div>
     </div>
   );

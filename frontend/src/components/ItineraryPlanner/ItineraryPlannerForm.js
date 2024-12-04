@@ -9,6 +9,7 @@ import {
   faCompass
 } from '@fortawesome/free-solid-svg-icons';
 import { Container, Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
+import './ItineraryPlannerForm.css';
 
 const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData }) => {
   const [peopleCount, setPeopleCount] = useState(1);
@@ -124,7 +125,7 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
   );
 
   return (
-    <Container className="py-4">
+    <Container className="itinerary-container py-4">
       <h2 className="text-center mb-4">
         {formType === 'known' ? 'Plan Your Specific Trip' : 'Let Us Help You Plan'}
       </h2>

@@ -58,3 +58,7 @@
   .textarea-input {
     @apply w-full p-2 border rounded-md h-24 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none;
   }
+
+  .itinerary-container {
+    width: 50vw;
+  }

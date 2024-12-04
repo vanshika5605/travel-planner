@@ -1,18 +1,17 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import Profile from './components/Profile/Profile';
-import Plan from './components/ItineraryPlanner/Plan';
-import Navbar from './components/Utils/Navbar';
-import Home from './components/Home/Home';
-import SignUp from './components/SignUp/SignUp';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Loader from './components/Utils/Loader';  // Import the loader component
-import backend from './components/Utils/backend';
-import Footer from './components/Utils/Footer';
-import PackingList from './components/PackingList/PackingList';
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import Profile from "./components/Profile/Profile";
+import Plan from "./components/ItineraryPlanner/Plan";
+import Navbar from "./components/Utils/Navbar";
+import Home from "./components/Home/Home";
+import SignUp from "./components/SignUp/SignUp";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Loader from "./components/Utils/Loader"; // Import the loader component
+import backend from "./components/Utils/backend";
+import Footer from "./components/Utils/Footer";
+import PackingList from "./components/PackingList/PackingList";
 
 const App = () => {
-  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -114,20 +113,23 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route
-                  path="/signup"
-                  element={
-                    <SignUp
-                      isLoggedIn={isLoggedIn}
-                      setIsLoggedIn={setIsLoggedIn}
-                      userId={userId}
-                      setUserId={setUserId}
-                      setUserData={setUserData}
-                    />
-                  }
+              path="/signup"
+              element={
+                <SignUp
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                  userId={userId}
+                  setUserId={setUserId}
+                  setUserData={setUserData}
                 />
+              }
+            />
             {isLoggedIn ? (
               <>
-                <Route path="/profile" element={<Profile userData={userData} />} />
+                <Route
+                  path="/profile"
+                  element={<Profile userData={userData} />}
+                />
                 <Route
                   path="/plan"
                   element={
@@ -141,7 +143,7 @@ const App = () => {
                     />
                   }
                 />
-                <Route path="/packing-list" element={<PackingList />} />
+                <Route path="/packing-list/:tripId" element={<PackingList />} />
               </>
             ) : (
               <></>
