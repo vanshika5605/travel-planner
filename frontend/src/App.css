@@ -59,13 +59,13 @@ h1, h2, h3, h4, h5, h6 {
 .custom-get-started-btn {
   color: black !important;
     border: 1px solid black !important;
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
 }
 
 .custom-get-started-btn:hover,
 .custom-get-started-btn:focus-visible {
   color: black !important;
     border: 1px solid black !important;
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
     background: none !important;
 }

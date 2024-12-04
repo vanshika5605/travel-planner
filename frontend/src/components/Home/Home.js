@@ -16,7 +16,7 @@ const Home = () => {
     <div className="home-container">
       <section className="header-section">
         <div class="flex-right">
-          <h1 className="typing">Discover Your Next Adventure</h1>
+          <h2 className="typing">Discover Your Next Adventure</h2>
           {/* <h3>Find Your Ideal Roommate with Ease</h3> */}
           <p>
             Welcome to your next adventure! Whether you're dreaming of a sunny
