@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-// import Profile from './components/Profile';
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Home from "./components/Home/Home";
-import Plan from "./components/ItineraryPlanner/Plan";
-import PackingList from "./components/PackingList/PackingList";
-import SignUp from "./components/SignUp/SignUp";
-import backend from "./components/Utils/backend";
-import Footer from "./components/Utils/Footer";
-import Loader from "./components/Utils/Loader";
-import Navbar from "./components/Utils/Navbar";
-import "bootstrap/dist/css/bootstrap.min.css";
+import './App.css';
+import React, { useState, useEffect } from 'react';
+import Profile from './components/Profile/Profile';
+import Plan from './components/ItineraryPlanner/Plan';
+import Navbar from './components/Utils/Navbar';
+import Home from './components/Home/Home';
+import SignUp from './components/SignUp/SignUp';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Loader from './components/Utils/Loader';  // Import the loader component
+import backend from './components/Utils/backend';
+import Footer from './components/Utils/Footer';
+import PackingList from './components/PackingList/PackingList';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -115,7 +114,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             {isLoggedIn ? (
               <>
-                {/* <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} userData={userData} mode="edit"/>} /> */}
+                <Route path="/profile" element={<Profile />} />
                 <Route
                   path="/plan"
                   element={
