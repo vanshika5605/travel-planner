@@ -2,8 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: #e8e8e3; /* Matches the light gray background */
-    padding: 2rem;
+    background-color: #589ea8; /* Matches the light gray background */
+    padding: 2rem 1rem;
     font-family: Arial, sans-serif;
   }
   
@@ -23,7 +23,7 @@
   }
   
   .footer-left a {
-    color: #0073e6; /* Blue link color */
+    color: white; /* Blue link color */
     text-decoration: none;
   }
   
@@ -51,7 +51,7 @@
   }
   
   .footer-section a {
-    color: #0073e6; /* Blue link color */
+    color: white; /* Blue link color */
     text-decoration: none;
   }
   

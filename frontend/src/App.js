@@ -178,9 +178,7 @@ const App = () => {
             {/* Redirects all undefined routes */}
           </Routes>
         </div>
-        <div>
           <Footer></Footer>
-        </div>
       </Router>
     </>
   );

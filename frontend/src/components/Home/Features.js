@@ -27,7 +27,7 @@ const Features = () => {
   return (
     <div className="features">
       <div className="left-div">
-        <h1>Our Services</h1>
+        <h2>Our Services</h2>
       </div>
       <div className="right-div">
         <div
