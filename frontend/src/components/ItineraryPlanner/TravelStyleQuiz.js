@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const TravelStyleQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);

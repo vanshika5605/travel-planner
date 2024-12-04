@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
-import axios from 'axios';
 
 const SignUp = (props) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    location: '',
-    role: 'user',
-    gender: '',
-    defaultCurrency: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    location: "",
+    role: "user",
+    gender: "",
+    defaultCurrency: "",
+    password: "",
+    confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
@@ -44,8 +42,14 @@ const SignUp = (props) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password || formData.password !== formData.confirmPassword) {
-      setErrorMessage("Please fill all fields correctly or ensure passwords match.");
+    if (
+      !formData.email ||
+      !formData.password ||
+      formData.password !== formData.confirmPassword
+    ) {
+      setErrorMessage(
+        "Please fill all fields correctly or ensure passwords match."
+      );
       return;
     }
 
@@ -53,7 +57,7 @@ const SignUp = (props) => {
       const response = await backend.addUser(formData);
       if (response.status === 200) {
         props.setUserId(formData.email);
-        props.setUserData(formData)
+        props.setUserData(formData);
         props.setIsLoggedIn(true);
         navigate("/");
       }
@@ -61,7 +65,9 @@ const SignUp = (props) => {
       if (error.response) {
         switch (error.response.status) {
           case 400:
-            setErrorMessage("User already exists. Please try with a different email.");
+            setErrorMessage(
+              "User already exists. Please try with a different email."
+            );
             break;
           case 500:
             setErrorMessage("Internal server error. Please try again later.");
@@ -119,17 +125,36 @@ const SignUp = (props) => {
             />
             {key === "password" && (
               <ul className="password-requirements">
-                <li className={passwordChecks.length ? "text-success" : "text-danger"}>
+                <li
+                  className={
+                    passwordChecks.length ? "text-success" : "text-danger"
+                  }
+                >
                   {passwordChecks.length ? "✔" : "✘"} At least 8 characters
                 </li>
-                <li className={passwordChecks.uppercase ? "text-success" : "text-danger"}>
-                  {passwordChecks.uppercase ? "✔" : "✘"} At least one uppercase letter
+                <li
+                  className={
+                    passwordChecks.uppercase ? "text-success" : "text-danger"
+                  }
+                >
+                  {passwordChecks.uppercase ? "✔" : "✘"} At least one uppercase
+                  letter
                 </li>
-                <li className={passwordChecks.lowercase ? "text-success" : "text-danger"}>
-                  {passwordChecks.lowercase ? "✔" : "✘"} At least one lowercase letter
+                <li
+                  className={
+                    passwordChecks.lowercase ? "text-success" : "text-danger"
+                  }
+                >
+                  {passwordChecks.lowercase ? "✔" : "✘"} At least one lowercase
+                  letter
                 </li>
-                <li className={passwordChecks.specialChar ? "text-success" : "text-danger"}>
-                  {passwordChecks.specialChar ? "✔" : "✘"} At least one special character
+                <li
+                  className={
+                    passwordChecks.specialChar ? "text-success" : "text-danger"
+                  }
+                >
+                  {passwordChecks.specialChar ? "✔" : "✘"} At least one special
+                  character
                 </li>
               </ul>
             )}
@@ -137,7 +162,7 @@ const SignUp = (props) => {
         );
       }
 
-      if(key==="role"){
+      if (key === "role") {
         return;
       }
 
@@ -159,7 +184,7 @@ const SignUp = (props) => {
   };
 
   return (
-    <div className="container mt-4" style={{ maxWidth: '600px' }}>
+    <div className="container mt-4" style={{ maxWidth: "600px" }}>
       <h2>Start Your Journey!</h2>
       {/* Display error message if it exists */}
       {errorMessage && (

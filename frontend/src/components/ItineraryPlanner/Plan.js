@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import "./Plan.css";
-import CustomCalendar from "./CustomCalendar";
 import CurrencyConverter from "./CurrencyConverter";
+import CustomCalendar from "./CustomCalendar";
+import ItineraryPlanner from "./ItineraryPlanner";
+import "./Plan.css";
 import TravelStyleQuiz from "./TravelStyleQuiz";
-import Itinerary from "./Itinerary";
-import ItineraryPlannerForm from "./ItineraryPlannerForm";
 
-const Plan = ({holidays, longWeekends, rates, currencies}) => {
+const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
   const [isPlanModeOn, setIsPlanModeOn] = useState(false);
   const [planModeType, setPlanModeType] = useState("");
 
   // New function to handle going back to the initial screen
   const handleGoBack = () => {
+    alert("The generated itinerary will be lost");
     setIsPlanModeOn(false);
     setPlanModeType("");
   };
@@ -135,40 +135,43 @@ const Plan = ({holidays, longWeekends, rates, currencies}) => {
 
       <section>
         <div className="row">
-          <div className="leftcolumn">
-            {isPlanModeOn ? (
-              <div className="plan-mode-container">
-                {/* Back button added to plan mode section */}
-                <button className="back-button" onClick={handleGoBack}>
-                  ← Back to Options
-                </button>
-                <ItineraryPlannerForm formType={planModeType} />
-              </div>
-            ) : (
-              <>
+          {isPlanModeOn ? (
+            <div className="plan-mode-container">
+              {/* Back button added to plan mode section */}
+              <button className="back-button" onClick={handleGoBack}>
+                ← Back to Options
+              </button>
+              <ItineraryPlanner userId={userId} formType={planModeType} />
+            </div>
+          ) : (
+            <>
+              <div className="leftcolumn">
                 <div className="card quiz-section">
                   <h2>Discover Your Travel Style</h2>
                   <TravelStyleQuiz />
                 </div>
                 <div className="card">
-                  <h2>Trips that'll have you trippin</h2>
+                  {/* <h2>Trips that'll have you trippin</h2>
                   <h5>Some popular itineraries</h5>
                   <div className="fakeimg" style={{ height: "200px" }}>
                     Image
-                  </div>
+                  </div> */}
+                  <CurrencyConverter rates={rates} currencies={currencies} />
                 </div>
-              </>
-            )}
-          </div>
-          <div className="rightcolumn">
-            <div className="card">
-              <CustomCalendar holidays={holidays} longWeekends={longWeekends}/>
-            </div>
-            <div className="card">
-              <CurrencyConverter rates={rates} currencies={currencies}/>
-            </div>
-            <Itinerary></Itinerary>
-          </div>
+              </div>
+              <div className="rightcolumn">
+                <div className="card">
+                  <CustomCalendar
+                    holidays={holidays}
+                    longWeekends={longWeekends}
+                  />
+                </div>
+                {/* <div className="card">
+                  <CurrencyConverter rates={rates} currencies={currencies} />
+                </div> */}
+              </div>
+            </>
+          )}
         </div>
       </section>
     </div>

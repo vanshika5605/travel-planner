@@ -1,8 +1,14 @@
 /* Container for the entire itinerary */
 .itinerary-container {
-    padding: 20px;
     max-width: 800px;
     margin: 0 auto;
+    background-color: #f9f9f9; /* Light gray background */
+    border: 2px solid #ccc; /* Gray border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 1.5rem; /* Internal spacing */
+    margin-bottom: 1rem; /* Space below the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%; /* Full width of container */
   }
   
   /* Title */

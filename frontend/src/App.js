@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-// import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
 import Plan from './components/ItineraryPlanner/Plan';
 import Navbar from './components/Utils/Navbar';
 import Home from './components/Home/Home';
@@ -12,6 +12,7 @@ import Footer from './components/Utils/Footer';
 import PackingList from './components/PackingList/PackingList';
 
 const App = () => {
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +45,11 @@ const App = () => {
       if (dayOfWeek === 5) {
         const nextMonday = new Date(holidayDate);
         nextMonday.setDate(holidayDate.getDate() + 3);
-        if (holidays.some((h) => new Date(h.date).toDateString() === nextMonday.toDateString())) {
+        if (
+          holidays.some(
+            (h) => new Date(h.date).toDateString() === nextMonday.toDateString()
+          )
+        ) {
           longWeekendDates.push(holidayDate.toDateString());
         }
       }
@@ -52,7 +57,11 @@ const App = () => {
       if (dayOfWeek === 1) {
         const prevFriday = new Date(holidayDate);
         prevFriday.setDate(holidayDate.getDate() - 3);
-        if (holidays.some((h) => new Date(h.date).toDateString() === prevFriday.toDateString())) {
+        if (
+          holidays.some(
+            (h) => new Date(h.date).toDateString() === prevFriday.toDateString()
+          )
+        ) {
           longWeekendDates.push(holidayDate.toDateString());
         }
       }
@@ -64,10 +73,12 @@ const App = () => {
     try {
       const response = await backend.getExchangeRates();
       setRates(response.data.rates);
-      const currencyOptions = Object.keys(response.data.rates).map((currency) => ({
-        value: currency,
-        label: currency,
-      }));
+      const currencyOptions = Object.keys(response.data.rates).map(
+        (currency) => ({
+          value: currency,
+          label: currency,
+        })
+      );
       setCurrencies(currencyOptions);
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
@@ -102,15 +113,39 @@ const App = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} userData={userData} mode="edit"/>} /> */}
-            <Route path="/plan" element={<Plan isLoggedIn={isLoggedIn} userId={userId} holidays={holidays} longWeekends={longWeekends} rates={rates} currencies={currencies}/>} />
-            <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn}
-            setIsLoggedIn={setIsLoggedIn}
-            userId={userId}
-            setUserId={setUserId}
-            setUserData={setUserData}/>}
-             />
-            <Route path="/packing-list" element={<PackingList />} />
+            <Route
+                  path="/signup"
+                  element={
+                    <SignUp
+                      isLoggedIn={isLoggedIn}
+                      setIsLoggedIn={setIsLoggedIn}
+                      userId={userId}
+                      setUserId={setUserId}
+                      setUserData={setUserData}
+                    />
+                  }
+                />
+            {isLoggedIn ? (
+              <>
+                <Route path="/profile" element={<Profile userData={userData} />} />
+                <Route
+                  path="/plan"
+                  element={
+                    <Plan
+                      isLoggedIn={isLoggedIn}
+                      userId={userId}
+                      holidays={holidays}
+                      longWeekends={longWeekends}
+                      rates={rates}
+                      currencies={currencies}
+                    />
+                  }
+                />
+                <Route path="/packing-list" element={<PackingList />} />
+              </>
+            ) : (
+              <></>
+            )}
           </Routes>
         </div>
         <div>

@@ -1,0 +1,109 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f5;
+  }
+  
+  /* Profile Page Layout */
+  .profile-page {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Main Content */
+  .profile-main {
+    flex: 2;
+    padding-right: 20px;
+  }
+  
+  .profile-header h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Profile Information */
+  .profile-info {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .profile-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* Trip Section */
+  .trips-section {
+    margin-bottom: 20px;
+  }
+  
+  .trips-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .trip-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .trip-card button {
+    background-color: #1a73e8;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .trip-card button:hover {
+    background-color: #0b57d0;
+  }
+  
+  /* Sidebar */
+  .profile-sidebar {
+    flex: 1;
+    padding-left: 20px;
+  }
+  
+  .travel-stats, .travel-goals {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .travel-stats h2, .travel-goals h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .stats-item, .goals-item {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .stats-item h3, .goals-item h3 {
+    font-size: 24px;
+    color: #1a73e8;
+  }
+  
+  .stats-item p, .goals-item p {
+    font-size: 14px;
+    color: #555;
+  }

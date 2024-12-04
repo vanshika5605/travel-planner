@@ -4,34 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlane, faUtensils, faBed, faHiking } from '@fortawesome/free-solid-svg-icons';
 import './Itinerary.css'; // Import the CSS file
 
-// Sample itinerary data
-const initialData = {
-  summary: '',
-  itinerary: [
-    {
-      date: '2024-03-30',
-      day: 'Day 1',
-      activities: [
-        { category: 'Travel', activity: 'Flight from Los Angeles to Vancouver' },
-        { category: 'Hotel', activity: 'Check-in and Rest' },
-        { category: 'Adventure', activity: 'Walk in Douglas Park' },
-        { category: 'Adventure', activity: 'Lynn Canyon Jeep Excursion' },
-      ],
-      note: '',
-    },
-    {
-      date: '2024-03-31',
-      day: 'Day 2',
-      activities: [
-        { category: 'Adventure', activity: 'Hike in Grouse Mountain' },
-        { category: 'Eat', activity: 'Dinner at Local Bistro' },
-      ],
-      note: '',
-    },
-  ],
-  note: '',
-};
-
 // Mapping categories to icons
 const categoryIcons = {
   Travel: faPlane,
@@ -40,29 +12,28 @@ const categoryIcons = {
   Hotel: faBed,
 };
 
-function Itinerary() {
-  const [data, setData] = useState(initialData);
+const Itinerary = ({itineraryData, setItineraryData}) => {
   const [activeTab, setActiveTab] = useState(0);
 
   // Handle drag and drop
   const handleDragEnd = (result, dayIndex) => {
     if (!result.destination) return;
 
-    const items = Array.from(data.itinerary[dayIndex].activities);
+    const items = Array.from(itineraryData.itinerary[dayIndex].activities);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    const newItinerary = [...data.itinerary];
+    const newItinerary = [...itineraryData.itinerary];
     newItinerary[dayIndex].activities = items;
 
-    setData({ ...data, itinerary: newItinerary });
+    setItineraryData({ ...itineraryData, itinerary: newItinerary });
   };
 
   // Handle note change for each day
   const handleNoteChange = (dayIndex, value) => {
-    const newItinerary = [...data.itinerary];
+    const newItinerary = [...itineraryData.itinerary];
     newItinerary[dayIndex].note = value;
-    setData({ ...data, itinerary: newItinerary });
+    setItineraryData({ ...itineraryData, itinerary: newItinerary });
   };
 
   // Copy to clipboard
@@ -71,7 +42,7 @@ const copyToClipboard = () => {
     let formattedItinerary = 'Itinerary:\n\n';
     
     // Loop through each day in the itinerary and format it
-    data.itinerary.forEach((day) => {
+    itineraryData.itinerary.forEach((day) => {
       formattedItinerary += `${day.day} - ${day.date}\n`;
       
       // Loop through activities and format them
@@ -96,12 +67,10 @@ const copyToClipboard = () => {
   };  
 
   return (
-    <div className="itinerary-container">
-      <h1>Itinerary Planner</h1>
-      
+    <div className="itinerary-container">      
       {/* Tabs for each day */}
       <div className="tabs">
-        {data.itinerary.map((day, index) => (
+        {itineraryData.itinerary.map((day, index) => (
           <div
             key={day.date}
             onClick={() => setActiveTab(index)}
@@ -115,14 +84,14 @@ const copyToClipboard = () => {
       {/* Display active day's activities */}
       <div className="day-container">
         <h3>
-          {data.itinerary[activeTab].day} - {data.itinerary[activeTab].date}
+          {itineraryData.itinerary[activeTab].date}
         </h3>
 
         <DragDropContext onDragEnd={(result) => handleDragEnd(result, activeTab)}>
           <Droppable droppableId={`day-${activeTab}`}>
             {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
-                {data.itinerary[activeTab].activities.map((activity, index) => (
+                {itineraryData.itinerary[activeTab].activities.map((activity, index) => (
                   <Draggable key={`${activity.activity}-${index}`} draggableId={`${activity.activity}-${index}`} index={index}>
                     {(provided) => (
                       <div
@@ -154,7 +123,7 @@ const copyToClipboard = () => {
         {/* Text area for notes */}
         <textarea
           placeholder="Add notes for this day..."
-          value={data.itinerary[activeTab].note}
+          value={itineraryData.itinerary[activeTab].note}
           onChange={(e) => handleNoteChange(activeTab, e.target.value)}
           className="note-textarea"
         />
