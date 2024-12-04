@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-// import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
 import Plan from './components/ItineraryPlanner/Plan';
 import Navbar from './components/Utils/Navbar';
 import Home from './components/Home/Home';
@@ -102,7 +102,7 @@ const App = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} userData={userData} mode="edit"/>} /> */}
+            <Route path="/profile" element={<Profile />} />
             <Route path="/plan" element={<Plan isLoggedIn={isLoggedIn} userId={userId} holidays={holidays} longWeekends={longWeekends} rates={rates} currencies={currencies}/>} />
             <Route path="/signup" element={<SignUp isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
