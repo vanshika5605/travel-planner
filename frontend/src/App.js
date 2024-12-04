@@ -112,6 +112,18 @@ const App = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route
+                  path="/signup"
+                  element={
+                    <SignUp
+                      isLoggedIn={isLoggedIn}
+                      setIsLoggedIn={setIsLoggedIn}
+                      userId={userId}
+                      setUserId={setUserId}
+                      setUserData={setUserData}
+                    />
+                  }
+                />
             {isLoggedIn ? (
               <>
                 <Route path="/profile" element={<Profile />} />
@@ -125,18 +137,6 @@ const App = () => {
                       longWeekends={longWeekends}
                       rates={rates}
                       currencies={currencies}
-                    />
-                  }
-                />
-                <Route
-                  path="/signup"
-                  element={
-                    <SignUp
-                      isLoggedIn={isLoggedIn}
-                      setIsLoggedIn={setIsLoggedIn}
-                      userId={userId}
-                      setUserId={setUserId}
-                      setUserData={setUserData}
                     />
                   }
                 />
