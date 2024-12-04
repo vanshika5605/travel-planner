@@ -14,7 +14,7 @@ const Navbar = ({
   userData,
   setUserData,
   isAdmin,
-  setAdmin
+  setIsAdmin,
 }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true); // for email validation
@@ -44,7 +44,6 @@ const Navbar = ({
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-
       const response = await backend.login({
         email: userId,
         password: password,
@@ -53,13 +52,13 @@ const Navbar = ({
       // Handle success response (status 200)
       if (response.status === 200) {
         setIsLoggedIn(true);
-        setShowLoginModal(false); 
-        if (userId === 'admin@umass.edu' && password === 'Test@123') {
-          navigate('/admin');
+        setShowLoginModal(false);
+        if (userId === "admin@umass.edu" && password === "Test@123") {
+          navigate("/admin");
           setUserData(response.data.data); // Redirect to Admin Page
-          setAdmin(true); 
+          setIsAdmin(true);
         } else {
-          navigate('/');
+          navigate("/");
           setUserData(response.data.data);
         }
       }
@@ -95,6 +94,10 @@ const Navbar = ({
     setErrorMessage("");
   };
 
+  // useEffect(() => {
+  //   console.log("Changed")
+  // },[isAdmin])
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <div className="container custom-nav">
@@ -104,24 +107,29 @@ const Navbar = ({
         </Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {isLoggedIn && !isAdmin ? (
-              <>
-                <li className="nav-item">
-                  <Link className=" nav-link custom-nav-link" to="/profile">
-                    Profile
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link custom-nav-link" to="/plan">
-                    Plan a Trip
-                  </Link>
-                </li>
-                {/* <li className="nav-item">
-                  <Link className="nav-link custom-nav-link" to="/packing-list">
-                    Packing List Generator
-                  </Link>
-                </li> */}
-              </>
+            {isLoggedIn ? (
+              isAdmin ? (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link custom-nav-link" to="/admin">
+                      Dashboard
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link className=" nav-link custom-nav-link" to="/profile">
+                      Profile
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link custom-nav-link" to="/plan">
+                      Plan a Trip
+                    </Link>
+                  </li>
+                </>
+              )
             ) : (
               <></>
             )}
@@ -134,7 +142,6 @@ const Navbar = ({
                 onClick={handleLoginModalShow}
               >
                 Login
-
               </Button>
               <Link
                 to="/signup"
