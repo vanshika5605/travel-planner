@@ -55,9 +55,9 @@ public class userDetailsController {
     }
 
     @GetMapping("/getUser/{emailId}")
-    public ResponseEntity<ApiResponse<Optional<UserDetails>>> getUser(@PathVariable(required=false) String emailId) {
+    public ResponseEntity<ApiResponse<Optional<UserDetails>>> getUser(@PathVariable String emailId) {
         try {
-            System.out.println("Received emailId: " + emailId);
+
             Optional<UserDetails> data = myUserDetailsService.getUser(emailId);
 
             // Return success response
@@ -71,7 +71,6 @@ public class userDetailsController {
 
         } catch (IllegalArgumentException e) {
             // Return error response
-            System.out.println("Received emailId: " + emailId);
             ApiResponse<Optional<UserDetails>> response = new ApiResponse<Optional<UserDetails>>(false, Optional.empty(), e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }

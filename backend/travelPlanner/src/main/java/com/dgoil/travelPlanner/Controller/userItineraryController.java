@@ -2,10 +2,12 @@ package com.dgoil.travelPlanner.Controller;
 
 import com.dgoil.travelPlanner.Model.DAO.UserItinerary;
 import com.dgoil.travelPlanner.Model.DTO.ApiResponse;
+import com.dgoil.travelPlanner.Model.DTO.UserTripsDetails;
 import com.dgoil.travelPlanner.Service.userItineraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,6 @@ public class userItineraryController {
     @GetMapping("/getItinerary/{tripId}")
     public ResponseEntity<ApiResponse<Optional<UserItinerary>>> getUserItinerary(@PathVariable(required=false) String tripId) {
         try {
-            System.out.println("Received tripId: " + tripId);
             Optional<UserItinerary> data = myUserItineraryService.getUserItinerary(tripId);
 
             // Return success response
@@ -44,13 +45,24 @@ public class userItineraryController {
     @PostMapping("/addItinerary")
     public ResponseEntity<ApiResponse<String>> saveUserItinerary(@RequestBody UserItinerary userItinerary){
         try {
-            userItinerary.setTripID(tripIDGeneratorController.generateTripID());
             myUserItineraryService.saveUserItinerary(userItinerary);
             ApiResponse<String> response = new ApiResponse<String>(true, "Itinerary added!", null);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch(IllegalArgumentException e) {
             ApiResponse<String> response = new ApiResponse<String>(false, "Exception thrown!", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/user/tripDetails/{email}")
+    public ResponseEntity<ApiResponse<UserTripsDetails>> userTripDetails(@PathVariable String email) {
+        try {
+            UserTripsDetails userTripsDetails = myUserItineraryService.getUserTripDetails(email);
+            ApiResponse<UserTripsDetails> response = new ApiResponse<>(true, userTripsDetails, null);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch(IllegalArgumentException e) {
+            ApiResponse<UserTripsDetails> response = new ApiResponse<UserTripsDetails>(false, null, e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 }

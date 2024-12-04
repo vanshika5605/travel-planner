@@ -25,6 +25,7 @@ public class UserItinerary {
     private Budget budget;
     private String customText;
     private TripDetails tripDetails;
+    private Boolean isPackingListCreated;
 
     public void setTripID(String tripID) {
         this.tripID = tripID;
@@ -34,11 +35,11 @@ public class UserItinerary {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Budget{
-        private String activities;
-        private String miscellaneous;
-        private String accommodation;
-        private String food;
-        private String travel;
+        private Integer activities;
+        private Integer miscellaneous;
+        private Integer accommodation;
+        private Integer food;
+        private Integer travel;
     }
 
     @Data
@@ -54,7 +55,16 @@ public class UserItinerary {
         public static class Itinerary{
             private String date;
             private String day;
-            private List<String> activities;
+            private String weekDay;
+            private List<Activities> activities;
+
+            @Data
+            @NoArgsConstructor
+            @AllArgsConstructor
+            public static class Activities{
+                private String category;
+                private String activity;
+            }
         }
     }
 }
