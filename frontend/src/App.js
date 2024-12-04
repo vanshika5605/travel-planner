@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import Profile from "./components/Profile/Profile";
+import AdminPage from "./components/AdminPage/AdminPage";
 import Plan from "./components/ItineraryPlanner/Plan";
 import Navbar from "./components/Utils/Navbar";
 import Home from "./components/Home/Home";
@@ -21,6 +22,7 @@ const App = () => {
   const [longWeekends, setLongWeekends] = useState([]);
   const [rates, setRates] = useState({});
   const [currencies, setCurrencies] = useState([]);
+  const [isAdmin,setAdmin] = useState(false);
 
   const fetchHolidays = async () => {
     try {
@@ -107,6 +109,8 @@ const App = () => {
             setPassword={setPassword}
             userData={userData}
             setUserData={setUserData}
+            isAdmin={isAdmin}
+            setAdmin={setAdmin}
           />
         )}
         <div className="content">
@@ -124,7 +128,7 @@ const App = () => {
                 />
               }
             />
-            {isLoggedIn ? (
+            {isLoggedIn? (
               <>
                 <Route
                   path="/profile"
@@ -147,6 +151,17 @@ const App = () => {
               </>
             ) : (
               <></>
+            )}
+            {isAdmin? (
+              <>
+              <Route path="/admin" 
+              element={
+              <AdminPage
+              setAdmin={setAdmin}/>} 
+              />
+              </>
+            ): (
+              <> </>
             )}
           </Routes>
         </div>

@@ -13,9 +13,10 @@ const Navbar = ({
   setPassword,
   userData,
   setUserData,
+  isAdmin,
+  setAdmin
 }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
-
   const [isEmailValid, setIsEmailValid] = useState(true); // for email validation
   const [touched, setTouched] = useState(false); // for tracking interaction
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,6 +44,7 @@ const Navbar = ({
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+
       const response = await backend.login({
         email: userId,
         password: password,
@@ -52,8 +54,14 @@ const Navbar = ({
       if (response.status === 200) {
         setIsLoggedIn(true);
         setShowLoginModal(false); 
-        navigate("/");
-        setUserData(response.data.data);
+        if (userId === 'admin@umass.edu' && password === 'Test@123') {
+          navigate('/admin');
+          setUserData(response.data.data); // Redirect to Admin Page
+          setAdmin(true); 
+        } else {
+          navigate('/');
+          setUserData(response.data.data);
+        }
       }
     } catch (error) {
       if (error.response) {
@@ -96,7 +104,7 @@ const Navbar = ({
         </Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {isLoggedIn ? (
+            {isLoggedIn && !isAdmin ? (
               <>
                 <li className="nav-item">
                   <Link className=" nav-link custom-nav-link" to="/profile">
@@ -126,6 +134,7 @@ const Navbar = ({
                 onClick={handleLoginModalShow}
               >
                 Login
+
               </Button>
               <Link
                 to="/signup"
