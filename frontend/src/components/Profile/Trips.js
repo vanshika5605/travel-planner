@@ -8,12 +8,12 @@ const Trips = ({userData}) => {
   // State for trips (fetched from backend)
   const [trips, setTrips] = useState({
     upcomingTrips: [
-      { id: 1, destination: 'Paris, France', date: '2024-12-15' },
-      { id: 2, destination: 'Tokyo, Japan', date: '2025-03-05' },
+      { id: 1, destination: 'Paris, France', date: '2024-12-15', hasPackingList: true },
+      { id: 2, destination: 'Tokyo, Japan', date: '2025-03-05', hasPackingList: false },
     ],
     pastTrips: [
-      { id: 3, destination: 'London, UK', date: '2023-06-10' },
-      { id: 4, destination: 'Sydney, Australia', date: '2022-11-20' },
+      { id: 3, destination: 'London, UK', date: '2023-06-10', hasPackingList: true },
+      { id: 4, destination: 'Sydney, Australia', date: '2022-11-20', hasPackingList: true },
     ],
   });
 
@@ -86,16 +86,19 @@ const Trips = ({userData}) => {
       {tripsArray.length > 0 ? (
         tripsArray.map((trip) => (
           <div key={trip.id} className="trip-card">
+            <div>
             <p><strong>Destination:</strong> {trip.destination}</p>
             <p><strong>Date:</strong> {trip.date}</p>
+            </div>
             <button 
               onClick={() => handleGeneratePackingList(trip)}
               disabled={generatingPackingListForTripId === trip.id}
+              className='generate-button'
             >
               {generatingPackingListForTripId === trip.id ? (
                 <div className="loader">Generating...</div>
-              ) : (
-                'Generate Packing List'
+              ) : ( trip.hasPackingList?
+                'View Packing List':'Generate Packing List'
               )}
             </button>
           </div>
