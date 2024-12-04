@@ -1,0 +1,124 @@
+.packing-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .trip-details {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .trip-info h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .packing-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .packing-list-header h2 {
+    margin: 0;
+    color: #2c3e50;
+  }
+  
+  .print-share-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .packing-category {
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+  }
+  
+  .category-title {
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin: 0;
+    text-transform: capitalize;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .category-items {
+    padding: 10px;
+  }
+  
+  .item-checkbox {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .item-checkbox input {
+    margin-right: 10px;
+  }
+  
+  .item-checkbox.packed {
+    color: #888;
+    text-decoration: line-through;
+  }
+  
+  .list-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .add-item-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pagination {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .page-btn {
+    background-color: #f1f1f1;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .page-btn.active {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .list-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+  }
+  
+  .save-btn {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }

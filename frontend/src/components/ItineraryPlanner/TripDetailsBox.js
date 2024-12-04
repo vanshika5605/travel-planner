@@ -14,8 +14,8 @@ const TripDetailsBox = ({ tripDetails }) => {
 
   return (
     <div className="trip-details-box">
-      <h3 className="trip-title">Trip Details</h3>
-      <p><strong>Destination:</strong> {destination}</p>
+      {/* <h3 className="trip-title">Trip Details</h3> */}
+      <h3>📍 Trip to {tripDetails.destination}</h3>
       <p><strong>Start Date:</strong> {startDate}</p>
       <p><strong>End Date:</strong> {endDate}</p>
       <p><strong>Budget:</strong> ${budget}</p>
