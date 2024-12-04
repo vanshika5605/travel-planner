@@ -12,6 +12,7 @@ import Footer from './components/Utils/Footer';
 import PackingList from './components/PackingList/PackingList';
 
 const App = () => {
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -126,7 +127,7 @@ const App = () => {
                 />
             {isLoggedIn ? (
               <>
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile userData={userData} />} />
                 <Route
                   path="/plan"
                   element={
