@@ -22,12 +22,17 @@ const getExchangeRates = () => {
   return axios.get("https://open.er-api.com/v6/latest/USD");
 }
 
+const saveTrip = (formData) => {
+  return axios.post(CONNECTION_URL + '/addItinerary', formData);
+}
+
 const backend = {
   getFeaturesList,
   addUser,
   login,
   getHolidays,
-  getExchangeRates
+  getExchangeRates,
+  saveTrip
 };
 
 export default backend;

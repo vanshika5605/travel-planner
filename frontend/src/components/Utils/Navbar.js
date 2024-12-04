@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Modal, Button, Alert } from "react-bootstrap";
-import "./Navbar.css";
-import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { Alert, Button, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
+import "./Navbar.css";
 
 const Navbar = ({
   isLoggedIn,
@@ -14,7 +12,7 @@ const Navbar = ({
   password,
   setPassword,
   userData,
-  setUserData
+  setUserData,
 }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -30,7 +28,7 @@ const Navbar = ({
     setPassword("");
     setIsEmailValid(true);
     setTouched(false);
-    setErrorMessage("")
+    setErrorMessage("");
   };
 
   const handleEmailChange = (e) => {
@@ -45,19 +43,17 @@ const Navbar = ({
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-        const response = await backend.login({
-          email: userId,
-          password: password
-        });
+      const response = await backend.login({
+        email: userId,
+        password: password,
+      });
 
       // Handle success response (status 200)
       if (response.status === 200) {
-        console.log("Login Success:", response.data);
         setIsLoggedIn(true);
-        setShowLoginModal(false); // Close the modal on successful login
+        setShowLoginModal(false); 
         navigate("/");
-        setUserData(response.data.data)
-        // Handle successful login logic (e.g., redirect to dashboard or store user data)
+        setUserData(response.data.data);
       }
     } catch (error) {
       if (error.response) {
@@ -88,8 +84,8 @@ const Navbar = ({
     setIsEmailValid(true);
     setTouched(false);
     navigate("/");
-    setErrorMessage("")
-  }
+    setErrorMessage("");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -140,8 +136,10 @@ const Navbar = ({
             </div>
           ) : (
             <>
-            <span className="custom-nav-link welcome-msg">Welcome <strong>{userData.name}</strong></span>
-            <Button
+              <span className="custom-nav-link welcome-msg">
+                Welcome <strong>{userData.name}</strong>
+              </span>
+              <Button
                 className="custom-btn"
                 variant="outline-primary"
                 onClick={handleLogout}
@@ -149,7 +147,6 @@ const Navbar = ({
                 Logout
               </Button>
             </>
-            
           )}
         </div>
       </div>
@@ -160,9 +157,13 @@ const Navbar = ({
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {errorMessage!=""?<><Alert variant="danger">
-      {errorMessage}
-    </Alert></>:<></> }
+          {errorMessage != "" ? (
+            <>
+              <Alert variant="danger">{errorMessage}</Alert>
+            </>
+          ) : (
+            <></>
+          )}
           <form onSubmit={handleLogin}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">

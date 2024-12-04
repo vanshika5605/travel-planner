@@ -1,0 +1,22 @@
+.trip-details-box {
+    background-color: #f9f9f9; /* Light gray background */
+    border: 2px solid #ccc; /* Gray border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 1.5rem; /* Internal spacing */
+    margin-bottom: 1rem; /* Space below the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100%; /* Full width of container */
+  }
+  
+  .trip-title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333; /* Dark gray title color */
+  }
+  
+  .trip-details-box p {
+    margin: 0.5rem 0; /* Spacing between rows */
+    font-size: 1rem;
+    color: #555; /* Medium gray text */
+  }
+  

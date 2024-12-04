@@ -41,7 +41,7 @@ public class userItineraryController {
         }
     }
 
-    @PostMapping("/addItinerary/")
+    @PostMapping("/addItinerary")
     public ResponseEntity<ApiResponse<String>> saveUserItinerary(@RequestBody UserItinerary userItinerary){
         try {
             userItinerary.setTripID(tripIDGeneratorController.generateTripID());
