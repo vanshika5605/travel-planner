@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Profile.css';
 import backend from "../Utils/backend";
 
 const Trips = ({userData}) => {
