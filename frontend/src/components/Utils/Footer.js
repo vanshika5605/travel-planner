@@ -14,12 +14,13 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Location</h3>
           {/* <p>123 Demo Street</p> */}
-          <p>Amherst, MA - 01002</p>
+          <p>Amherst</p>
+          <p>MA - 01002</p>
         </div>
         <div className="footer-section">
           <h3>Contact</h3>
           <p><a href="mailto:email@example.com">contact@travelbuddy.com</a></p>
-          <p>(555) 555-5555</p>
+          <p>(123) 456-7890</p>
         </div>
       </div>
     </footer>
