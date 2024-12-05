@@ -41,12 +41,13 @@ const ItineraryBox = ({ itineraryData, setItineraryData }) => {
   const handleNoteChange = (dayIndex, value) => {
     const newItinerary = [...itineraryData.itinerary];
     newItinerary[dayIndex].note = value;
+    console.log(newItinerary);
     setItineraryData({ ...itineraryData, itinerary: newItinerary });
   };
 
   return (
-    <div className="itinerary-container">
-              <h2>Itinerary</h2>
+    <>
+      <h2>Itinerary</h2>
 
       {/* Tabs for each day */}
       <div className="tabs">
@@ -114,7 +115,7 @@ const ItineraryBox = ({ itineraryData, setItineraryData }) => {
           className="note-textarea"
         />
       </div>
-    </div>
+    </>
   );
 };
 

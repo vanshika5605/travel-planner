@@ -66,8 +66,8 @@ const PackingList = () => {
   }, [tripId, location.state, navigate]);
 
   useEffect(() => {
-    console.log("Changed")
-  },[tripDetails])
+    console.log("Changed");
+  }, [tripDetails]);
 
   const toggleItemPacked = (category, name) => {
     setPackingList((current) => ({
@@ -107,8 +107,11 @@ const PackingList = () => {
 
   const handleSaveChanges = async (tripId) => {
     try {
-      console.log(packingList)
-      const response = await backend.savePackingList({tripID: tripId, packingList: packingList});
+      console.log(packingList);
+      const response = await backend.savePackingList({
+        tripID: tripId,
+        packingList: packingList,
+      });
       // Optionally show a success message
     } catch (error) {
       console.error("Error saving packing list:", error);
@@ -120,25 +123,31 @@ const PackingList = () => {
 
   return (
     <div className="packing-list-container">
-      <div className="trip-details">
-        <div className="trip-info">
-          <TripDetailsBox tripDetails={tripDetails} />
-        </div>
-      </div>
+      <TripDetailsBox tripDetails={tripDetails} />
 
       <div className="packing-list-content">
         <div className="packing-list-header">
           <h2>🧳 Packing List for {tripDetails.destination}</h2>
           <PrintShare tripDetails={tripDetails} packingList={packingList} />
         </div>
-
+        <div className="list-summary">
+          <span>
+            {packedCount} of {totalCount} items packed
+          </span>
+          <button
+            className="save-btn"
+            onClick={() => handleSaveChanges(tripDetails.tripId)}
+          >
+            Save Changes
+          </button>
+        </div>
         {Object.entries(packingList)
           .filter(([category]) =>
             paginatedItems.items.some((item) => item.category === category)
           )
           .map(([category, items]) => (
             <div key={category} className="packing-category">
-              <h4 className="category-title">{category}</h4>
+              <h5 className="category-title">{category}</h5>
               <div className="category-items">
                 {paginatedItems.items
                   .filter((item) => item.category === category)
@@ -173,15 +182,6 @@ const PackingList = () => {
               </button>
             ))}
           </div>
-        </div>
-
-        <div className="list-summary">
-          <span>
-            {packedCount} of {totalCount} items packed
-          </span>
-          <button className="save-btn" onClick={() => handleSaveChanges(tripDetails.tripId)}>
-            Save Changes
-          </button>
         </div>
         <NewItemModal
           showAddItemModal={showAddItemModal}

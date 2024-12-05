@@ -61,19 +61,6 @@ body {
     justify-content: space-between;
   }
   
-  .trip-card button {
-    background-color: #1a73e8;
-    color: white;
-    /* padding: 10px 15px; */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .trip-card button:hover {
-    background-color: #0b57d0;
-  }
-  
   /* Sidebar */
   .profile-sidebar {
     flex: 1;
@@ -100,7 +87,7 @@ body {
   
   .stats-item h3, .goals-item h3 {
     font-size: 24px;
-    color: #1a73e8;
+    color: #c65d36;
   }
   
   .stats-item p, .goals-item p {
@@ -134,14 +121,14 @@ body {
 }
 
 .ongoing-trip-card h3 {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #1a73e8;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: black;
 }
 
 .ongoing-trip-card ul {
     list-style-type: disc;
-    padding-left: 20px;
 }
 
 .ongoing-trip-card li {
@@ -165,5 +152,15 @@ body {
 }
 
 .collapsible-header:hover {
-    color: #1a73e8;
+    color: #c65d36;
+}
+
+.no-bullets{
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 0.9rem;
+}
+
+.no-bullets li{
+  margin: 5px;
 }

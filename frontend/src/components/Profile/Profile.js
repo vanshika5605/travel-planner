@@ -1,9 +1,27 @@
+import {
+  faBed,
+  faCartShopping,
+  faHiking,
+  faPlane,
+  faUtensils,
+  faVanShuttle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
+import PackingListButton from "./PackingListButton";
 import "./Profile.css";
 import Trips from "./Trips";
-import PackingListButton from "./PackingListButton";
+
+const categoryIcons = {
+  Travel: faPlane,
+  Adventure: faHiking,
+  Food: faUtensils,
+  Hotel: faBed,
+  Shopping: faCartShopping,
+  Sightseeing: faVanShuttle,
+};
 
 const Profile = ({ userData }) => {
   const navigate = useNavigate();
@@ -46,9 +64,9 @@ const Profile = ({ userData }) => {
         const response = await backend.getPackingList(trip.tripId);
         packingList = response.data.data.packingList;
       }
-      console.log(trip)
-      console.log(packingList)
-      navigate(`/packing-list/${trip.tripId}`, {
+      console.log(trip);
+      console.log(packingList);
+      navigate("/packing-list/${trip.tripId}", {
         state: {
           tripDetails: trip,
           packingList: packingList,
@@ -65,26 +83,26 @@ const Profile = ({ userData }) => {
   const handleViewItinerary = async (trip) => {
     try {
       // Set loading state for the specific trip
-      setLoading(prev => ({ ...prev, [trip.id]: true }));
+      setLoading((prev) => ({ ...prev, [trip.id]: true }));
 
       // Assuming you have an API endpoint to fetch trip details
       const response = await backend.getTripDetails(trip.tripId);
-      console.log(response.data)
+      console.log(response.data);
       // Navigate to itinerary page with trip data
-      navigate('/itinerary', {
+      navigate("/itinerary", {
         state: {
           tripData: response.data.data,
           userId: userData.id,
-          itineraryData: response.data.data.tripDetails
-        }
+          itineraryData: response.data.data.tripDetails,
+        },
       });
     } catch (error) {
-      console.error('Error fetching itinerary:', error);
+      console.error("Error fetching itinerary:", error);
       // Optionally show an error message to the user
-      alert('Failed to load itinerary. Please try again.');
+      alert("Failed to load itinerary. Please try again.");
     } finally {
       // Clear loading state
-      setLoading(prev => ({ ...prev, [trip.id]: false }));
+      setLoading((prev) => ({ ...prev, [trip.id]: false }));
     }
   };
 
@@ -127,38 +145,53 @@ const Profile = ({ userData }) => {
           <h2>Ongoing Trip</h2>
           {trips.onGoingTrips && trips.onGoingTrips.length > 0 ? (
             trips.onGoingTrips.map((trip) => (
-              <div key={trip.id} className="ongoing-trip-card">
-                <h3>{trip.destination}</h3>
-                <p>
-                  <strong>Start Date:</strong> {trip.startDate}
-                </p>
-                <p>
-                  <strong>End Date:</strong> {trip.endDate}
-                </p>
-                <p>
-                  <strong>Activities Planned for Today:</strong>
-                </p>
-                <ul>
-                  {trip.activities &&
-                    trip.activities.map((activity, index) => (
-                      <li key={index}>{activity}</li>
-                    ))}
-                </ul>
+              <>
+                <div key={trip.id} className="ongoing-trip-card">
+                  <h3>📍 Trip to {trip.destination}</h3>
+                  <p>
+                    <strong>Start Date:</strong> {trip.startDate}
+                  </p>
+                  <p>
+                    <strong>End Date:</strong> {trip.endDate}
+                  </p>
+                  <p>
+                    <strong>Activities Planned for Today:</strong>
+                  </p>
+                  {trips.todayActivities && trips.todayActivities.length > 0 ? (
+                    <ul className="no-bullets">
+                      {trips.todayActivities.map((activity, index) => (
+                        <p key={index}>
+                          <strong>
+                            <FontAwesomeIcon
+                              icon={categoryIcons[activity.category]}
+                              className="category-icon"
+                            />
+                          </strong>{" "}
+                          {activity.activity}
+                        </p>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No activities planned for today.</p>
+                  )}
+                </div>
                 <div className="trip-button-section">
                   <PackingListButton
                     handleGeneratePackingList={handleGeneratePackingList}
                     trip={trip}
-                    generatingPackingListForTripId={generatingPackingListForTripId}
+                    generatingPackingListForTripId={
+                      generatingPackingListForTripId
+                    }
                   />
-                  <button 
+                  <button
                     className="generate-button"
                     onClick={() => handleViewItinerary(trip)}
                     disabled={loading[trip.id]}
                   >
-                    {loading[trip.id] ? 'Loading...' : 'View Itinerary'}
+                    {loading[trip.id] ? "Loading..." : "View Itinerary"}
                   </button>
-                </div>
-              </div>
+                </div>{" "}
+              </>
             ))
           ) : (
             <p>No ongoing trips.</p>
@@ -185,20 +218,20 @@ const Profile = ({ userData }) => {
         </div>
 
         {/* <div className="travel-goals">
-                    <h2>Travel Goals</h2>
-                    <div className="goals-item">
-                        <h3>{staticUserData.travelGoals.tripsPlanned}</h3>
-                        <p>Trips Planned</p>
-                    </div>
-                    <div className="goals-item">
-                        <h3>{staticUserData.travelGoals.newDestinations}</h3>
-                        <p>New Destinations</p>
-                    </div>
-                    <div className="goals-item">
-                        <h3>{staticUserData.travelGoals.travelMiles}</h3>
-                        <p>Miles to Travel</p>
-                    </div>
-                </div> */}
+                      <h2>Travel Goals</h2>
+                      <div className="goals-item">
+                          <h3>{staticUserData.travelGoals.tripsPlanned}</h3>
+                          <p>Trips Planned</p>
+                      </div>
+                      <div className="goals-item">
+                          <h3>{staticUserData.travelGoals.newDestinations}</h3>
+                          <p>New Destinations</p>
+                      </div>
+                      <div className="goals-item">
+                          <h3>{staticUserData.travelGoals.travelMiles}</h3>
+                          <p>Miles to Travel</p>
+                      </div>
+                  </div> */}
       </div>
     </div>
   );

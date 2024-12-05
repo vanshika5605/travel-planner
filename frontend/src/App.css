@@ -69,3 +69,26 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.2rem !important;
     background: none !important;
 }
+
+.profile-page button, .trip-itinerary button , .packing-list-container button{
+  background-color: #c65d36  ;
+  color: white;
+  /* padding: 10px 15px; */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-page button {
+  height: 2rem;
+  padding: 0 0.5rem;
+}
+
+.trip-itinerary button {
+  height: 2.5rem;
+  padding: 0 1rem;
+}
+
+.trip-itinerary button:hover, .profile-page button:hover, .packing-list-container button:hover{
+  background-color: #d89075;
+}
