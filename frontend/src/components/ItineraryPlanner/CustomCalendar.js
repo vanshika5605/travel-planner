@@ -8,13 +8,13 @@ const CustomCalendar = ({holidays, longWeekends}) => {
 
   const tileClassName = ({ date }) => {
     const dateStr = date.toDateString();
-
     const today = new Date();
     if (dateStr === today.toDateString()) {
       return "custom-today";
     }
-
-    if (longWeekends.includes(dateStr)) {
+    console.log(new Date(dateStr).toISOString().split("T")[0])
+    if (longWeekends.includes(new Date(dateStr).toISOString().split("T")[0])) {
+      console.log("enetered")
       return "long-weekend";
     }
 

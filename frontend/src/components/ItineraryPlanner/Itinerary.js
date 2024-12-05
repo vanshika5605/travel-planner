@@ -115,17 +115,21 @@ const Itinerary = () => {
       <div className="trip-itinerary">
         <TripDetailsBox tripDetails={tripData}></TripDetailsBox>
         <div className="itinerary-details-box">
-          <ItineraryBox
-            itineraryData={itineraryData}
-            setItineraryData={setItineraryData}
-          ></ItineraryBox>
-          {/* Button to copy itinerary */}
-          <button onClick={copyToClipboard} className="copy-button">
-            Copy Itinerary to Clipboard
-          </button>
-          <button onClick={saveTrip} className="copy-button">
-            Save Trip
-          </button>
+          <div className="itinerary-container">
+            <ItineraryBox
+              itineraryData={itineraryData}
+              setItineraryData={setItineraryData}
+            ></ItineraryBox>
+            {/* Button to copy itinerary */}
+            <div className="itinerary-action-btn-section">
+              <button onClick={copyToClipboard} className="copy-button">
+                Copy Itinerary to Clipboard
+              </button>
+              <button onClick={saveTrip} className="copy-button">
+                Save Trip
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>

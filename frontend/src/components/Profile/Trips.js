@@ -22,13 +22,13 @@ const Trips = ({
         {title} {isVisible ? <span style={{ fontSize: '12px', lineHeight: '1' }}>▼</span> : <span style={{ fontSize: '12px', lineHeight: '1' }}>▶</span>}
       </h2>
       {isVisible && (
-        <>
+        <div className="trip-display-section">
           {tripsArray && tripsArray.length > 0 ? (
             tripsArray.map((trip) => (
               <div key={trip.id} className="trip-card">
                 <div>
                   <p><strong>Destination:</strong> {trip.destination}</p>
-                  <p><strong>Date:</strong> {trip.startDate}</p>
+                  <p><strong>Dates:</strong> {trip.startDate} - {trip.endDate}</p>
                 </div>
                 <div className="trip-button-section">
                   <PackingListButton
@@ -49,7 +49,7 @@ const Trips = ({
           ) : (
             <p>No {title.toLowerCase()}.</p>
           )}
-        </>
+        </div>
       )}
     </div>
   );

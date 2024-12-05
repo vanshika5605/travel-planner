@@ -13,7 +13,7 @@ public class packingListService {
     @Autowired
     packingListRepo mypackingListRepo;
     @Autowired
-    userItineraryService userItineraryService;
+    userItineraryService myUserItineraryService;
 
     public void saveList(PackingList packingList){
 
@@ -25,11 +25,11 @@ public class packingListService {
             packingList.set_id(existingPackingList.get_id());
             mypackingListRepo.save(packingList);
         }
-        Optional<UserItinerary> userItinerary = userItineraryService.getUserItinerary(tripId);
+        Optional<UserItinerary> userItinerary = myUserItineraryService.getUserItinerary(tripId);
         if(userItinerary.isPresent()) {
             UserItinerary userItineraryData = userItinerary.get();
             userItineraryData.setIsPackingListCreated(Boolean.TRUE);
-            userItineraryService.saveUserItinerary(userItineraryData);
+            myUserItineraryService.saveUserItinerary(userItineraryData);
         }
     }
 

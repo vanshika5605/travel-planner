@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +14,8 @@ import java.util.Optional;
 public class userDetailsService {
     @Autowired
     userDetailsRepo myUserDetailsRepo;
-
+    @Autowired
+    userItineraryService userItineraryService;
     public UserDetails validateUser(String email, String password){
         return myUserDetailsRepo.findByEmail(email)
                 .filter(user -> user.getPassword().equals(password)) // Validate password
@@ -43,19 +43,12 @@ public class userDetailsService {
 
     public AdminStatistics getAdminDetails() {
         AdminStatistics adminStatistics = new AdminStatistics();
-        adminStatistics.setTotalUsers(50);
-        adminStatistics.setNewUsers(10);
-        adminStatistics.setPastTrips(180);
-        adminStatistics.setUpcomingTrips(20);
-
-        List<AdminStatistics.PopularDestinations> popularDestinations = new ArrayList<>();
-        AdminStatistics.PopularDestinations popularDestinations1 = new AdminStatistics.PopularDestinations(100, "Paris");
-        AdminStatistics.PopularDestinations popularDestinations2 = new AdminStatistics.PopularDestinations(75, "New York");
-        AdminStatistics.PopularDestinations popularDestinations3 = new AdminStatistics.PopularDestinations(42, "Kanpur");
-        popularDestinations.add(popularDestinations1);
-        popularDestinations.add(popularDestinations2);
-        popularDestinations.add(popularDestinations3);
-        adminStatistics.setPopularDestinations(popularDestinations);
+        adminStatistics.setTotalUsers((int) myUserDetailsRepo.count());
+        LocalDateTime date = LocalDateTime.now().minusDays(30);
+        adminStatistics.setNewUsers(myUserDetailsRepo.getRecentUsers(date).size());
+        adminStatistics.setPastTrips(userItineraryService.pastTrips());
+        adminStatistics.setUpcomingTrips(userItineraryService.upcomingTrips());
+        adminStatistics.setPopularDestinations(userItineraryService.getPopularDestination());
 
         return adminStatistics;
     }
