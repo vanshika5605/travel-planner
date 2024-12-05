@@ -30,8 +30,8 @@ const PackingList = () => {
   );
 
   const [showAddItemModal, setShowAddItemModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Fetch trip details and packing list if not passed via navigation state
   useEffect(() => {
@@ -65,29 +65,33 @@ const PackingList = () => {
     fetchTripDetails();
   }, [tripId, location.state, navigate]);
 
-  const toggleItemPacked = (category, itemId) => {
+  const toggleItemPacked = (category, name) => {
     setPackingList((current) => ({
       ...current,
       [category]: current[category].map((item) =>
-        item.id === itemId ? { ...item, packed: !item.packed } : item
+        item.name === name ? { ...item, packed: !item.packed } : item
       ),
     }));
   };
 
-  // Pagination logic
-  const paginatedItems = useMemo(() => {
-    const allItems = Object.entries(packingList).flatMap(([category, items]) =>
+  const flattenedItems = useMemo(() => {
+    console.log(Object.entries(packingList).flatMap(([category, items]) =>
+      items.map((item) => ({ ...item, category }))
+    ))
+    return Object.entries(packingList).flatMap(([category, items]) =>
       items.map((item) => ({ ...item, category }))
     );
+  }, [packingList]);
 
+  const paginatedItems = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-
+    console.log(flattenedItems.slice(startIndex, endIndex))
     return {
-      items: allItems.slice(startIndex, endIndex),
-      totalPages: Math.ceil(allItems.length / itemsPerPage),
+      items: flattenedItems.slice(startIndex, endIndex),
+      totalPages: Math.ceil(flattenedItems.length / itemsPerPage),
     };
-  }, [packingList, currentPage]);
+  }, [flattenedItems, currentPage]);
 
   const calculatePackedItemsCount = () => {
     let packedCount = 0;
@@ -130,54 +134,48 @@ const PackingList = () => {
           />
         </div>
 
-        {Object.entries(packingList).map(([category, items]) => (
-          <div key={category} className="packing-category">
-            <h4 className="category-title">{category}</h4>
-            <div className="category-items">
-              {items
-                .slice(
-                  (currentPage - 1) * itemsPerPage,
-                  currentPage * itemsPerPage
-                )
-                .map((item) => (
-                  <label
-                    key={item.name}
-                    className={`item-checkbox ${item.packed ? "packed" : ""}`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={item.packed}
-                      onChange={() => toggleItemPacked(category, item.id)}
-                    />
-                    {item.name} (Qty: {item.quantity})
-                  </label>
-                ))}
-            </div>
-          </div>
-        ))}
+        {Object.entries(packingList)
+  .filter(([category]) => 
+    paginatedItems.items.some(item => item.category === category)
+  )
+  .map(([category, items]) => (
+    <div key={category} className="packing-category">
+      <h4 className="category-title">{category}</h4>
+      <div className="category-items">
+        {paginatedItems.items
+          .filter(item => item.category === category)
+          .map((item) => (
+            <label
+              key={`${category}-${item.name}`}
+              className={`item-checkbox ${item.packed ? "packed" : ""}`}
+            >
+              <input
+                type="checkbox"
+                checked={item.packed}
+                onChange={() => toggleItemPacked(category, item.name)}
+              />
+              {item.name} (Qty: {item.quantity})
+            </label>
+          ))}
+      </div>
+    </div>
+  ))}
 
-        <div className="list-actions">
-          <button
-            className="add-item-btn"
-            onClick={() => setShowAddItemModal(true)}
-          >
-            + Add New Item
-          </button>
-
-          <div className="pagination">
-            {[...Array(paginatedItems.totalPages)].map((_, index) => (
-              <button
-                key={index + 1}
-                className={`page-btn ${
-                  index + 1 === currentPage ? "active" : ""
-                }`}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+<div className="list-actions">
+        <div className="pagination">
+          {[...Array(paginatedItems.totalPages)].map((_, index) => (
+            <button
+              key={index + 1}
+              className={`page-btn ${
+                index + 1 === currentPage ? "active" : ""
+              }`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
         </div>
+      </div>
 
         <div className="list-summary">
           <span>
