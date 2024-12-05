@@ -1,3 +1,4 @@
+import requests
 import os
 import json
 from huggingface_hub import InferenceClient
@@ -9,19 +10,68 @@ class PackingListService:
     
     def __init__(self, huggingface_client: HuggingFaceClient):
         self.huggingface_client = huggingface_client  # Updated to use the new HuggingFaceClient
+    
+    def fetch_trip_and_user_details(self, api_url):
+        """
+        Fetch trip and user details from an external API.
+
+        Args:
+            api_url (str): The API URL to fetch data from.
+
+        Returns:
+            tuple: A tuple containing gender, location, and itinerary details.
+
+        Raises:
+            PackingListGenerationError: If the API call fails or data is missing.
+        """
+        try:
+            response = requests.get(api_url)
+            if response.status_code != 200:
+                raise PackingListGenerationError(f"Failed to fetch data. Status code: {response.status_code}")
+
+            data = response.json()
+            if not data.get("success"):
+                raise PackingListGenerationError("API returned a failure response.")
+
+            # Extract required fields
+            user_details = data["data"]["userDetails"]
+            user_itinerary = data["data"]["userItinerary"]
+
+            gender = user_details.get("gender")
+            location = user_details.get("location")
+            itinerary = {
+                "destination": user_itinerary.get("destination"),
+                "mood": user_itinerary.get("mood"),
+                "groupType": user_itinerary.get("groupType"),
+                "startDate": user_itinerary.get("startDate"),
+                "endDate": user_itinerary.get("endDate"),
+                "activities": user_itinerary["tripDetails"]["itinerary"],
+                "budget": {
+                    "food": user_itinerary["budget"].get("food"),
+                    "travel": user_itinerary["budget"].get("travel")
+                }
+            }
+
+            return gender, location, itinerary
+
+        except Exception as e:
+            raise PackingListGenerationError(f"Error fetching trip and user details: {str(e)}")
 
     def generate_packing_list(self, gender, itinerary):
         """
-        Generate a packing list based on the provided itinerary and gender.
+        Generate a packing list based on data fetched from an API.
 
         Args:
-            gender (str): Gender for generating a packing list.
-            itinerary (dict): Travel itinerary to base the packing list on.
+            api_url (str): The API URL to fetch trip and user details.
 
         Returns:
             dict: The generated packing list as a Python dictionary.
         """
         try:
+            # Fetch data from API
+            api_url = "https://example.com/api/v1/tripAndUserDetails/TB-x6W0"
+            gender, location, itinerary = self.fetch_trip_and_user_details(api_url)
+            
             # Create a formatted message to send to the Hugging Face API
             list_message = self._create_packing_list_message(gender, itinerary)
 
@@ -46,7 +96,15 @@ class PackingListService:
         Returns:
             str: Formatted message to send to the Hugging Face API.
         """
-        list_message = f"""Itinerary: {str(itinerary)}
+        list_message = f"""Itinerary Details:
+        Destination: {itinerary['destination']}
+        Mood: {itinerary['mood']}
+        Group Type: {itinerary['groupType']}
+        Start Date: {itinerary['startDate']}
+        End Date: {itinerary['endDate']}
+        Activities: {itinerary['activities']}
+        Food Budget: {itinerary['budget']['food']}
+        Travel Budget: {itinerary['budget']['travel']}
         Generate a packing list based on the above itinerary inputs for a {gender}:
 
         The packing list should include essentials like documents, clothing, toiletries, personal items, first aid, electronics, and miscellaneous items based on the destination, weather, and number of days.
