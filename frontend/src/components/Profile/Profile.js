@@ -7,7 +7,7 @@ import PackingListButton from "./PackingListButton";
 
 const Profile = ({ userData }) => {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState({});
   const [trips, setTrips] = useState({});
   const [generatingPackingListForTripId, setGeneratingPackingListForTripId] =
     useState(null);
@@ -62,6 +62,32 @@ const Profile = ({ userData }) => {
     }
   };
 
+  const handleViewItinerary = async (trip) => {
+    try {
+      // Set loading state for the specific trip
+      setLoading(prev => ({ ...prev, [trip.id]: true }));
+
+      // Assuming you have an API endpoint to fetch trip details
+      const response = await backend.getTripDetails(trip.tripId);
+      console.log(response.data)
+      // Navigate to itinerary page with trip data
+      navigate('/itinerary', {
+        state: {
+          tripData: response.data.data,
+          userId: userData.id,
+          itineraryData: response.data.data.tripDetails
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching itinerary:', error);
+      // Optionally show an error message to the user
+      alert('Failed to load itinerary. Please try again.');
+    } finally {
+      // Clear loading state
+      setLoading(prev => ({ ...prev, [trip.id]: false }));
+    }
+  };
+
   return (
     <div className="profile-page">
       {/* Main Profile Section */}
@@ -91,6 +117,7 @@ const Profile = ({ userData }) => {
           trips={trips}
           handleGeneratePackingList={handleGeneratePackingList}
           generatingPackingListForTripId={generatingPackingListForTripId}
+          handleViewItinerary={handleViewItinerary}
         />
       </div>
 
@@ -117,7 +144,20 @@ const Profile = ({ userData }) => {
                       <li key={index}>{activity}</li>
                     ))}
                 </ul>
-                <PackingListButton handleGeneratePackingList={handleGeneratePackingList} trip={trip} generatingPackingListForTripId={generatingPackingListForTripId}></PackingListButton>
+                <div className="trip-button-section">
+                  <PackingListButton
+                    handleGeneratePackingList={handleGeneratePackingList}
+                    trip={trip}
+                    generatingPackingListForTripId={generatingPackingListForTripId}
+                  />
+                  <button 
+                    className="generate-button"
+                    onClick={() => handleViewItinerary(trip)}
+                    disabled={loading[trip.id]}
+                  >
+                    {loading[trip.id] ? 'Loading...' : 'View Itinerary'}
+                  </button>
+                </div>
               </div>
             ))
           ) : (

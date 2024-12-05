@@ -9,37 +9,12 @@ const Trips = ({
   trips,
   handleGeneratePackingList,
   generatingPackingListForTripId,
+  handleViewItinerary
 }) => {
   const navigate = useNavigate();
   const [isUpcomingTripsVisible, setIsUpcomingTripsVisible] = useState(true);
   const [isPastTripsVisible, setIsPastTripsVisible] = useState(false);
   const [loading, setLoading] = useState({});
-
-  const handleViewItinerary = async (trip) => {
-    try {
-      // Set loading state for the specific trip
-      setLoading(prev => ({ ...prev, [trip.id]: true }));
-
-      // Assuming you have an API endpoint to fetch trip details
-      const response = await backend.getTripDetails(trip.tripId);
-      console.log(response.data)
-      // Navigate to itinerary page with trip data
-      navigate('/itinerary', {
-        state: {
-          tripData: response.data.data,
-          userId: userData.id,
-          itineraryData: response.data.data.tripDetails
-        }
-      });
-    } catch (error) {
-      console.error('Error fetching itinerary:', error);
-      // Optionally show an error message to the user
-      alert('Failed to load itinerary. Please try again.');
-    } finally {
-      // Clear loading state
-      setLoading(prev => ({ ...prev, [trip.id]: false }));
-    }
-  };
 
   const renderTripSection = (tripsArray, title, isVisible, toggleVisibility) => (
     <div className="trips-section">
