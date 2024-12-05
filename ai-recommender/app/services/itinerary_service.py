@@ -40,65 +40,12 @@ class ItineraryService:
             # Prepare message for Hugging Face API
             message = self._create_itinerary_prompt(destination, travel_type, budget, start_date, end_date, start_point, note)
             print("HELLO1")
-            return {
-                "summary": "A 2-day family trip to Boston, exploring the city's iconic landmarks, enjoying local food, and taking a scenic harbor cruise.",
-                "itinerary": [
-                    {
-                    "date": "2024-12-24",
-                    "day": "Day 1",
-                    "weekDay": "Wednesday",
-                    "activities": [
-                        {
-                        "category": "Travel",
-                        "activity": "Drive from Amherst to Boston ( approx. 2 hours)"
-                        },
-                        {
-                        "category": "Accommodation",
-                        "activity": "Check-in at a budget-friendly hotel in Boston ( approx. 20 USD per night)"
-                        },
-                        {
-                        "category": "Sightseeing",
-                        "activity": "Visit the Boston Common (free admission)"
-                        },
-                        {
-                        "category": "Shopping",
-                        "activity": "Explore the Quincy Market (free admission)"
-                        },
-                        {
-                        "category": "Food",
-                        "activity": "Grab a slice of pizza at a local pizzeria ( approx. 10 USD per person)"
-                        }
-                    ]
-                    },
-                    {
-                    "date": "2024-12-25",
-                    "day": "Day 2",
-                    "weekDay": "Thursday",
-                    "activities": [
-                        {
-                        "category": "Sightseeing",
-                        "activity": "Take a scenic harbor cruise ( approx. 20 USD per person)"
-                        },
-                        {
-                        "category": "Food",
-                        "activity": "Enjoy a family-friendly breakfast at a local café ( approx. 15 USD per person)"
-                        }
-                    ]
-                    }
-                ],
-                "budget": {
-                    "activities": 50,
-                    "miscellaneous": 10,
-                    "accommodation": 40,
-                    "food": 35,
-                    "travel": 5
-                }
-                }
-
+           
             # Generate itinerary from Hugging Face service
             response_text = ""
             for response in self.huggingface_client.chat_completion([{"role": "user", "content": message}]):
                 if response:
+                    print(response)
                     # Assuming the response has a 'choices' field with 'delta' containing the content
                     delta = response.get("choices", [{}])[0].get("delta", {}).get("content", "")
                     response_text += delta

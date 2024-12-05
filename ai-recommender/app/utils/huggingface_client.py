@@ -58,6 +58,7 @@ class HuggingFaceClient:
 
         try:
             response = requests.post(self.api_url, headers=self.headers, json=payload, stream=stream)
+            print(response)
             if response.status_code != 200:
                 raise Exception(f"Request failed: {response.status_code} {response.text}")
 
