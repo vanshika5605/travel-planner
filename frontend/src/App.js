@@ -1,18 +1,25 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import Profile from './components/Profile/Profile';
-import Plan from './components/ItineraryPlanner/Plan';
-import Navbar from './components/Utils/Navbar';
-import Home from './components/Home/Home';
-import SignUp from './components/SignUp/SignUp';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Loader from './components/Utils/Loader';  // Import the loader component
-import backend from './components/Utils/backend';
-import Footer from './components/Utils/Footer';
-import PackingList from './components/PackingList/PackingList';
+import React, { useEffect, useState } from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import "./App.css";
+import AdminPage from "./components/AdminPage/AdminPage";
+import Home from "./components/Home/Home";
+import Plan from "./components/ItineraryPlanner/Plan";
+import Itinerary from "./components/ItineraryPlanner/Itinerary";
+import PackingList from "./components/PackingList/PackingList";
+import Profile from "./components/Profile/Profile";
+import SignUp from "./components/SignUp/SignUp";
+import backend from "./components/Utils/backend";
+import Footer from "./components/Utils/Footer";
+import Loader from "./components/Utils/Loader"; // Import the loader component
+import Navbar from "./components/Utils/Navbar";
+// import { useNavigate } from "react-router-dom";
 
 const App = () => {
-  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +29,7 @@ const App = () => {
   const [longWeekends, setLongWeekends] = useState([]);
   const [rates, setRates] = useState({});
   const [currencies, setCurrencies] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const fetchHolidays = async () => {
     try {
@@ -85,6 +93,10 @@ const App = () => {
     }
   };
 
+  // useEffect(() => {
+  //   navigate("/"); // Redirect to home route on refresh
+  // }, [navigate]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false); // Hide the loader after 3 seconds (for example)
@@ -108,49 +120,70 @@ const App = () => {
             setPassword={setPassword}
             userData={userData}
             setUserData={setUserData}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
           />
         )}
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route
-                  path="/signup"
-                  element={
-                    <SignUp
-                      isLoggedIn={isLoggedIn}
-                      setIsLoggedIn={setIsLoggedIn}
-                      userId={userId}
-                      setUserId={setUserId}
-                      setUserData={setUserData}
-                    />
-                  }
+              path="/signup"
+              element={
+                <SignUp
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                  userId={userId}
+                  setUserId={setUserId}
+                  setUserData={setUserData}
                 />
+              }
+            />
             {isLoggedIn ? (
-              <>
-                <Route path="/profile" element={<Profile userData={userData} />} />
-                <Route
-                  path="/plan"
-                  element={
-                    <Plan
-                      isLoggedIn={isLoggedIn}
-                      userId={userId}
-                      holidays={holidays}
-                      longWeekends={longWeekends}
-                      rates={rates}
-                      currencies={currencies}
-                    />
-                  }
-                />
-                <Route path="/packing-list" element={<PackingList />} />
-              </>
+              !isAdmin ? (
+                <>
+                  <Route
+                    path="/profile"
+                    element={<Profile userData={userData} />}
+                  />
+                  <Route
+                    path="/plan"
+                    element={
+                      <Plan
+                        isLoggedIn={isLoggedIn}
+                        userId={userId}
+                        holidays={holidays}
+                        longWeekends={longWeekends}
+                        rates={rates}
+                        currencies={currencies}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/packing-list/:tripId"
+                    element={<PackingList />}
+                  />
+                  <Route
+                    path="/itinerary"
+                    element={<Itinerary/>}
+                  />
+                </>
+              ) : (
+                <>
+                  <Route
+                    path="/admin"
+                    element={<AdminPage setIsAdmin={setIsAdmin} />}
+                  />
+                </>
+              )
             ) : (
               <></>
             )}
+            <Route path="*" element={<Navigate to="/" />} />{" "}
+            {/* Redirects all undefined routes */}
           </Routes>
         </div>
-        <div>
           <Footer></Footer>
-        </div>
       </Router>
     </>
   );

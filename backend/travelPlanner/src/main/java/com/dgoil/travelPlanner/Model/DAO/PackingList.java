@@ -15,16 +15,26 @@ import java.util.List;
 public class PackingList {
     @Id
     private String _id;
-    private String email;
-    private List<String> toPackList;
     private String tripID;
-    private List<SuggestedList> suggestedList;
+    private PackingObj packingList;
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class SuggestedList{
-        private String item;
-        private String priority;
+    public static class PackingObj{
+        private List<Item> essentialDocuments;
+        private List<Item> clothing;
+        private List<Item> toiletries;
+        private List<Item> electronics;
+        private List<Item> miscellaneous;
+
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class Item{
+            private String name;
+            private Integer quantity;
+            private Boolean packed;
+        }
     }
 }

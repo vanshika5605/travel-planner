@@ -1,6 +1,7 @@
 package com.dgoil.travelPlanner.Controller;
 
 import com.dgoil.travelPlanner.Model.DAO.UserDetails;
+import com.dgoil.travelPlanner.Model.DTO.AdminStatistics;
 import com.dgoil.travelPlanner.Model.DTO.ApiResponse;
 import com.dgoil.travelPlanner.Model.DTO.LoginDetails;
 import com.dgoil.travelPlanner.Service.userDetailsService;
@@ -54,10 +55,17 @@ public class userDetailsController {
         }
     }
 
+    @GetMapping("/admin/statistics")
+    public ResponseEntity<ApiResponse<AdminStatistics>> getAdminDetails() {
+        AdminStatistics adminStatistics = myUserDetailsService.getAdminDetails();
+        ApiResponse<AdminStatistics> response = new ApiResponse<AdminStatistics>(true, adminStatistics, null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/getUser/{emailId}")
-    public ResponseEntity<ApiResponse<Optional<UserDetails>>> getUser(@PathVariable(required=false) String emailId) {
+    public ResponseEntity<ApiResponse<Optional<UserDetails>>> getUser(@PathVariable String emailId) {
         try {
-            System.out.println("Received emailId: " + emailId);
+
             Optional<UserDetails> data = myUserDetailsService.getUser(emailId);
 
             // Return success response
@@ -71,7 +79,6 @@ public class userDetailsController {
 
         } catch (IllegalArgumentException e) {
             // Return error response
-            System.out.println("Received emailId: " + emailId);
             ApiResponse<Optional<UserDetails>> response = new ApiResponse<Optional<UserDetails>>(false, Optional.empty(), e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }

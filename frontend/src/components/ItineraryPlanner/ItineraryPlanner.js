@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import backend from "../Utils/backend";
-import Itinerary from "./Itinerary";
-import "./ItineraryPlanner.css"; // Import the CSS file
+import axios from "axios"; // Import axios
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import "./ItineraryPlanner.css";
 import ItineraryPlannerForm from "./ItineraryPlannerForm";
-import TripDetailsBox from "./TripDetailsBox";
 
 const initialData = {
   summary: "",
@@ -36,80 +35,54 @@ const initialData = {
 };
 
 const ItineraryPlanner = ({ userId, formType }) => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
   const [itineraryData, setItineraryData] = useState(initialData);
-  const [itineraryGenerated, setItineraryGenerated] = useState(false);
   const [formData, setFormData] = useState({
     destination: "",
     startDate: "",
     endDate: "",
     budget: "",
-    vacationType: "relaxed",
     groupType: "solo",
     customDetails: "",
   });
 
-  const getItinerary = () => {
-    //call api
-    setItineraryGenerated(true);
-  };
-
-  const saveTrip = async() => {
-    let tripData = { ...formData, email: userId, tripDetails: itineraryData };
+  const getItinerary = async () => {
     try {
-      const response = await backend.saveTrip(tripData);
-      if (response.status === 200) {
-        console.log("Trip saved");
-      }
-    } catch (error) {
-      if (error.response) {
-        switch (error.response.status) {
-          case 500:
-            setErrorMessage("Internal server error. Please try again later.");
-            break;
-          default:
-            setErrorMessage("An unknown error occurred.");
+      // Call API to generate itinerary
+      // const response = await axios.post('/api/generate-itinerary', {
+      //   userId: userId,
+      //   ...formData
+      // });
+
+      // // Update local state with API response
+      // const newItineraryData = response.data;
+      // setItineraryData(newItineraryData);
+
+      // Navigate to itinerary route with data in location state
+      navigate('/itinerary', {
+        state: {
+          tripData: formData,
+          userId: userId,
+          itineraryData: itineraryData
         }
-      } else {
-        setErrorMessage("Error: Could not connect to the server.");
-      }
+      });
+
+    } catch (error) {
+      console.error('Error generating itinerary:', error);
+      // Optionally handle error (show toast, set error state, etc.)
+      // For example:
+      // toast.error('Failed to generate itinerary. Please try again.');
     }
   };
 
   return (
     <>
-      {!itineraryGenerated ? (
-        <>
-          <ItineraryPlannerForm
-            formType={formType}
-            getItinerary={getItinerary}
-            formData={formData}
-            setFormData={setFormData}
-          ></ItineraryPlannerForm>
-        </>
-      ) : (
-        <>
-          {errorMessage && (
-            <div className="alert alert-danger" role="alert">
-              {errorMessage}
-            </div>
-          )}
-          <h1>Itinerary</h1>
-
-          <div className="trip-itinerary">
-            <TripDetailsBox tripDetails={formData}></TripDetailsBox>
-            <div>
-              <Itinerary
-                itineraryData={itineraryData}
-                setItineraryData={setItineraryData}
-              ></Itinerary>
-              <button onClick={saveTrip} className="copy-button">
-                Save Trip
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+      <ItineraryPlannerForm
+        formType={formType}
+        getItinerary={getItinerary}
+        formData={formData}
+        setFormData={setFormData}
+      />
     </>
   );
 };

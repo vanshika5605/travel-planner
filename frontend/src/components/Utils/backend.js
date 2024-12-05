@@ -27,7 +27,23 @@ const saveTrip = (formData) => {
 }
 
 const getTrips = (email) => {
-  return axios.get(CONNECTION_URL + '/getTripDetails?email=' + email);
+  return axios.get(CONNECTION_URL + '/user/tripDetails/' + email);
+}
+
+const getUserStatistics = () => {
+  return axios.get(CONNECTION_URL + '/admin/statistics');
+}
+
+const getPackingList = (tripId) => {
+  return axios.get(CONNECTION_URL + '/getList/' + tripId);
+}
+
+const savePackingList = (packingList) => {
+  return axios.post(CONNECTION_URL + '/saveList', packingList);
+}
+
+const getTripDetails = (tripId) => {
+  return axios.get(CONNECTION_URL + '/getItinerary/' + tripId);
 }
 
 const backend = {
@@ -37,7 +53,11 @@ const backend = {
   getHolidays,
   getExchangeRates,
   saveTrip,
-  getTrips
+  getTrips,
+  getUserStatistics,
+  getPackingList,
+  savePackingList,
+  getTripDetails
 };
 
 export default backend;

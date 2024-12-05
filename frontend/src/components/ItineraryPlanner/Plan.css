@@ -141,13 +141,13 @@
 /* Left column */
 .leftcolumn {
     float: left;
-    width: 75% !important;
+    width: 70% !important;
   }
   
   /* Right column */
   .rightcolumn {
     float: left;
-    width: 25% !important;
+    width: 30% !important;
     padding-left: 20px;
   }
   
