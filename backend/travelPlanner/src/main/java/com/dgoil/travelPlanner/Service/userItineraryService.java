@@ -3,16 +3,19 @@ package com.dgoil.travelPlanner.Service;
 import ch.qos.logback.core.util.StringUtil;
 import com.dgoil.travelPlanner.Model.DAO.UserDetails;
 import com.dgoil.travelPlanner.Model.DAO.UserItinerary;
+import com.dgoil.travelPlanner.Model.DTO.AdminStatistics;
 import com.dgoil.travelPlanner.Model.DTO.UserTripData;
 import com.dgoil.travelPlanner.Model.DTO.UserTripsDetails;
 import com.dgoil.travelPlanner.Repository.userItineraryRepo;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class userItineraryService {
     @Autowired
     userItineraryRepo myUserItineraryRepo;
+    @Lazy
     @Autowired
     userDetailsService userDetailsService;
 
@@ -48,6 +52,17 @@ public class userItineraryService {
 
         return userTripData;
     }
+    public Integer pastTrips() {
+        return myUserItineraryRepo.getPastTrips(LocalDate.now().toString()).size();
+    }
+
+    public Integer upcomingTrips() {
+        return myUserItineraryRepo.getUpcomingTrips(LocalDate.now().toString()).size();
+    }
+
+    public List<AdminStatistics.PopularDestinations> getPopularDestination() {
+        return myUserItineraryRepo.getPopularDestination();
+    }
 
     public void saveUserItinerary(UserItinerary userItinerary){
         if(StringUtils.isEmpty(userItinerary.getTripID())) {
@@ -57,8 +72,9 @@ public class userItineraryService {
         } else {
             Optional<UserItinerary> existingItinerary = myUserItineraryRepo.findByTripID(userItinerary.getTripID());
             if (existingItinerary.isPresent()) {
-                userItinerary.set_id(existingItinerary.get().get_id());
-                myUserItineraryRepo.save(userItinerary);
+                UserItinerary existingItinerary1 = existingItinerary.get();
+                existingItinerary1.setTripDetails(userItinerary.getTripDetails());
+                myUserItineraryRepo.save(existingItinerary1);
                 log.info("Successfully updated UserItinerary with TripID: {}", userItinerary.getTripID());
             } else {
                 log.warn("No existing UserItinerary found with TripID: {}", userItinerary.getTripID());
