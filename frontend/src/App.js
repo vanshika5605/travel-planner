@@ -33,49 +33,60 @@ const App = () => {
 
   const fetchHolidays = async () => {
     try {
-      const response = await backend.getHolidays();
-      setHolidays(response.data);
-
+      const response1 = await backend.getHolidays('2024');
+      const response2 = await backend.getHolidays('2025');
+      const response = [...response1.data, ...response2.data]
+      setHolidays(response);
       // Determine long weekends
-      const longWeekendDates = getLongWeekends(response.data);
+      const longWeekendDates = findLongWeekends(response);
       setLongWeekends(longWeekendDates);
     } catch (error) {
       console.error("Error fetching holidays:", error);
     }
   };
 
-  const getLongWeekends = (holidays) => {
-    const longWeekendDates = [];
-    holidays.forEach((holiday) => {
-      const holidayDate = new Date(holiday.date);
-      const dayOfWeek = holidayDate.getDay();
+  const findLongWeekends = (holidays) => {
+    // Convert holiday dates to a Set for quick lookup, maintaining UTC format
+    const holidayDates = new Set(holidays.map(holiday => holiday.date));
 
-      if (dayOfWeek === 5) {
-        const nextMonday = new Date(holidayDate);
-        nextMonday.setDate(holidayDate.getDate() + 3);
-        if (
-          holidays.some(
-            (h) => new Date(h.date).toDateString() === nextMonday.toDateString()
-          )
-        ) {
-          longWeekendDates.push(holidayDate.toDateString());
-        }
-      }
+    // Helper function to check if a date (in UTC) is a holiday
+    const isHoliday = (date) => {
+        const isoDate = date.toISOString().split("T")[0]; // Ensure UTC format
+        return holidayDates.has(isoDate);
+    };
 
-      if (dayOfWeek === 1) {
-        const prevFriday = new Date(holidayDate);
-        prevFriday.setDate(holidayDate.getDate() - 3);
-        if (
-          holidays.some(
-            (h) => new Date(h.date).toDateString() === prevFriday.toDateString()
-          )
-        ) {
-          longWeekendDates.push(holidayDate.toDateString());
+    // Calculate long weekends
+    const longWeekendDates = holidays.reduce((longWeekends, holiday) => {
+        const holidayDate = new Date(holiday.date); // Parse the date as UTC
+        const dayOfWeek = holidayDate.getUTCDay(); // Get the day of the week in UTC
+
+        if (dayOfWeek === 5) { // Friday
+            const saturday = new Date(holidayDate);
+            saturday.setUTCDate(holidayDate.getUTCDate() + 1); // Add one day
+            const sunday = new Date(holidayDate);
+            sunday.setUTCDate(holidayDate.getUTCDate() + 2); // Add two days
+            if (!isHoliday(saturday) && !isHoliday(sunday)) {
+                longWeekends.push(holiday.date); // Friday
+                longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
+                longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
+            }
+        } else if (dayOfWeek === 1) { // Monday
+            const sunday = new Date(holidayDate);
+            sunday.setUTCDate(holidayDate.getUTCDate() - 1); // Subtract one day
+            const saturday = new Date(holidayDate);
+            saturday.setUTCDate(holidayDate.getUTCDate() - 2); // Subtract two days
+            if (!isHoliday(sunday) && !isHoliday(saturday)) {
+                longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
+                longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
+                longWeekends.push(holiday.date); // Monday
+            }
         }
-      }
-    });
+
+        return longWeekends;
+    }, []);
+
     return longWeekendDates;
-  };
+};
 
   const fetchExchangeRates = async () => {
     try {
@@ -92,10 +103,6 @@ const App = () => {
       console.error("Error fetching exchange rates:", error);
     }
   };
-
-  // useEffect(() => {
-  //   navigate("/"); // Redirect to home route on refresh
-  // }, [navigate]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
