@@ -57,12 +57,17 @@ const categoryIcons = {
 
   const handleGeneratePackingList = async (trip) => {
     try {
+      console.log(trip)
       // Set the current trip as generating packing list
       setGeneratingPackingListForTripId(trip.tripId);
       let packingList;
       if (trip.isPackingListCreated) {
         const response = await backend.getPackingList(trip.tripId);
         packingList = response.data.data.packingList;
+      } else {
+        const response = await backend.generatePackingList({tripID: trip.tripId});
+        packingList = response.data.packingList
+        console.log(response)
       }
 
       navigate("/packing-list/${trip.tripId}", {

@@ -49,7 +49,7 @@ const getTripDetails = (tripId) => {
 }
 
 const generatePackingList = (formData) => {
-  return axios.post(CONNECTION_URL_2 + '/itinerary/create', formData);
+  return axios.post(CONNECTION_URL_2 + '/packingList/create', formData);
 }
 
 const generateItinerary = (formData) => {
