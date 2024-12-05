@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./Itinerary.css";
 import ItineraryBox from "./ItineraryBox";
@@ -7,6 +7,7 @@ import TripDetailsBox from "./TripDetailsBox";
 
 const Itinerary = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Extract data from location state with fallback
   const {
@@ -64,6 +65,7 @@ const Itinerary = () => {
       const response = await backend.saveTrip(tripDataNew);
       if (response.status === 200) {
         console.log("Trip saved");
+        navigate('/profile');
       }
     } catch (error) {
       if (error.response) {
