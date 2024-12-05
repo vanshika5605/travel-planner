@@ -29,7 +29,7 @@ public class packingListService {
         if(userItinerary.isPresent()) {
             UserItinerary userItineraryData = userItinerary.get();
             userItineraryData.setIsPackingListCreated(Boolean.TRUE);
-            myUserItineraryService.saveUserItinerary(userItineraryData);
+            myUserItineraryService.saveItinerary(userItineraryData);
         }
     }
 
