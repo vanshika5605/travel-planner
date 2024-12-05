@@ -10,8 +10,6 @@ import {
     Globe 
   } from 'lucide-react';
 
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
-import { scaleLinear } from "d3-scale";
 import { Bar } from 'react-chartjs-2';
 import { WorldMap } from "react-svg-worldmap";
 
@@ -170,7 +168,7 @@ const AdminPage = () => {
             <WorldMap color="teal" 
             value-suffix="people" 
             size="lg"
-            tooltipBgColor="blue"
+            tooltipBgColor="teal"
             data={userData}
             onHover={(country) => {
                 const countryInfo = userData.find(item => item.country === country.id);
