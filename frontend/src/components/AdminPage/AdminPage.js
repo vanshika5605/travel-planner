@@ -9,98 +9,30 @@ import {
     Map,
     Globe 
   } from 'lucide-react';
+
+import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { scaleLinear } from "d3-scale";
 import { Bar } from 'react-chartjs-2';
-// import { WorldMap } from "react-svg-worldmap";
-// import { Table } from "antd";
-// import "antd/dist/antd.min.css";
+import { WorldMap } from "react-svg-worldmap";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'; 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+// TopoJSON file for world map data
+const geoUrl =
+  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-// Bar Chart for Popular Travel Months
-const PopularMonthsChart = ({ data }) => {
-  const maxValue = Math.max(...data.map(d => d.count));
-
-  return (
-    <div className="flex flex-col space-y-2">
-      {data.map((month, index) => (
-        <div key={month.name} className="flex items-center">
-          <div className="w-24 text-sm">{month.name}</div>
-          <div 
-            className="bg-blue-500 h-6" 
-            style={{ 
-              width: `${(month.count / maxValue) * 100}%`,
-              minWidth: '10px'
-            }}
-          />
-          <span className="ml-2 text-sm">{month.count}</span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-// Country Heatmap
-const CountryHeatmap = ({ data }) => {
-  const maxValue = Math.max(...data.map(d => d.users));
-
-  const getColorGradient = (value) => {
-    const intensity = Math.min(
-      Math.floor((value / maxValue) * 8),
-      8
-    );
-    return `color-gradient-${intensity}`;
-  };
-
-  return (
-    <div className="country-heatmap">
-      {data.map((country) => (
-        <div
-          key={country.code}
-          className={`country-heatmap-cell ${getColorGradient(country.users)}`}
-          title={`${country.name}: ${country.users} users`}
-        />
-      ))}
-    </div>
-  );
-};
-
-// const BarChart = () => {
-//     const data = {
-//       labels: ["January", "February", "March", "April", "May", "June"],
-//       datasets: [
-//         {
-//           label: "Number of Trips",
-//           data: [10, 20, 30, 40, 50, 60],
-//           backgroundColor: "rgba(75, 192, 192, 0.6)",
-//           borderColor: "rgba(75, 192, 192, 1)",
-//           borderWidth: 1,
-//         },
-//       ],
-//     };
-  
-//     const options = {
-//       responsive: true,
-//       plugins: {
-//         legend: {
-//           position: "top",
-//         },
-//         title: {
-//           display: true,
-//           text: "Trips Per Month",
-//         },
-//       },
-//     };
-  
-//     return (
-//       <div style={{ width: "600px", height: "400px", margin: "0 auto" }}>
-//         <h3>Popular Travel Months</h3>
-//         <Bar data={data} options={options} />
-//       </div>
-//     );
-//   };
+const userData = [
+    { country: "cn", value: 100 },
+    { country: "in", value: 80 },
+    { country: "us", value: 120 },
+    { country: "id", value: 60 },
+    { country: "br", value: 70 },  
+    { country: "bd", value: 16 },  
+    { country: "ru", value: 176 },  
+    { country: "mx", value: 12 },
+  ];
 
 const AdminPage = () => {
   const [stats, setStats] = useState({
@@ -207,15 +139,7 @@ const AdminPage = () => {
               },
             ],
             }} />
-        {/* <div className="bar-chart">
-            <h3>Popular Travel Months</h3>
-            <Bar data={stats.popularMonths} />
-        </div> */}
         </div>
-          {/* <Map className="mb-4 text-blue-500" size={40} />
-          <h3 className="text-xl font-bold mb-4">Popular Travel Months</h3>
-          <PopularMonthsChart data={stats.popularMonths} /> */}
-
 
         {/* Popular Destinations */}
         <div className="stat-card stat-card-large">
@@ -241,11 +165,17 @@ const AdminPage = () => {
           </table>
         </div>
 
-        {/* Users Per Country Heatmap */}
-        <div className="stat-card stat-card-full">
-          <Globe className="mb-4 text-red-500" size={40} />
-          <h3 className="text-xl font-bold mb-4">Users Per Country</h3>
-          {/* <CountryHeatmap data={stats.usersByCountry} /> */}
+        <div className="world-map">
+            <h3>Users Per Country</h3>
+            <WorldMap color="teal" 
+            value-suffix="people" 
+            size="lg"
+            tooltipBgColor="blue"
+            data={userData}
+            onHover={(country) => {
+                const countryInfo = userData.find(item => item.country === country.id);
+                console.log(countryInfo); // Access the data for the hovered country
+              }}/>
         </div>
       </div>
     </div>
