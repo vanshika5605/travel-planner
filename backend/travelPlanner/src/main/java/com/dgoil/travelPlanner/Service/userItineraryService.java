@@ -83,6 +83,10 @@ public class userItineraryService {
         }
     }
 
+    public void saveItinerary(UserItinerary userItinerary) {
+        myUserItineraryRepo.save(userItinerary);
+    }
+
     public UserTripsDetails getUserTripDetails(String email) {
         if (StringUtils.isEmpty(email)) {
             log.warn("Email is null or empty. Cannot retrieve trip details.");
