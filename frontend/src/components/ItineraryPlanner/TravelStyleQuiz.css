@@ -1,9 +1,21 @@
-.quiz-section button{
-    color:#c65d36;
-    border: 1px solid #c65d36;
+.quiz-option-btn{
+    color:#c65d36 !important;
+    border: 1px solid #c65d36 !important;
 }
 
-.quiz-section button:hover{
-    color:white;
-    background-color:#c65d36;
+.quiz-option-btn:hover, .quiz-option-btn:focus-visible, .quiz-option-btn:active{
+    color:white !important;
+    background-color:#c65d36 !important ;
+    box-shadow: none !important;
 }
+
+.quiz-btn {
+    color:white !important;
+    background-color:#c65d36 !important ;
+}
+
+.quiz-btn:hover, .quiz-btn:focus-visible, .quiz-btn:active{
+    background-color: #d89075;
+    box-shadow: none !important;
+}
+

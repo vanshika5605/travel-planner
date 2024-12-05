@@ -16,7 +16,7 @@ const categoryIcons = {
   Travel: faPlane,
   Adventure: faHiking,
   Food: faUtensils,
-  Hotel: faBed,
+  Accommodation: faBed,
   Shopping: faCartShopping,
   Sightseeing: faVanShuttle,
 };
@@ -41,7 +41,6 @@ const ItineraryBox = ({ itineraryData, setItineraryData }) => {
   const handleNoteChange = (dayIndex, value) => {
     const newItinerary = [...itineraryData.itinerary];
     newItinerary[dayIndex].note = value;
-    console.log(newItinerary);
     setItineraryData({ ...itineraryData, itinerary: newItinerary });
   };
 

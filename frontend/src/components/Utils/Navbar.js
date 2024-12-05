@@ -103,6 +103,7 @@ const Navbar = ({
       <div className="container custom-nav">
         <Link className="navbar-brand" to="/">
           {/* <img className="logo-class" src="/logo.jpg" alt="Loading..." /> */}
+          <img className="logo-img" src="/images/logo.jpeg" alt="Logo"></img>
           <span className="main-app-name">Travel Planner </span>
         </Link>
         <div className="collapse navbar-collapse">

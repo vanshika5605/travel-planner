@@ -36,7 +36,7 @@ public class packingListController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             ApiResponse<PackingList> response = new ApiResponse<PackingList>(false, new PackingList(), e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 }

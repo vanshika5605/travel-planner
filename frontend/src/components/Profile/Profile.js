@@ -63,10 +63,12 @@ const categoryIcons = {
       if (trip.isPackingListCreated) {
         const response = await backend.getPackingList(trip.tripId);
         packingList = response.data.data.packingList;
+      } else {
+        const response = await backend.generatePackingList({tripID: trip.tripId});
+        packingList = response.data.packingList
       }
-      console.log(trip);
-      console.log(packingList);
-      navigate("/packing-list/${trip.tripId}", {
+
+      navigate('/packing-list/'+`${trip.tripId}`, {
         state: {
           tripDetails: trip,
           packingList: packingList,
@@ -87,7 +89,6 @@ const categoryIcons = {
 
       // Assuming you have an API endpoint to fetch trip details
       const response = await backend.getTripDetails(trip.tripId);
-      console.log(response.data);
       // Navigate to itinerary page with trip data
       navigate("/itinerary", {
         state: {

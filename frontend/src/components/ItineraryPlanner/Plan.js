@@ -11,7 +11,7 @@ const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
 
   // New function to handle going back to the initial screen
   const handleGoBack = () => {
-    alert("The generated itinerary will be lost");
+    // alert("The generated itinerary will be lost");
     setIsPlanModeOn(false);
     setPlanModeType("");
   };

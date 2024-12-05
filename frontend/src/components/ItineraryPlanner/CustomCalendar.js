@@ -12,9 +12,7 @@ const CustomCalendar = ({holidays, longWeekends}) => {
     if (dateStr === today.toDateString()) {
       return "custom-today";
     }
-    console.log(new Date(dateStr).toISOString().split("T")[0])
     if (longWeekends.includes(new Date(dateStr).toISOString().split("T")[0])) {
-      console.log("enetered")
       return "long-weekend";
     }
 
@@ -48,15 +46,15 @@ const CustomCalendar = ({holidays, longWeekends}) => {
   };
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center">Holiday Calendar</h1>
+    <div className="container">
+      <h2 className="text-center">Holiday Calendar</h2>
       <Calendar
         tileClassName={tileClassName}
         tileContent={tileContent}
         className="border rounded"
       />
       <div className="mt-3">
-        <h5>Legend:</h5>
+        {/* <h5>Legend:</h5> */}
         <ul className="list-unstyled">
           <li>
             <span className="legend-box long-weekend"></span> Long Weekend
