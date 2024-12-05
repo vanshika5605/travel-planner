@@ -153,3 +153,17 @@ body {
   display: grid;
   grid-gap: 0.5rem;
 }
+.collapsible-header {
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.collapsible-header:hover {
+    color: #1a73e8;
+}

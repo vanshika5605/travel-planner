@@ -31,7 +31,7 @@ const getTrips = (email) => {
 }
 
 const getUserStatistics = () => {
-  return axios.get(CONNECTION_URL + '/getUsers');
+  return axios.get(CONNECTION_URL + '/admin/statistics');
 }
 
 const getPackingList = (tripId) => {

@@ -40,18 +40,24 @@ const AdminPage = () => {
     pastTrips: 1245,
     popularMonths: [
       { name: 'January', count: 210 },
-      { name: 'February', count: 180 },
-      { name: 'March', count: 250 },
-      { name: 'April', count: 300 },
+      { name: 'February', count: 50 },
+      { name: 'March', count: 20 },
+      { name: 'April', count: 100 },
       { name: 'May', count: 275 },
-      { name: 'June', count: 320 }
+      { name: 'June', count: 320 },
+      { name: 'July', count: 70 },
+      { name: 'August', count: 18 },
+      { name: 'September', count: 10 },
+      { name: 'October', count: 30 },
+      { name: 'November', count: 120 },
+      { name: 'December', count: 320 }
     ],
     popularDestinations: [
-      { name: 'Paris', trips: 842, country: 'France' },
-      { name: 'Tokyo', trips: 723, country: 'Japan' },
-      { name: 'New York', trips: 651, country: 'USA' },
-      { name: 'London', trips: 589, country: 'UK' },
-      { name: 'Sydney', trips: 412, country: 'Australia' }
+      {count: 842, country: 'France' },
+      {count: 723, country: 'Japan' },
+      {count: 651, country: 'USA' },
+      {count: 589, country: 'UK' },
+      {count: 412, country: 'Australia' }
     ],
     usersByCountry: [
       { code: 'US', name: 'United States', users: 1500 },
@@ -71,16 +77,14 @@ const AdminPage = () => {
   useEffect(() => {
     const fetchAdminStats = async () => {
       try {
-        const fetchUserStatistics = async () => {
             const response = await backend.getUserStatistics(); 
-            const data = await response.json();
-            setStats(data);
-        };
+            // const data = await response.json();
+            console.log(response.data);
+            setStats({...stats, ...response.data.data});
       } catch (error) {
         console.error('Failed to fetch admin statistics', error);
       }
     };
-
     fetchAdminStats();
   }, []);
 
@@ -146,17 +150,15 @@ const AdminPage = () => {
           <table className="destinations-table">
             <thead>
               <tr>
-                <th>Destination</th>
-                <th>Country</th>
+                <th>City</th>
                 <th>Trips</th>
               </tr>
             </thead>
             <tbody>
               {stats.popularDestinations.map((dest) => (
-                <tr key={dest.name}>
-                  <td>{dest.name}</td>
-                  <td>{dest.country}</td>
-                  <td>{dest.trips}</td>
+                <tr>
+                  <td>{dest.destination}</td>
+                  <td>{dest.count}</td>
                 </tr>
               ))}
             </tbody>
