@@ -17,7 +17,6 @@ const Trips = ({userData}) => {
     const fetchTrips = async () => {
       const response = await backend.getTrips(userData.email); 
       // const data = await response.json();
-      console.log(response.data)
       setTrips(response.data.data);
     };
 
@@ -31,7 +30,6 @@ const Trips = ({userData}) => {
       let packingList;
       if(trip.isPackingListCreated){
         const response = await backend.getPackingList(trip.tripId);
-        console.log(response)
         packingList = response.data.data.packingList;
       }
 

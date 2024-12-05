@@ -1,10 +1,10 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
-import "./PackingList.css";
-import NewItemModal from "./NewItemModal";
-import PrintShare from "./PrintShare";
+import React, { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TripDetailsBox from "../ItineraryPlanner/TripDetailsBox";
 import backend from "../Utils/backend";
+import NewItemModal from "./NewItemModal";
+import "./PackingList.css";
+import PrintShare from "./PrintShare";
 
 const PackingList = () => {
   const { tripId } = useParams();
@@ -45,7 +45,7 @@ const PackingList = () => {
         } catch (error) {
           console.error("Error fetching trip details:", error);
           // Optionally show an error message or redirect
-          navigate('/trips');
+          navigate("/trips");
         }
       }
 
@@ -75,9 +75,6 @@ const PackingList = () => {
   };
 
   const flattenedItems = useMemo(() => {
-    console.log(Object.entries(packingList).flatMap(([category, items]) =>
-      items.map((item) => ({ ...item, category }))
-    ))
     return Object.entries(packingList).flatMap(([category, items]) =>
       items.map((item) => ({ ...item, category }))
     );
@@ -86,7 +83,6 @@ const PackingList = () => {
   const paginatedItems = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    console.log(flattenedItems.slice(startIndex, endIndex))
     return {
       items: flattenedItems.slice(startIndex, endIndex),
       totalPages: Math.ceil(flattenedItems.length / itemsPerPage),
@@ -105,9 +101,10 @@ const PackingList = () => {
     return { packedCount, totalCount };
   };
 
-  const handleSaveChanges = async () => {
+  const handleSaveChanges = async (tripId) => {
     try {
-      await backend.updatePackingList(tripId, packingList);
+      console.log(packingList)
+      const response = await backend.savePackingList({tripID: tripId, packingList: packingList});
       // Optionally show a success message
     } catch (error) {
       console.error("Error saving packing list:", error);
@@ -128,63 +125,57 @@ const PackingList = () => {
       <div className="packing-list-content">
         <div className="packing-list-header">
           <h2>🧳 Packing List for {tripDetails.destination}</h2>
-          <PrintShare
-            tripDetails={tripDetails}
-            packingList={packingList}
-          />
+          <PrintShare tripDetails={tripDetails} packingList={packingList} />
         </div>
 
         {Object.entries(packingList)
-  .filter(([category]) => 
-    paginatedItems.items.some(item => item.category === category)
-  )
-  .map(([category, items]) => (
-    <div key={category} className="packing-category">
-      <h4 className="category-title">{category}</h4>
-      <div className="category-items">
-        {paginatedItems.items
-          .filter(item => item.category === category)
-          .map((item) => (
-            <label
-              key={`${category}-${item.name}`}
-              className={`item-checkbox ${item.packed ? "packed" : ""}`}
-            >
-              <input
-                type="checkbox"
-                checked={item.packed}
-                onChange={() => toggleItemPacked(category, item.name)}
-              />
-              {item.name} (Qty: {item.quantity})
-            </label>
+          .filter(([category]) =>
+            paginatedItems.items.some((item) => item.category === category)
+          )
+          .map(([category, items]) => (
+            <div key={category} className="packing-category">
+              <h4 className="category-title">{category}</h4>
+              <div className="category-items">
+                {paginatedItems.items
+                  .filter((item) => item.category === category)
+                  .map((item) => (
+                    <label
+                      key={`${category}-${item.name}`}
+                      className={`item-checkbox ${item.packed ? "packed" : ""}`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={item.packed}
+                        onChange={() => toggleItemPacked(category, item.name)}
+                      />
+                      {item.name} (Qty: {item.quantity})
+                    </label>
+                  ))}
+              </div>
+            </div>
           ))}
-      </div>
-    </div>
-  ))}
 
-<div className="list-actions">
-        <div className="pagination">
-          {[...Array(paginatedItems.totalPages)].map((_, index) => (
-            <button
-              key={index + 1}
-              className={`page-btn ${
-                index + 1 === currentPage ? "active" : ""
-              }`}
-              onClick={() => setCurrentPage(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
+        <div className="list-actions">
+          <div className="pagination">
+            {[...Array(paginatedItems.totalPages)].map((_, index) => (
+              <button
+                key={index + 1}
+                className={`page-btn ${
+                  index + 1 === currentPage ? "active" : ""
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
         <div className="list-summary">
           <span>
             {packedCount} of {totalCount} items packed
           </span>
-          <button 
-            className="save-btn"
-            onClick={handleSaveChanges}
-          >
+          <button className="save-btn" onClick={() => handleSaveChanges(tripDetails.tripId)}>
             Save Changes
           </button>
         </div>

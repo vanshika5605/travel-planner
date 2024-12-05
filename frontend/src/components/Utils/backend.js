@@ -38,6 +38,10 @@ const getPackingList = (tripId) => {
   return axios.get(CONNECTION_URL + '/getList/' + tripId);
 }
 
+const savePackingList = (packingList) => {
+  return axios.post(CONNECTION_URL + '/saveList', packingList);
+}
+
 const backend = {
   getFeaturesList,
   addUser,
@@ -47,7 +51,8 @@ const backend = {
   saveTrip,
   getTrips,
   getUserStatistics,
-  getPackingList
+  getPackingList,
+  savePackingList
 };
 
 export default backend;
