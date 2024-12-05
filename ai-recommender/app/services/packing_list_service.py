@@ -24,6 +24,7 @@ class PackingListService:
         Raises:
             PackingListGenerationError: If the API call fails or data is missing.
         """
+        api_url = "https://39da-128-119-202-80.ngrok-free.app/api/v1/tripAndUserDetails/TB-x6W0"
         try:
             response = requests.get(api_url)
             if response.status_code != 200:
