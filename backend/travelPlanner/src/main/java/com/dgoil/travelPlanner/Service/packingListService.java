@@ -17,13 +17,20 @@ public class packingListService {
 
     public void saveList(PackingList packingList){
 
-        Optional<UserItinerary> userItinerary = userItineraryService.getUserItinerary(packingList.getTripID());
+        String tripId = packingList.getTripID();
+        PackingList existingPackingList = mypackingListRepo.getByTripId(tripId).orElse(null);
+        if(existingPackingList == null) {
+            mypackingListRepo.insert(packingList);
+        } else {
+            packingList.set_id(existingPackingList.get_id());
+            mypackingListRepo.save(packingList);
+        }
+        Optional<UserItinerary> userItinerary = userItineraryService.getUserItinerary(tripId);
         if(userItinerary.isPresent()) {
             UserItinerary userItineraryData = userItinerary.get();
             userItineraryData.setIsPackingListCreated(Boolean.TRUE);
             userItineraryService.saveUserItinerary(userItineraryData);
         }
-        mypackingListRepo.save(packingList);
     }
 
      public PackingList getList(String tripId) {

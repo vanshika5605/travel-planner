@@ -1,13 +1,16 @@
 package com.dgoil.travelPlanner.Service;
 
 import ch.qos.logback.core.util.StringUtil;
+import com.dgoil.travelPlanner.Model.DAO.UserDetails;
 import com.dgoil.travelPlanner.Model.DAO.UserItinerary;
+import com.dgoil.travelPlanner.Model.DTO.UserTripData;
 import com.dgoil.travelPlanner.Model.DTO.UserTripsDetails;
 import com.dgoil.travelPlanner.Repository.userItineraryRepo;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -22,12 +25,28 @@ import java.util.stream.Collectors;
 public class userItineraryService {
     @Autowired
     userItineraryRepo myUserItineraryRepo;
+    @Autowired
+    userDetailsService userDetailsService;
 
     public Optional<UserItinerary> getUserItinerary(String tripId) {
         if (tripId == null || tripId.isEmpty()) {
             throw new IllegalArgumentException("tripId parameter is missing or empty.");
         }
         return myUserItineraryRepo.findByTripID(tripId);
+    }
+
+    public UserTripData getUserTripData(String tripId) {
+        UserTripData userTripData = new UserTripData();
+        userTripData.setTripId(tripId);
+        UserItinerary userItinerary = getUserItinerary(tripId).orElseGet(null);
+        userTripData.setUserItinerary(userItinerary);
+        if(!ObjectUtils.isEmpty(userItinerary)) {
+            UserDetails userDetails =  userDetailsService.getUser(userItinerary.getEmail()).orElseGet(null);
+            userTripData.setEmail(userItinerary.getEmail());
+            userTripData.setUserDetails(userDetails);
+        }
+
+        return userTripData;
     }
 
     public void saveUserItinerary(UserItinerary userItinerary){
@@ -57,9 +76,9 @@ public class userItineraryService {
         List<UserItinerary> tripDetails = myUserItineraryRepo.getUserTrips(email);
         if (tripDetails == null || tripDetails.isEmpty()) {
             log.info("No trip details found for email: {}", email);
-            return new UserTripsDetails(email, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+            return new UserTripsDetails(email, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         }
-
+        UserTripsDetails userTripsDetails = new UserTripsDetails();
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -71,12 +90,21 @@ public class userItineraryService {
                 .filter(trip -> LocalDate.parse(trip.getStartDate(), formatter).isAfter(today))
                 .collect(Collectors.toList()));
 
-        List<UserTripsDetails.TripDetails> onGoingTripsDetails = mapToTripDetails(tripDetails.stream()
+        List<UserItinerary>  todayDetailsList = tripDetails.stream()
                 .filter(trip -> !LocalDate.parse(trip.getStartDate(), formatter).isAfter(today) &&
                         !LocalDate.parse(trip.getEndDate(), formatter).isBefore(today))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+        if(!todayDetailsList.isEmpty()) {
+            List<UserItinerary.TripDetails.Itinerary> todayDetails = todayDetailsList.get(0).getTripDetails().getItinerary().stream()
+                    .filter(trip -> LocalDate.parse(trip.getDate(), formatter).equals(today))
+                    .collect(Collectors.toList());
+            if(!todayDetails.isEmpty()) {
+                userTripsDetails.setTodayActivities(todayDetails.get(0).getActivities());
+            }
+        }
 
-        UserTripsDetails userTripsDetails = new UserTripsDetails();
+        List<UserTripsDetails.TripDetails> onGoingTripsDetails = mapToTripDetails(todayDetailsList);
+
         userTripsDetails.setEmail(email);
         userTripsDetails.setOnGoingTrips(onGoingTripsDetails);
         userTripsDetails.setPastTrips(pastTripsDetails);
@@ -93,6 +121,9 @@ public class userItineraryService {
             temp.setDestination(trip.getDestination());
             temp.setIsPackingListCreated(trip.getIsPackingListCreated());
             temp.setStartDate(convertToReadableDate(trip.getStartDate()));
+            temp.setEndDate(convertToReadableDate(trip.getEndDate()));
+            temp.setBudget(trip.getBudget());
+            temp.setGroupType(trip.getGroupType());
             return temp;
         }).collect(Collectors.toList());
     }
