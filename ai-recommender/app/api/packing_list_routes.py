@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
-from ..services.itinerary_service import ItineraryService
+from ..services.itinerary_service import PackingListService
 from ..utils.huggingface_client import HuggingFaceClient  # Ensure HuggingFaceClient is imported
-from ..utils.exceptions import ItineraryGenerationError
+from ..utils.exceptions import PackingListGenerationError
 
 packing_list_blueprint = Blueprint('packing-list', __name__, url_prefix='/api/v1/packingList')
 
@@ -26,13 +26,13 @@ def generate_packing_list():
         huggingface_client = HuggingFaceClient()
 
         # Create the ItineraryService instance with the HuggingFaceClient
-        itinerary_service = ItineraryService(huggingface_client)
+        packing_list_service = PackingListService(huggingface_client)
 
         # Generate itinerary
-        itinerary = itinerary_service.generate_itinerary(request.json)
-        return jsonify({"itinerary": itinerary})
+        packing_list = packing_list_service.generate_packing_list(api_url)
+        return jsonify({"packingList": packing_list})
 
-    except ItineraryGenerationError as e:
+    except PackingListGenerationError as e:
         return jsonify({"error": str(e)}), 500
     except Exception as e:
         return jsonify({"error": "Unexpected error occurred"}), 500
