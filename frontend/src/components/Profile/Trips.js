@@ -6,16 +6,7 @@ const Trips = ({userData}) => {
   const navigate = useNavigate();
   
   // State for trips (fetched from backend)
-  const [trips, setTrips] = useState({
-    upcomingTrips: [
-      { id: 1, destination: 'Paris, France', date: '2024-12-15', hasPackingList: true },
-      { id: 2, destination: 'Tokyo, Japan', date: '2025-03-05', hasPackingList: false },
-    ],
-    pastTrips: [
-      { id: 3, destination: 'London, UK', date: '2023-06-10', hasPackingList: true },
-      { id: 4, destination: 'Sydney, Australia', date: '2022-11-20', hasPackingList: true },
-    ],
-  });
+  const [trips, setTrips] = useState({});
 
   const [packingList, setPackingList] = useState({
     essentials: [
@@ -44,8 +35,9 @@ const Trips = ({userData}) => {
     // Simulate a backend API call
     const fetchTrips = async () => {
       const response = await backend.getTrips(userData.email); 
-      const data = await response.json();
-      setTrips(data);
+      // const data = await response.json();
+      console.log(response.data)
+      setTrips(response.data.data);
     };
 
     fetchTrips().catch((error) => console.error('Error fetching trips:', error));
@@ -83,12 +75,12 @@ const Trips = ({userData}) => {
   const renderTripSection = (tripsArray, title) => (
     <div className="trips-section">
       <h2>{title}</h2>
-      {tripsArray.length > 0 ? (
+      {tripsArray && tripsArray.length > 0 ? (
         tripsArray.map((trip) => (
           <div key={trip.id} className="trip-card">
             <div>
             <p><strong>Destination:</strong> {trip.destination}</p>
-            <p><strong>Date:</strong> {trip.date}</p>
+            <p><strong>Date:</strong> {trip.startDate}</p>
             </div>
             <button 
               onClick={() => handleGeneratePackingList(trip)}
@@ -97,7 +89,7 @@ const Trips = ({userData}) => {
             >
               {generatingPackingListForTripId === trip.id ? (
                 <div className="loader">Generating...</div>
-              ) : ( trip.hasPackingList?
+              ) : ( trip.isPackingListCreated?
                 'View Packing List':'Generate Packing List'
               )}
             </button>

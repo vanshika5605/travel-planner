@@ -27,7 +27,7 @@ const saveTrip = (formData) => {
 }
 
 const getTrips = (email) => {
-  return axios.get(CONNECTION_URL + '/getTripDetails?email=' + email);
+  return axios.get(CONNECTION_URL + '/user/tripDetails/' + email);
 }
 
 const getUserStatistics = () => {
