@@ -44,7 +44,7 @@ const ItineraryPlanner = ({ userId, formType }) => {
     startDate: "",
     endDate: "",
     budget: "",
-    vacationType: "relaxed",
+    // vacationType: "relaxed",
     groupType: "solo",
     customDetails: "",
   });

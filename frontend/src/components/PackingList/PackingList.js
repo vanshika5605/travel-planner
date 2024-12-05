@@ -141,7 +141,7 @@ const PackingList = () => {
                 )
                 .map((item) => (
                   <label
-                    key={item.id}
+                    key={item.name}
                     className={`item-checkbox ${item.packed ? "packed" : ""}`}
                   >
                     <input

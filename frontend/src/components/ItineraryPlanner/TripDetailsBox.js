@@ -19,9 +19,7 @@ const TripDetailsBox = ({ tripDetails }) => {
       <p><strong>Start Date:</strong> {startDate}</p>
       <p><strong>End Date:</strong> {endDate}</p>
       <p><strong>Budget:</strong> ${budget}</p>
-      <p><strong>Vacation Type:</strong> {vacationType}</p>
       <p><strong>Group Type:</strong> {groupType}</p>
-      <p><strong>Travellers:</strong> {travellers}</p>
     </div>
   );
 };

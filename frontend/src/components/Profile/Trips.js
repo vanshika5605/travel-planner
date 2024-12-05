@@ -8,25 +8,6 @@ const Trips = ({userData}) => {
   // State for trips (fetched from backend)
   const [trips, setTrips] = useState({});
 
-  const [packingList, setPackingList] = useState({
-    essentials: [
-      { id: "passport", name: "Passport", quantity: 1, packed: false },
-      { id: "wallet", name: "Wallet", quantity: 1, packed: false },
-      {
-        id: "phone-charger",
-        name: "Phone Charger",
-        quantity: 1,
-        packed: false,
-      },
-    ],
-    clothing: [
-      { id: "t-shirts", name: "T-Shirts", quantity: 3, packed: false },
-      { id: "underwear", name: "Underwear", quantity: 4, packed: false },
-      { id: "socks", name: "Socks", quantity: 3, packed: false },
-      { id: "pants", name: "Pants", quantity: 2, packed: false },
-    ],
-  });
-
   // State to track which trip is generating a packing list
   const [generatingPackingListForTripId, setGeneratingPackingListForTripId] = useState(null);
 
@@ -46,18 +27,19 @@ const Trips = ({userData}) => {
   const handleGeneratePackingList = async (trip) => {
     try {
       // Set the current trip as generating packing list
-      setGeneratingPackingListForTripId(trip.id);
-
-      // Call API to generate packing list
-      // const response = await backend.generatePackingList({ 
-      //   tripId: trip.id 
-      // });
+      setGeneratingPackingListForTripId(trip.tripId);
+      let packingList;
+      if(trip.isPackingListCreated){
+        const response = await backend.getPackingList(trip.tripId);
+        console.log(response)
+        packingList = response.data.data.packingList;
+      }
 
       // Parse the API response
       // const packingList = await response.json();
 
       // Navigate to packing list page with trip details and generated list
-      navigate(`/packing-list/${trip.id}`, { 
+      navigate(`/packing-list/${trip.tripId}`, { 
         state: { 
           tripDetails: trip, 
           packingList: packingList 
@@ -77,17 +59,17 @@ const Trips = ({userData}) => {
       <h2>{title}</h2>
       {tripsArray && tripsArray.length > 0 ? (
         tripsArray.map((trip) => (
-          <div key={trip.id} className="trip-card">
+          <div key={trip.tripId} className="trip-card">
             <div>
             <p><strong>Destination:</strong> {trip.destination}</p>
             <p><strong>Date:</strong> {trip.startDate}</p>
             </div>
             <button 
               onClick={() => handleGeneratePackingList(trip)}
-              disabled={generatingPackingListForTripId === trip.id}
+              disabled={generatingPackingListForTripId === trip.tripId}
               className='generate-button'
             >
-              {generatingPackingListForTripId === trip.id ? (
+              {generatingPackingListForTripId === trip.tripId ? (
                 <div className="loader">Generating...</div>
               ) : ( trip.isPackingListCreated?
                 'View Packing List':'Generate Packing List'

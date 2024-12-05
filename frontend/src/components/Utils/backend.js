@@ -34,6 +34,10 @@ const getUserStatistics = () => {
   return axios.get(CONNECTION_URL + '/getUsers');
 }
 
+const getPackingList = (tripId) => {
+  return axios.get(CONNECTION_URL + '/getList/' + tripId);
+}
+
 const backend = {
   getFeaturesList,
   addUser,
@@ -43,6 +47,7 @@ const backend = {
   saveTrip,
   getTrips,
   getUserStatistics,
+  getPackingList
 };
 
 export default backend;

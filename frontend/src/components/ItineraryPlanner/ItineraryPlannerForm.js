@@ -28,14 +28,6 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
     { value: 'business', label: 'Business' }
   ];
 
-  const moodOptions = [
-    { value: 'adventure', label: 'Adventure' },
-    { value: 'relaxation', label: 'Relaxation' },
-    { value: 'cultural', label: 'Cultural' },
-    { value: 'party', label: 'Party' },
-    { value: 'nature', label: 'Nature' }
-  ];
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -83,30 +75,6 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
 
   const renderDateField = (label, name) => renderInputField(label, faCalendar, 'date', name, formData[name]);
 
-  const renderPeopleCounter = () => (
-    <Form.Group className="mb-3">
-      <Form.Label className="d-flex align-items-center">
-        <FontAwesomeIcon icon={faUsers} className="me-2 text-primary" />
-        Number of People
-      </Form.Label>
-      <InputGroup>
-        <Button
-          variant="outline-secondary"
-          onClick={() => handlePeopleCountChange('decrement')}
-        >
-          -
-        </Button>
-        <Form.Control type="text" value={peopleCount} readOnly className="text-center" />
-        <Button
-          variant="outline-secondary"
-          onClick={() => handlePeopleCountChange('increment')}
-        >
-          +
-        </Button>
-      </InputGroup>
-    </Form.Group>
-  );
-
   const renderTextareaField = (label, icon, name, value, placeholder, rows = 3) => (
     <Form.Group className="mb-3">
       <Form.Label className="d-flex align-items-center">
@@ -141,9 +109,7 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
               <Col>{renderDateField('End Date', 'endDate')}</Col>
             </Row>
             {renderInputField('Budget', faDollarSign, 'number', 'budget', formData.budget, 'Your total trip budget')}
-            {renderSelectField('Vacation Type', faCompass, 'vacationType', vacationTypes)}
             {renderSelectField('Group Type', faUsers, 'groupType', groupTypes)}
-            {renderPeopleCounter()}
             {renderTextareaField('Additional Details', faSmile, 'customDetails', formData.customDetails, 'Share any special requirements or preferences...', 3)}
           </>
         )}
