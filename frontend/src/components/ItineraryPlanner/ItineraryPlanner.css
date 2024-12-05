@@ -1,4 +1,10 @@
 .trip-itinerary {
-    display: grid;
-        grid-template-columns: 1fr 4fr;
+    display: flex;
+    margin: 2rem 2rem;
+    justify-content: space-between;
+}
+
+.itinerary-details-box {
+    width: 70vw;
+    text-align: center;
 }
