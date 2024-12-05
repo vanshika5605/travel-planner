@@ -1,4 +1,3 @@
-# app/__init__.py
 from flask import Flask
 from flask_cors import CORS
 from .config import get_config
@@ -28,8 +27,11 @@ def create_app(config_class=None):
     CORS(app)
 
     # Initialize Hugging Face service
-    huggingface_client = HuggingFaceClient(app.config['HUGGINGFACE_API_KEY'], "meta-llama/Llama-3.2-3B-Instruct")
-
+    # Note: Replace with your actual API key and model
+    huggingface_client = HuggingFaceClient(
+        api_token='HUGGINGFACE_API_KEY', 
+        model='meta-llama/Llama-3.2-3B-Instruct'
+    )
 
     # Initialize services
     itinerary_service = ItineraryService(

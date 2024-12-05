@@ -6,7 +6,7 @@ load_dotenv()
 
 class Config:
     """Base configuration class."""
-    HUGGINGFACE_API_KEY = os.getenv('HUGGINGFACE_API_KEY')
+    api_token = os.getenv('HUGGINGFACE_API_KEY')
     
     DEBUG = False
     TESTING = False

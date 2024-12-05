@@ -4,14 +4,14 @@ from dotenv import load_dotenv
 import os
 
 class HuggingFaceClient:
-    def __init__(self, api_token, model_name):
+    def __init__(self, api_token, model):
         """
         Initialize the Hugging Face client.
         
         :param api_token: Your Hugging Face API token
-        :param model_name: The name of the model to use, e.g., "meta-llama/Llama-3.2-3B-Instruct"
+        :param model: The name of the model to use, e.g., "meta-llama/Llama-3.2-3B-Instruct"
         """
-        self.api_url = f"https://api-inference.huggingface.co/models/{model_name}"
+        self.api_url = f"https://api-inference.huggingface.co/models/{model}"
         self.headers = {
             "Authorization": f"Bearer {api_token}",
             "Content-Type": "application/json"
@@ -78,10 +78,10 @@ if __name__ == "__main__":
     if not API_TOKEN:
         raise ValueError("HUGGINGFACE_API_KEY not found in environment variables or .env file.")
     
-    MODEL_NAME = "meta-llama/Llama-3.2-3B-Instruct"
+    MODEL = "meta-llama/Llama-3.2-3B-Instruct"
     
     # Initialize the client
-    client = HuggingFaceClient(API_TOKEN, MODEL_NAME)
+    client = HuggingFaceClient(API_TOKEN, MODEL)
     
     # Check if the API is available
     if not client.check_api_availability():
