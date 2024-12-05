@@ -14,8 +14,8 @@ const login = (formData)=>{
   return axios.post(CONNECTION_URL + '/login', formData);
 }
 
-const getHolidays = () => {
-  return axios.get('https://date.nager.at/api/v3/publicholidays/2024/US');
+const getHolidays = (year) => {
+  return axios.get('https://date.nager.at/api/v3/publicholidays/'+ year +'/US');
 }
 
 const getExchangeRates = () => {

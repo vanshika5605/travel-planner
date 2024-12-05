@@ -1,6 +1,6 @@
 .holiday {
   background-color: orange !important;
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 .holiday:hover {
   background-color: #ffa726 !important;
@@ -10,7 +10,8 @@
 }
 .long-weekend {
   background-color: lightblue !important;
-  border-radius: 50%;
+  /* border-radius: 50%; */
+  color: black;
 }
 .long-weekend:hover {
   background-color: #87ceeb !important;

@@ -1,5 +1,10 @@
 import React from "react";
 import { Button } from 'react-bootstrap';
+import {
+  faPrint,
+  faShare,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const PrintShare = ({ tripDetails, packingList }) => {
   const generatePrintContent = () => {
@@ -89,10 +94,14 @@ const PrintShare = ({ tripDetails, packingList }) => {
           className="me-2"
           onClick={handlePrint}
         >
-          Print
+          <FontAwesomeIcon
+                              icon={faPrint}
+                            />
         </Button>
         <Button variant="outline-primary" onClick={handleShare}>
-          Share
+        <FontAwesomeIcon
+                              icon={faShare}
+                            />
         </Button>
       </div>
     </>
