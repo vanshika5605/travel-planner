@@ -20,7 +20,7 @@ public class userDetailsController {
     private userDetailsService myUserDetailsService;
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<UserDetails>> login(@RequestBody LoginDetails loginDetails){
+    public ResponseEntity<ApiResponse<UserDetails>> login(@RequestBody LoginDetails loginDetails) {
         try {
             UserDetails userDetails = myUserDetailsService.validateUser(loginDetails.getEmail(), loginDetails.getPassword());
             ApiResponse<UserDetails> response = new ApiResponse<UserDetails>(true, userDetails, null);
@@ -32,7 +32,7 @@ public class userDetailsController {
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<ApiResponse<String>> addUser(@RequestBody UserDetails userDetails){
+    public ResponseEntity<ApiResponse<String>> addUser(@RequestBody UserDetails userDetails) {
         try {
             myUserDetailsService.checkDuplicate(userDetails);
             ApiResponse<String> response = new ApiResponse<String>(true, "User Signed Up", null);
