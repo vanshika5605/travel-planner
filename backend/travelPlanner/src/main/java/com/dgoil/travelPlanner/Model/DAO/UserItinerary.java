@@ -56,6 +56,7 @@ public class UserItinerary {
             private String date;
             private String day;
             private String weekDay;
+            private String notes;
             private List<Activities> activities;
 
             @Data

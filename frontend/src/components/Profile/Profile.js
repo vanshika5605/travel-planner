@@ -23,37 +23,37 @@ const categoryIcons = {
   Sightseeing: faVanShuttle,
 };
 
-const Profile = ({ userData }) => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState({});
-  const [trips, setTrips] = useState({});
-  const [generatingPackingListForTripId, setGeneratingPackingListForTripId] =
-    useState(null);
-  // State for user details
-  const [staticUserData] = useState({
-    travelStats: {
-      totalCountriesVisited: 12,
-      totalCitiesVisited: 25,
-      totalDistanceTraveled: "12000 miles",
-      flightsTaken: 20,
-    },
-    travelGoals: {
-      tripsPlanned: 5,
-      newDestinations: 3,
-      travelMiles: "10,000 km",
-    },
-  });
+    const Profile = ({ userData }) => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState({});
+    const [trips, setTrips] = useState({});
+    const [generatingPackingListForTripId, setGeneratingPackingListForTripId] =
+        useState(null);
+    // State for user details
+    const [staticUserData] = useState({
+        travelStats: {
+        totalCountriesVisited: 12,
+        totalCitiesVisited: 25,
+        totalDistanceTraveled: "12000 miles",
+        flightsTaken: 20,
+        },
+        travelGoals: {
+        tripsPlanned: 5,
+        newDestinations: 3,
+        travelMiles: "10,000 km",
+        },
+    });
 
-  useEffect(() => {
-    const fetchTrips = async () => {
-      const response = await backend.getTrips(userData.email);
-      setTrips(response.data.data);
-    };
+    useEffect(() => {
+        const fetchTrips = async () => {
+        const response = await backend.getTrips(userData.email);
+        setTrips(response.data.data);
+        };
 
-    fetchTrips().catch((error) =>
-      console.error("Error fetching trips:", error)
-    );
-  }, []);
+        fetchTrips().catch((error) =>
+        console.error("Error fetching trips:", error)
+        );
+    }, []);
 
   const handleGeneratePackingList = async (trip) => {
     try {
@@ -106,38 +106,38 @@ const Profile = ({ userData }) => {
     }
   };
 
-  return (
-    <div className="profile-page">
-      {/* Main Profile Section */}
-      <div className="profile-main">
-        {/* Profile Information */}
-        <div className="profile-info">
-          <h2>Profile Details</h2>
-          <p>
-            <strong>Name:</strong> {userData.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {userData.email}
-          </p>
-          <p>
-            <strong>Gender:</strong> {userData.gender}
-          </p>
-          <p>
-            <strong>Location:</strong> {userData.location}
-          </p>
-          <p>
-            <strong>Default Currency:</strong> {userData.defaultCurrency}
-          </p>
+    return (
+        <div className="profile-page">
+        {/* Main Profile Section */}
+        <div className="profile-main">
+            {/* Profile Information */}
+            <div className="profile-info">
+            <h2>Profile Details</h2>
+            <p>
+                <strong>Name:</strong> {userData.name}
+            </p>
+            <p>
+                <strong>Email:</strong> {userData.email}
+            </p>
+            <p>
+                <strong>Gender:</strong> {userData.gender}
+            </p>
+            <p>
+                <strong>Location:</strong> {userData.location}
+            </p>
+            <p>
+                <strong>Default Currency:</strong> {userData.defaultCurrency}
+            </p>
+            </div>
+            {/* Trips Section */}
+            <Trips
+            userData={userData}
+            trips={trips}
+            handleGeneratePackingList={handleGeneratePackingList}
+            generatingPackingListForTripId={generatingPackingListForTripId}
+            handleViewItinerary={handleViewItinerary}
+            />
         </div>
-        {/* Trips Section */}
-        <Trips
-          userData={userData}
-          trips={trips}
-          handleGeneratePackingList={handleGeneratePackingList}
-          generatingPackingListForTripId={generatingPackingListForTripId}
-          handleViewItinerary={handleViewItinerary}
-        />
-      </div>
 
       {/* Sidebar with Statistics and Goals */}
       <div className="profile-sidebar">
@@ -216,22 +216,6 @@ const Profile = ({ userData }) => {
             <p>Flights Taken</p>
           </div>
         </div>
-
-        {/* <div className="travel-goals">
-                      <h2>Travel Goals</h2>
-                      <div className="goals-item">
-                          <h3>{staticUserData.travelGoals.tripsPlanned}</h3>
-                          <p>Trips Planned</p>
-                      </div>
-                      <div className="goals-item">
-                          <h3>{staticUserData.travelGoals.newDestinations}</h3>
-                          <p>New Destinations</p>
-                      </div>
-                      <div className="goals-item">
-                          <h3>{staticUserData.travelGoals.travelMiles}</h3>
-                          <p>Miles to Travel</p>
-                      </div>
-                  </div> */}
       </div>
     </div>
   );
