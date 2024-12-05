@@ -9,6 +9,7 @@ import "./App.css";
 import AdminPage from "./components/AdminPage/AdminPage";
 import Home from "./components/Home/Home";
 import Plan from "./components/ItineraryPlanner/Plan";
+import Itinerary from "./components/ItineraryPlanner/Itinerary";
 import PackingList from "./components/PackingList/PackingList";
 import Profile from "./components/Profile/Profile";
 import SignUp from "./components/SignUp/SignUp";
@@ -161,6 +162,10 @@ const App = () => {
                   <Route
                     path="/packing-list/:tripId"
                     element={<PackingList />}
+                  />
+                  <Route
+                    path="/itinerary"
+                    element={<Itinerary/>}
                   />
                 </>
               ) : (

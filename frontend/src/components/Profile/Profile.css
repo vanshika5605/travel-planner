@@ -64,7 +64,7 @@ body {
   .trip-card button {
     background-color: #1a73e8;
     color: white;
-    padding: 10px 15px;
+    /* padding: 10px 15px; */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -109,7 +109,7 @@ body {
   }
 
   .generate-button{
-    height: 3rem;
+    /* height: 3rem; */
   }
 
   .ongoing-trips {
@@ -147,4 +147,9 @@ body {
 .ongoing-trip-card li {
     font-size: 14px;
     color: #555;
+}
+
+.trip-button-section {
+  display: grid;
+  grid-gap: 0.5rem;
 }
