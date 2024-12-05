@@ -39,6 +39,9 @@ body {
     font-size: 24px;
     margin-bottom: 10px;
     color: #333;
+    background-color: #f5e2db;
+    border-radius: 1rem;
+    padding: 0.5rem;
   }
   
   /* Trip Section */
@@ -110,6 +113,9 @@ body {
 .ongoing-trips h2 {
     font-size: 24px;
     margin-bottom: 15px;
+    background-color: #f5e2db;
+    border-radius: 1rem;
+    padding: 0.5rem;
 }
 
 .ongoing-trip-card {
@@ -146,9 +152,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px 10px;
     border-bottom: 1px solid #ddd;
     color: #333;
+    background-color: #f5e2db;
+    border-radius: 1rem;
 }
 
 .collapsible-header:hover {
@@ -163,4 +171,9 @@ body {
 
 .no-bullets li{
   margin: 5px;
+}
+
+.trip-display-section {
+  max-height: 40vh;
+  overflow-y: scroll;
 }

@@ -21,7 +21,7 @@
   /* Tabs styling */
   .tabs {
     display: flex;
-    margin-bottom: 20px;
+    margin: 1.5rem;
     justify-content: space-evenly;
   }
   
@@ -41,7 +41,6 @@
   
   /* Day content container */
   .day-container {
-    padding: 15px;
     border-radius: 10px;
   }
   

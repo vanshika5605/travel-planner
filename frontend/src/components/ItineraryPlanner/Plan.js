@@ -27,36 +27,36 @@ const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
               <div className="grid-1">
                 <img
                   className="image-item"
-                  src="/images/img5.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img5.jpg"
                   alt="Loading..."
                 />
                 <img
                   className="image-item"
-                  src="/images/img6.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img6.jpg"
                   alt="Loading..."
                 />
                 <img
                   className="image-item"
-                  src="/images/img7.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img7.jpg"
                   alt="Loading..."
                 />
               </div>
               <div className="grid-2">
                 <img
                   className="image-item"
-                  src="/images/img8.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img8.jpg"
                   alt="Loading..."
                 />
                 <img
                   className="image-item"
-                  src="/images/img9.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img9.jpg"
                   alt="Loading..."
                 />
               </div>
               <div className="grid-3">
                 <img
                   className="image-item"
-                  src="/images/img10.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img10.jpg"
                   alt="Loading..."
                 />
               </div>
@@ -94,7 +94,7 @@ const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
               <div className="grid-3">
                 <img
                   className="image-item"
-                  src="/images/img11.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img11.jpg"
                   alt="Loading..."
                 />
               </div>
@@ -102,29 +102,29 @@ const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
               <div className="grid-2">
                 <img
                   className="image-item"
-                  src="/images/img12.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img12.jpg"
                   alt="Loading..."
                 />
                 <img
                   className="image-item"
-                  src="/images/img1.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img1.jpg"
                   alt="Loading..."
                 />
               </div>
               <div className="grid-1">
                 <img
                   className="image-item"
-                  src="/images/img2.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img2.jpg"
                   alt="Loading..."
                 />
                 <img
                   className="image-item"
-                  src="/images/img3.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img3.jpg"
                   alt="Loading..."
                 />
                 <img
                   className="image-item"
-                  src="/images/img4.jpg"
+                  src="https://umass-travel-buddy.s3.us-east-2.amazonaws.com/img4.jpg"
                   alt="Loading..."
                 />
               </div>

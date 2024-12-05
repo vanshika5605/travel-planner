@@ -1,0 +1,9 @@
+.quiz-section button{
+    color:#c65d36;
+    border: 1px solid #c65d36;
+}
+
+.quiz-section button:hover{
+    color:white;
+    background-color:#c65d36;
+}

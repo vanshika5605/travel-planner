@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TripDetailsBox from "../ItineraryPlanner/TripDetailsBox";
 import backend from "../Utils/backend";
@@ -30,8 +30,6 @@ const PackingList = () => {
   );
 
   const [showAddItemModal, setShowAddItemModal] = useState(false);
-  const itemsPerPage = 15;
-  const [currentPage, setCurrentPage] = useState(1);
 
   // Fetch trip details and packing list if not passed via navigation state
   useEffect(() => {
@@ -65,10 +63,6 @@ const PackingList = () => {
     fetchTripDetails();
   }, [tripId, location.state, navigate]);
 
-  useEffect(() => {
-    console.log("Changed");
-  }, [tripDetails]);
-
   const toggleItemPacked = (category, name) => {
     setPackingList((current) => ({
       ...current,
@@ -77,21 +71,6 @@ const PackingList = () => {
       ),
     }));
   };
-
-  const flattenedItems = useMemo(() => {
-    return Object.entries(packingList).flatMap(([category, items]) =>
-      items.map((item) => ({ ...item, category }))
-    );
-  }, [packingList]);
-
-  const paginatedItems = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return {
-      items: flattenedItems.slice(startIndex, endIndex),
-      totalPages: Math.ceil(flattenedItems.length / itemsPerPage),
-    };
-  }, [flattenedItems, currentPage]);
 
   const calculatePackedItemsCount = () => {
     let packedCount = 0;
@@ -124,14 +103,13 @@ const PackingList = () => {
   return (
     <div className="packing-list-container">
       <TripDetailsBox tripDetails={tripDetails} />
-
       <div className="packing-list-content">
         <div className="packing-list-header">
-          <h2>🧳 Packing List for {tripDetails.destination}</h2>
+          <h2>🧳 Packing List</h2>
           <PrintShare tripDetails={tripDetails} packingList={packingList} />
         </div>
         <div className="list-summary">
-          <span>
+          <span className="item-count">
             {packedCount} of {totalCount} items packed
           </span>
           <button
@@ -141,48 +119,28 @@ const PackingList = () => {
             Save Changes
           </button>
         </div>
-        {Object.entries(packingList)
-          .filter(([category]) =>
-            paginatedItems.items.some((item) => item.category === category)
-          )
-          .map(([category, items]) => (
-            <div key={category} className="packing-category">
-              <h5 className="category-title">{category}</h5>
-              <div className="category-items">
-                {paginatedItems.items
-                  .filter((item) => item.category === category)
-                  .map((item) => (
-                    <label
-                      key={`${category}-${item.name}`}
-                      className={`item-checkbox ${item.packed ? "packed" : ""}`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={item.packed}
-                        onChange={() => toggleItemPacked(category, item.name)}
-                      />
-                      {item.name} (Qty: {item.quantity})
-                    </label>
-                  ))}
-              </div>
+        <div className="list-items">
+        {Object.entries(packingList).map(([category, items]) => (
+          <div key={category} className="packing-category">
+            <h5 className="category-title">{category}</h5>
+            <div className="category-items">
+              {items.map((item) => (
+                <label
+                  key={`${category}-${item.name}`}
+                  className={`item-checkbox ${item.packed ? "packed" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={item.packed}
+                    onChange={() => toggleItemPacked(category, item.name)}
+                  />
+                  {item.name} (Qty: {item.quantity})
+                </label>
+              ))}
             </div>
-          ))}
-
-        <div className="list-actions">
-          <div className="pagination">
-            {[...Array(paginatedItems.totalPages)].map((_, index) => (
-              <button
-                key={index + 1}
-                className={`page-btn ${
-                  index + 1 === currentPage ? "active" : ""
-                }`}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
           </div>
-        </div>
+        ))}
+</div>
         <NewItemModal
           showAddItemModal={showAddItemModal}
           setShowAddItemModal={setShowAddItemModal}

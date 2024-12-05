@@ -51,7 +51,7 @@
   }
   
   .category-title {
-    background-color: #f8f9fa;
+    background-color: #f5e2db;
     padding: 10px;
     margin: 0;
     text-transform: capitalize;
@@ -116,8 +116,17 @@
     align-items: center;
     margin-top: 20px;
     padding: 10px;
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
     border-radius: 5px;
+    color: #c65d36;
+    font-weight: bold;
+  }
+
+  .item-count {
+    padding: 0.5rem;
+    color: #c65d36;
+    border: 1px solid #c65d36;
+    border-radius: 0.5rem;
   }
   
   .save-btn {
@@ -127,4 +136,9 @@
     padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  .list-items {
+    max-height: 65vh;
+    overflow-y: scroll;
   }
