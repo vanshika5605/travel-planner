@@ -1,6 +1,7 @@
 package com.dgoil.travelPlanner.Controller;
 
 import com.dgoil.travelPlanner.Model.DAO.UserDetails;
+import com.dgoil.travelPlanner.Model.DTO.AdminStatistics;
 import com.dgoil.travelPlanner.Model.DTO.ApiResponse;
 import com.dgoil.travelPlanner.Model.DTO.LoginDetails;
 import com.dgoil.travelPlanner.Service.userDetailsService;
@@ -52,6 +53,13 @@ public class userDetailsController {
             ApiResponse<List<UserDetails>> response = new ApiResponse<List<UserDetails>>(false, null, e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    @GetMapping("/admin/statistics")
+    public ResponseEntity<ApiResponse<AdminStatistics>> getAdminDetails() {
+        AdminStatistics adminStatistics = myUserDetailsService.getAdminDetails();
+        ApiResponse<AdminStatistics> response = new ApiResponse<AdminStatistics>(true, adminStatistics, null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/getUser/{emailId}")
