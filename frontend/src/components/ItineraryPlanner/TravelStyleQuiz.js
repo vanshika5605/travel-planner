@@ -121,7 +121,7 @@ const TravelStyleQuiz = () => {
               </p>
               <button 
                 onClick={resetQuiz} 
-                className="btn btn-primary w-100"
+                className="btn btn-primary w-100 quiz-btn"
               >
                 Take Quiz Again
               </button>
@@ -145,7 +145,7 @@ const TravelStyleQuiz = () => {
                 <button 
                   key={index} 
                   onClick={() => handleAnswer(option)} 
-                  className="btn btn-outline-primary"
+                  className="quiz-option-btn btn btn-outline-primary"
                 >
                   {option.text}
                 </button>

@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const CONNECTION_URL = `http://localhost:8081/api/v1`;
 
+export const CONNECTION_URL_2 = `http://localhost:5000/api/v1`;
+
 const getFeaturesList = () => {
   return axios.get(CONNECTION_URL + `/getFeatures`);
 };
@@ -46,6 +48,14 @@ const getTripDetails = (tripId) => {
   return axios.get(CONNECTION_URL + '/getItinerary/' + tripId);
 }
 
+const generatePackingList = (formData) => {
+  return axios.post(CONNECTION_URL_2 + '/itinerary/create', formData);
+}
+
+const generateItinerary = (formData) => {
+  return axios.post(CONNECTION_URL_2 + '/itinerary/create', formData);
+}
+
 const backend = {
   getFeaturesList,
   addUser,
@@ -57,7 +67,9 @@ const backend = {
   getUserStatistics,
   getPackingList,
   savePackingList,
-  getTripDetails
+  getTripDetails,
+  generatePackingList,
+  generateItinerary
 };
 
 export default backend;

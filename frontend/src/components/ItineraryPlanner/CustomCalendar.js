@@ -12,9 +12,7 @@ const CustomCalendar = ({holidays, longWeekends}) => {
     if (dateStr === today.toDateString()) {
       return "custom-today";
     }
-    console.log(new Date(dateStr).toISOString().split("T")[0])
     if (longWeekends.includes(new Date(dateStr).toISOString().split("T")[0])) {
-      console.log("enetered")
       return "long-weekend";
     }
 

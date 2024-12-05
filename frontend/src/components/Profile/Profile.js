@@ -64,8 +64,7 @@ const categoryIcons = {
         const response = await backend.getPackingList(trip.tripId);
         packingList = response.data.data.packingList;
       }
-      console.log(trip);
-      console.log(packingList);
+
       navigate("/packing-list/${trip.tripId}", {
         state: {
           tripDetails: trip,
@@ -87,7 +86,6 @@ const categoryIcons = {
 
       // Assuming you have an API endpoint to fetch trip details
       const response = await backend.getTripDetails(trip.tripId);
-      console.log(response.data);
       // Navigate to itinerary page with trip data
       navigate("/itinerary", {
         state: {

@@ -26,25 +26,6 @@ const Itinerary = () => {
   const [itineraryData, setItineraryData] = useState(initialItineraryData);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Ensure we have at least one day when component loads
-  useEffect(() => {
-    if (!itineraryData.itinerary || itineraryData.itinerary.length === 0) {
-      setItineraryData({
-        summary: "",
-        itinerary: [
-          {
-            date: new Date().toISOString().split("T")[0],
-            day: "Day 1",
-            activities: [],
-            note: "",
-          },
-        ],
-        note: "",
-      });
-    }
-  }, []);
-
-  // Copy to clipboard
   const copyToClipboard = () => {
     let formattedItinerary = "Itinerary:\n\n";
 

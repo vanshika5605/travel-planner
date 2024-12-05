@@ -43,7 +43,7 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
   const renderInputField = (label, icon, type, name, value, placeholder) => (
     <Form.Group className="mb-3">
       <Form.Label className="d-flex align-items-center">
-        <FontAwesomeIcon icon={icon} className="me-2 text-primary" />
+        <FontAwesomeIcon icon={icon} className="me-2" />
         {label}
       </Form.Label>
       <Form.Control
@@ -59,7 +59,7 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
   const renderSelectField = (label, icon, name, options, placeholder = '') => (
     <Form.Group className="mb-3">
       <Form.Label className="d-flex align-items-center">
-        <FontAwesomeIcon icon={icon} className="me-2 text-primary" />
+        <FontAwesomeIcon icon={icon} className="me-2" />
         {label}
       </Form.Label>
       <Form.Select name={name} value={formData[name]} onChange={handleInputChange}>
@@ -78,7 +78,7 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
   const renderTextareaField = (label, icon, name, value, placeholder, rows = 3) => (
     <Form.Group className="mb-3">
       <Form.Label className="d-flex align-items-center">
-        <FontAwesomeIcon icon={icon} className="me-2 text-primary" />
+        <FontAwesomeIcon icon={icon} className="me-2" />
         {label}
       </Form.Label>
       <Form.Control
@@ -115,7 +115,6 @@ const ItineraryPlannerForm = ({ formType, getItinerary, formData, setFormData })
         )}
 
         <Button
-          variant="primary"
           type="submit"
           className="w-100"
           onClick={getItinerary}

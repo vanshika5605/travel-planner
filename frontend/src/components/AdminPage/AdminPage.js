@@ -78,8 +78,6 @@ const AdminPage = () => {
     const fetchAdminStats = async () => {
       try {
             const response = await backend.getUserStatistics(); 
-            // const data = await response.json();
-            console.log(response.data);
             setStats({...stats, ...response.data.data});
       } catch (error) {
         console.error('Failed to fetch admin statistics', error);
