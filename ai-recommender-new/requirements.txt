@@ -1,0 +1,8 @@
+# requirements.txt
+Flask==2.3.2
+flask-cors==5.0.0
+huggingface_hub==0.16.4
+python-dotenv==1.0.0
+requests==2.31.0
+pymongo==4.3.3
+dnspython==2.3.0

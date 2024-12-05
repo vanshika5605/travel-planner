@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.env
+
+# Logs and temporary files
+*.log
+*.tmp
+*.out
+*.dat
+
+# IDEs
+.vscode/
+.idea/
+
+# Dataset
+data/
+*.csv
+
+# Models
+*.pt
+*.ckpt
+*.h5
+*.pkl
+
+# Node.js (if applicable for the microservice)
+node_modules/
