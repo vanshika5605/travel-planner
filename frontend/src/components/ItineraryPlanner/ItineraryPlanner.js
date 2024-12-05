@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import axios
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import backend from "../Utils/backend";
 import "./ItineraryPlanner.css";
 import ItineraryPlannerForm from "./ItineraryPlannerForm";
 
@@ -62,7 +61,7 @@ const ItineraryPlanner = ({ userId, formType }) => {
       // Navigate to itinerary route with data in location state
       navigate('/itinerary', {
         state: {
-          formData: formData,
+          tripData: formData,
           userId: userId,
           itineraryData: itineraryData
         }

@@ -46,7 +46,8 @@ const Profile = ({ userData }) => {
         const response = await backend.getPackingList(trip.tripId);
         packingList = response.data.data.packingList;
       }
-
+      console.log(trip)
+      console.log(packingList)
       navigate(`/packing-list/${trip.tripId}`, {
         state: {
           tripDetails: trip,

@@ -7,6 +7,8 @@ import {
   faUtensils,
   faBed,
   faHiking,
+  faCartShopping,
+  faVanShuttle
 } from "@fortawesome/free-solid-svg-icons";
 import "./Itinerary.css";
 import TripDetailsBox from "./TripDetailsBox";
@@ -16,16 +18,18 @@ import backend from "../Utils/backend";
 const categoryIcons = {
   Travel: faPlane,
   Adventure: faHiking,
-  Eat: faUtensils,
+  Food: faUtensils,
   Hotel: faBed,
+  Shopping: faCartShopping,
+  Sightseeing: faVanShuttle,
 };
 
 const Itinerary = () => {
   const location = useLocation();
   
   // Extract data from location state with fallback
-  const { formData, userId, itineraryData: initialItineraryData } = location.state || {
-    formData: {},
+  const { tripData, userId, itineraryData: initialItineraryData } = location.state || {
+    tripData: {},
     userId: '',
     itineraryData: {
       summary: "",
@@ -104,14 +108,14 @@ const Itinerary = () => {
   };
 
   const saveTrip = async () => {
-    let tripData = { 
-      ...formData, 
+    let tripDataNew = { 
+      ...tripData, 
       email: userId, 
       tripDetails: itineraryData 
     };
     
     try {
-      const response = await backend.saveTrip(tripData);
+      const response = await backend.saveTrip(tripDataNew);
       if (response.status === 200) {
         console.log("Trip saved");
       }
@@ -145,7 +149,7 @@ const Itinerary = () => {
       <h1>Itinerary</h1>
 
       <div className="trip-itinerary">
-        <TripDetailsBox tripDetails={formData}></TripDetailsBox>
+        <TripDetailsBox tripDetails={tripData}></TripDetailsBox>
         <div>
           <div className="itinerary-container">
             {/* Tabs for each day */}

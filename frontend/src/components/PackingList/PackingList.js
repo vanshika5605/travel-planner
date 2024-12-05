@@ -65,6 +65,10 @@ const PackingList = () => {
     fetchTripDetails();
   }, [tripId, location.state, navigate]);
 
+  useEffect(() => {
+    console.log("Changed")
+  },[tripDetails])
+
   const toggleItemPacked = (category, name) => {
     setPackingList((current) => ({
       ...current,
