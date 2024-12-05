@@ -12,8 +12,8 @@ const Profile = ({ userData }) => {
         defaultCurrency: '',
         travelStats: {
             totalCountriesVisited: 12,
-            totalCitiesVisited: 35,
-            totalDistanceTraveled: '45,000 km',
+            totalCitiesVisited: 25,
+            totalDistanceTraveled: '12000 miles',
             flightsTaken: 20,
         },
         travelGoals: {
@@ -23,6 +23,15 @@ const Profile = ({ userData }) => {
         },
     });
 
+    const [ongoingTrips, setOngoingTrips] = useState([
+        {
+            id: 1,
+            destination: 'New York, USA',
+            startDate: '12-01-2024',
+            endDate: '12-10-2024',
+            activities: ['Visit Times Square', 'Central Park Walk', 'Dinner at Katz’s Deli'],
+        },
+    ]);
     return (
         <div className="profile-page">
             {/* Main Profile Section */}
@@ -43,6 +52,26 @@ const Profile = ({ userData }) => {
 
             {/* Sidebar with Statistics and Goals */}
             <div className="profile-sidebar">
+            <div className="ongoing-trips">
+                    <h2>Ongoing Trip</h2>
+                    {ongoingTrips.length > 0 ? (
+                        ongoingTrips.map((trip) => (
+                            <div key={trip.id} className="ongoing-trip-card">
+                                <h3>{trip.destination}</h3>
+                                <p><strong>Start Date:</strong> {trip.startDate}</p>
+                                <p><strong>End Date:</strong> {trip.endDate}</p>
+                                <p><strong>Activities Planned for Today:</strong></p>
+                                <ul>
+                                    {trip.activities.map((activity, index) => (
+                                        <li key={index}>{activity}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No ongoing trips.</p>
+                    )}
+                </div>
                 <div className="travel-stats">
                     <h2>Travel Statistics</h2>
                     <div className="stats-item">
@@ -63,7 +92,7 @@ const Profile = ({ userData }) => {
                     </div>
                 </div>
 
-                <div className="travel-goals">
+                {/* <div className="travel-goals">
                     <h2>Travel Goals</h2>
                     <div className="goals-item">
                         <h3>{staticUserData.travelGoals.tripsPlanned}</h3>
@@ -77,7 +106,8 @@ const Profile = ({ userData }) => {
                         <h3>{staticUserData.travelGoals.travelMiles}</h3>
                         <p>Miles to Travel</p>
                     </div>
-                </div>
+                </div> */}
+
             </div>
         </div>
     );

@@ -111,3 +111,40 @@ body {
   .generate-button{
     height: 3rem;
   }
+
+  .ongoing-trips {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.ongoing-trips h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.ongoing-trip-card {
+    margin-bottom: 20px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ongoing-trip-card h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #1a73e8;
+}
+
+.ongoing-trip-card ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.ongoing-trip-card li {
+    font-size: 14px;
+    color: #555;
+}
