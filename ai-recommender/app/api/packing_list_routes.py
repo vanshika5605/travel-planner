@@ -17,8 +17,10 @@ def generate_packing_list():
     """
     try:
         # Validate input
-        if not request.json:
-            return jsonify({"error": "No input data provided"}), 400
+        if not request.json or "api_url" not in request.json:
+            return jsonify({"error": "API URL not provided"}), 400
+
+        api_url = request.json["api_url"]
         
         # Instantiate HuggingFaceClient (assuming it's configured properly)
         huggingface_client = HuggingFaceClient()
