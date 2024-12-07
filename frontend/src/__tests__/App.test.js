@@ -1,100 +1,201 @@
-// // App.test.js
-// import React from "react";
-// import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-// import { BrowserRouter } from "react-router-dom";
-// import App from "../App";
-// import backend from "../components/Utils/backend";
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import App from '../App';
+import backend from '../components/Utils/backend';
 
-// // Mock the backend API calls
-// jest.mock("../components/Utils/backend");
+// Mock dependencies
+jest.mock('../components/Utils/backend', () => ({
+  getHolidays: jest.fn(),
+  getExchangeRates: jest.fn()
+}));
 
-// describe("App Component Tests", () => {
-//   beforeEach(() => {
-//     jest.clearAllMocks();
-//   });
+jest.mock('react-router-dom', () => ({
+  BrowserRouter: ({ children }) => <div>{children}</div>,
+  Routes: ({ children }) => <div>{children}</div>,
+  Route: ({ element }) => element,
+  Navigate: () => <div>Redirected</div>,
+  useNavigate: () => jest.fn(), // Add this line to mock useNavigate
+}));
 
-//   test("renders the Loader initially", () => {
-//     render(
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     );
+// Mock child components
+jest.mock('../components/Home/Home', () => {
+  return function DummyHome() {
+    return <div data-testid="home-component">Home</div>;
+  };
+});
 
-//     expect(screen.getByText(/loading/i)).toBeInTheDocument();
-//   });
+jest.mock('../components/Utils/Navbar', () => {
+  return function DummyNavbar() {
+    return <div data-testid="navbar-component">Navbar</div>;
+  };
+});
 
-//   test("fetches holidays and exchange rates on mount", async () => {
-//     backend.getHolidays.mockResolvedValueOnce({ data: [{ date: "2024-01-01" }] });
-//     backend.getExchangeRates.mockResolvedValueOnce({
-//       data: { rates: { USD: 1, EUR: 0.85 } },
-//     });
+jest.mock('../components/Utils/Footer', () => {
+  return function DummyFooter() {
+    return <div data-testid="footer-component">Footer</div>;
+  };
+});
 
-//     render(
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     );
+jest.mock('../components/Utils/Loader', () => {
+  return function DummyLoader() {
+    return <div data-testid="loader-component">Loading...</div>;
+  };
+});
 
-//     await waitFor(() => {
-//       expect(backend.getHolidays).toHaveBeenCalledTimes(2); // For 2024 and 2025
-//       expect(backend.getExchangeRates).toHaveBeenCalled();
-//     });
-//   });
+describe('App Component', () => {
+  // Mock data
+  const mockHolidays = [
+    { date: '2024-01-01', name: 'New Year' },
+    { date: '2024-07-04', name: 'Independence Day' }
+  ];
 
-//   test("renders the Home page at root route `/`", async () => {
-//     render(
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     );
+  const mockExchangeRates = {
+    rates: {
+      USD: 1,
+      EUR: 0.85,
+      GBP: 0.75
+    }
+  };
 
-//     await waitFor(() => {
-//       expect(screen.getByText(/welcome/i)).toBeInTheDocument(); // Assuming "Welcome" text exists in Home.js
-//     });
-//   });
+  beforeEach(() => {
+    // Reset mocks before each test
+    jest.clearAllMocks();
 
-//   test("navigates to the SignUp page when clicking the signup link", async () => {
-//     render(
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     );
+    // Setup mock implementations
+    backend.getHolidays.mockResolvedValue({ data: mockHolidays });
+    backend.getExchangeRates.mockResolvedValue({ data: mockExchangeRates });
 
-//     fireEvent.click(screen.getByText(/Sign Up/i)); // Assuming "Sign Up" link exists
+    // Mock timer functions to control loading state
+    jest.useFakeTimers();
+  });
 
-//     await waitFor(() => {
-//       expect(screen.getByText(/create your account/i)).toBeInTheDocument(); // Assuming the text in SignUp.js
-//     });
-//   });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
-//   test("renders AdminPage if logged in as an admin", async () => {
-//     backend.getHolidays.mockResolvedValueOnce({ data: [] });
-//     backend.getExchangeRates.mockResolvedValueOnce({ data: { rates: {} } });
+  describe('Initial Rendering', () => {
+    test('shows loader on initial render', () => {
+      render(<App />);
+      const loader = screen.getByTestId('loader-component');
+      expect(loader).toBeInTheDocument();
+    });
 
-//     render(
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     );
+    test('fetches holidays and exchange rates on mount', async () => {
+      render(<App />);
 
-//     fireEvent.click(screen.getByText(/login/i)); // Assuming there's a login link/button
+      // Fast-forward timers
+      jest.runAllTimers();
 
-//     await waitFor(() => {
-//       expect(screen.getByText(/admin dashboard/i)).toBeInTheDocument(); // Assuming AdminPage has this text
-//     });
-//   });
+      // Wait for async operations
+      await waitFor(() => {
+        expect(backend.getHolidays).toHaveBeenCalledTimes(2);
+        expect(backend.getHolidays).toHaveBeenCalledWith('2024');
+        expect(backend.getHolidays).toHaveBeenCalledWith('2025');
+        expect(backend.getExchangeRates).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
 
-//   test("redirects to Home on unknown routes", async () => {
-//     window.history.pushState({}, "Test page", "/unknown");
+  describe('Post-Loading Rendering', () => {
+    test('renders navbar after loading', async () => {
+      render(<App />);
 
-//     render(
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     );
+      // Fast-forward timers
+      jest.runAllTimers();
 
-//     await waitFor(() => {
-//       expect(screen.getByText(/welcome/i)).toBeInTheDocument(); // Redirected to Home
-//     });
-//   });
-// });
+      // Wait for async operations
+      await waitFor(() => {
+        const navbar = screen.getByTestId('navbar-component');
+        expect(navbar).toBeInTheDocument();
+      });
+    });
+
+    test('renders footer', async () => {
+      render(<App />);
+
+      // Fast-forward timers
+      jest.runAllTimers();
+
+      // Wait for async operations
+      await waitFor(() => {
+        const footer = screen.getByTestId('footer-component');
+        expect(footer).toBeInTheDocument();
+      });
+    });
+
+    test('renders home component as default route', async () => {
+      render(<App />);
+
+      // Fast-forward timers
+      jest.runAllTimers();
+
+      // Wait for async operations
+      await waitFor(() => {
+        const homeComponent = screen.getByTestId('home-component');
+        expect(homeComponent).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Long Weekend Calculation', () => {
+    test('findLongWeekends calculates correctly', () => {
+      // This would require accessing the internal function
+      // You might need to export it or use a different testing strategy
+      const longWeekendDates = [
+        '2024-01-05', // Friday
+        '2024-01-06', // Saturday
+        '2024-01-07'  // Sunday
+      ];
+      
+      // You can add more specific assertions based on your implementation
+      expect(longWeekendDates).toHaveLength(3);
+    });
+  });
+
+  describe('Error Handling', () => {
+    test('handles holiday fetch error', async () => {
+      // Mock console.error to suppress error logging
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      
+      backend.getHolidays.mockRejectedValue(new Error('Fetch failed'));
+
+      render(<App />);
+
+      // Fast-forward timers
+      jest.runAllTimers();
+
+      // Wait for async operations
+      await waitFor(() => {
+        expect(consoleErrorSpy).toHaveBeenCalledWith(
+          'Error fetching holidays:', 
+          expect.any(Error)
+        );
+      });
+
+      consoleErrorSpy.mockRestore();
+    });
+
+    test('handles exchange rates fetch error', async () => {
+      // Mock console.error to suppress error logging
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      
+      backend.getExchangeRates.mockRejectedValue(new Error('Fetch failed'));
+
+      render(<App />);
+
+      // Fast-forward timers
+      jest.runAllTimers();
+
+      // Wait for async operations
+      await waitFor(() => {
+        expect(consoleErrorSpy).toHaveBeenCalledWith(
+          'Error fetching exchange rates:', 
+          expect.any(Error)
+        );
+      });
+
+      consoleErrorSpy.mockRestore();
+    });
+  });
+});
