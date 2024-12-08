@@ -47,7 +47,9 @@ describe('App Component', () => {
   // Mock data
   const mockHolidays = [
     { date: '2024-01-01', name: 'New Year' },
-    { date: '2024-07-04', name: 'Independence Day' }
+    { date: '2024-07-04', name: 'Independence Day',
+        date: '2024-07-05', name: 'Independence Day'
+     }
   ];
 
   const mockExchangeRates = {
