@@ -86,7 +86,6 @@ const PackingList = () => {
 
   const handleSaveChanges = async (tripId) => {
     try {
-      console.log(packingList);
       const response = await backend.savePackingList({
         tripID: tripId,
         packingList: packingList,
@@ -120,27 +119,27 @@ const PackingList = () => {
           </button>
         </div>
         <div className="list-items">
-        {Object.entries(packingList).map(([category, items]) => (
-          <div key={category} className="packing-category">
-            <h5 className="category-title">{category}</h5>
-            <div className="category-items">
-              {items.map((item) => (
-                <label
-                  key={`${category}-${item.name}`}
-                  className={`item-checkbox ${item.packed ? "packed" : ""}`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={item.packed}
-                    onChange={() => toggleItemPacked(category, item.name)}
-                  />
-                  {item.name} (Qty: {item.quantity})
-                </label>
-              ))}
+          {Object.entries(packingList).map(([category, items]) => (
+            <div key={category} className="packing-category">
+              <h5 className="category-title">{category}</h5>
+              <div className="category-items">
+                {items.map((item) => (
+                  <label
+                    key={`${category}-${item.name}`}
+                    className={`item-checkbox ${item.packed ? "packed" : ""}`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={item.packed}
+                      onChange={() => toggleItemPacked(category, item.name)}
+                    />
+                    {item.name} (Qty: {item.quantity})
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-</div>
+          ))}
+        </div>
         <NewItemModal
           showAddItemModal={showAddItemModal}
           setShowAddItemModal={setShowAddItemModal}

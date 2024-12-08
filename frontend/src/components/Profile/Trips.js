@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import PackingListButton from "./PackingListButton";
-import backend from "../Utils/backend";
 
 const Trips = ({
   userData,

@@ -1,8 +1,6 @@
 # Travel Planner
  
-
 ![Travel Planner Logo](frontend/public/images/logo.jpeg)
-
 
 The Travel Planner Application is an AI-powered platform designed to enhance and simplify the travel planning experience. By leveraging the capabilities of Llama-3.2-3B-Instruct, the application curates personalized itineraries, suggests destinations based on user moods, provides a comprehensive packing checklist, and more. It’s designed for users who seek seamless travel planning and for admins who want insights into user behavior and travel trends.
 

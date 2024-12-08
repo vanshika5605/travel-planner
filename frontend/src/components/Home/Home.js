@@ -13,7 +13,7 @@ import Features from "./Features";
 const Home = () => {
 
   return (
-    <div className="home-container">
+    <div data-testid="home-container" className="home-container">
       <section className="header-section">
         <div class="flex-right">
           <h2 className="typing">Discover Your Next Adventure</h2>

@@ -97,3 +97,8 @@ h1, h2, h3, h4, h5, h6 {
 .trip-itinerary button:hover, .profile-page button:hover, .packing-list-container button:hover, .take-a-break button:hover, .currency-converter button:hover, .itinerary-container button:hover{
   background-color: #d89075;
 }
+
+button:disabled {
+  background-color: gray !important;
+  color: black !important;
+}
