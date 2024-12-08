@@ -32,6 +32,7 @@ const userData = [
     { country: "mx", value: 12 },
   ];
 
+// Admin page component to display all user statistics
 const AdminPage = () => {
   const [stats, setStats] = useState({
     totalUsers: 5234,
@@ -163,6 +164,7 @@ const AdminPage = () => {
           </table>
         </div>
 
+        {/* Number of users per country */}
         <div className="world-map">
             <h3>Users Per Country</h3>
             <WorldMap color="teal" 

@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import backend from "../Utils/backend";
 import "./CustomCalendar.css";
 
+// Calendar component that calculates long weekends
 const CustomCalendar = ({holidays, longWeekends}) => {
 
   const tileClassName = ({ date }) => {

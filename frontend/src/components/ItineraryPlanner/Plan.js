@@ -5,6 +5,7 @@ import ItineraryPlanner from "./ItineraryPlanner";
 import "./Plan.css";
 import TravelStyleQuiz from "./TravelStyleQuiz";
 
+// Plan component that gives the users two options - plan an itinerary or let us suggest you
 const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
   const [isPlanModeOn, setIsPlanModeOn] = useState(false);
   const [planModeType, setPlanModeType] = useState("");

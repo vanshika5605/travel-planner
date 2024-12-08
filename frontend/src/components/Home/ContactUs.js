@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import "./ContactUs.css";
 
+// Contact us section on the home page
 const ContactUs = () => {
 
     const handleGetInTouch = () => {

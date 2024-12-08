@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button } from "react-bootstrap";
 
+// Feature of Printing and Sharing the packing list
 const PrintShare = ({ tripDetails, packingList }) => {
   const generatePrintContent = () => {
     return Object.entries(packingList)

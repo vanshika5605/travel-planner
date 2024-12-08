@@ -1,6 +1,7 @@
 import React from "react";
 import "./Profile.css";
 
+// Packing List Button to navigate the user to the packing list for a particular trip
 const PackingListButton = ({
   handleGeneratePackingList,
   trip,

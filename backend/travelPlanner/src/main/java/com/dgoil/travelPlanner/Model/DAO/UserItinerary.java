@@ -1,19 +1,22 @@
 package com.dgoil.travelPlanner.Model.DAO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+/**
+ * Represents a user's travel itinerary stored in the "userItinerary" MongoDB collection.
+ */
 @Document(collection = "userItinerary")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserItinerary {
-    @Id
+    @Id // Unique identifier for the itinerary document.
     private String _id;
     private String email;
     private String tripID;
@@ -30,7 +33,9 @@ public class UserItinerary {
     public void setTripID(String tripID) {
         this.tripID = tripID;
     }
-
+    /**
+     * Represents the budget details for a trip.
+     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -41,14 +46,18 @@ public class UserItinerary {
         private Integer food;
         private Integer travel;
     }
-
+    /**
+     * Represents the trip details, including a summary and daily itinerary.
+     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     public static class TripDetails{
         private String summary;
         private List<Itinerary> itinerary;
-
+        /**
+         * Represents a single day's itinerary.
+         */
         @Data
         @NoArgsConstructor
         @AllArgsConstructor
@@ -58,7 +67,9 @@ public class UserItinerary {
             private String weekDay;
             private String notes;
             private List<Activities> activities;
-
+            /**
+             * Represents an activity for a specific day.
+             */
             @Data
             @NoArgsConstructor
             @AllArgsConstructor

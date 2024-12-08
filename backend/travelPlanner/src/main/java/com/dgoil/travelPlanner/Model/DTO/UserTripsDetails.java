@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
+/**
+ * Represents detailed trip information for a specific user.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,9 @@ public class UserTripsDetails {
     private List<TripDetails> upcomingTrips;
     private List<TripDetails> onGoingTrips;
     private List<UserItinerary.TripDetails.Itinerary.Activities> todayActivities;
-
+    /**
+     * Represents detailed information about a specific trip.
+     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
