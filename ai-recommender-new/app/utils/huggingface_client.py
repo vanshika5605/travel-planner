@@ -2,6 +2,10 @@ import requests
 import json
 from dotenv import load_dotenv
 import os
+from flask import jsonify,request
+# from huggingface_hub import InferenceClient
+import json
+import re
 
 class HuggingFaceClient:
     def __init__(self, api_token, model):
@@ -13,10 +17,9 @@ class HuggingFaceClient:
         """
         self.api_url = f"https://api-inference.huggingface.co/models/{model}"
         self.headers = {
-            "Authorization": f"Bearer {api_token}",
+            "Authorization": "Bearer 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",
             "Content-Type": "application/json"
         }
-
     def check_api_availability(self):
         """
         Check if the Hugging Face API is reachable.
@@ -32,11 +35,9 @@ class HuggingFaceClient:
         except requests.exceptions.RequestException as e:
             print(f"Error checking API availability: {e}")
             return False
-
     def chat_completion(self, messages, temperature=0.5, max_tokens=2048, top_p=0.7, stream=True):
         """
         Make a streaming chat completion request to the model.
-
         :param messages: A list of messages in the chat history
         :param temperature: Sampling temperature
         :param max_tokens: Maximum number of tokens in the response
@@ -44,10 +45,11 @@ class HuggingFaceClient:
         :param stream: Whether to use streaming responses
         :return: Generator yielding streamed responses
         """
+
+        
+        messages=str(messages)
         payload = {
-            "inputs": {
-                "messages": messages
-            },
+            "inputs":  messages,
             "parameters": {
                 "temperature": temperature,
                 "max_tokens": max_tokens,
@@ -55,23 +57,17 @@ class HuggingFaceClient:
                 "stream": stream
             }
         }
-
         try:
             response = requests.post(self.api_url, headers=self.headers, json=payload, stream=stream)
-            print(response)
-            if response.status_code != 200:
-                raise Exception(f"Request failed: {response.status_code} {response.text}")
+            print("HEYYYY")
+            print(type(response.json()))
+            print("HEYYYY2")
+            print(response.text)
 
-            if stream:
-                for line in response.iter_lines():
-                    if line.strip():
-                        yield json.loads(line.decode("utf-8"))
-            else:
-                return response.json()
         except requests.exceptions.RequestException as e:
             print(f"Error during the API request: {e}")
             return None
-
+        
 if __name__ == "__main__":
     # Load API key from .env file
     load_dotenv()
