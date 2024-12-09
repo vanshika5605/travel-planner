@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import PackingListButton from "./PackingListButton";
 
 // Trips component to show upcoming and past trips for a user
@@ -8,17 +7,26 @@ const Trips = ({
   trips,
   handleGeneratePackingList,
   generatingPackingListForTripId,
-  handleViewItinerary
+  handleViewItinerary,
 }) => {
-  const navigate = useNavigate();
   const [isUpcomingTripsVisible, setIsUpcomingTripsVisible] = useState(true);
   const [isPastTripsVisible, setIsPastTripsVisible] = useState(false);
   const [loading, setLoading] = useState({});
 
-  const renderTripSection = (tripsArray, title, isVisible, toggleVisibility) => (
+  const renderTripSection = (
+    tripsArray,
+    title,
+    isVisible,
+    toggleVisibility
+  ) => (
     <div className="trips-section">
       <h2 onClick={toggleVisibility} className="collapsible-header">
-        {title} {isVisible ? <span style={{ fontSize: '12px', lineHeight: '1' }}>▼</span> : <span style={{ fontSize: '12px', lineHeight: '1' }}>▶</span>}
+        {title}{" "}
+        {isVisible ? (
+          <span style={{ fontSize: "12px", lineHeight: "1" }}>▼</span>
+        ) : (
+          <span style={{ fontSize: "12px", lineHeight: "1" }}>▶</span>
+        )}
       </h2>
       {isVisible && (
         <div className="trip-display-section">
@@ -26,21 +34,27 @@ const Trips = ({
             tripsArray.map((trip) => (
               <div key={trip.id} className="trip-card">
                 <div>
-                  <p><strong>Destination:</strong> {trip.destination}</p>
-                  <p><strong>Dates:</strong> {trip.startDate} - {trip.endDate}</p>
+                  <p>
+                    <strong>Destination:</strong> {trip.destination}
+                  </p>
+                  <p>
+                    <strong>Dates:</strong> {trip.startDate} - {trip.endDate}
+                  </p>
                 </div>
                 <div className="trip-button-section">
                   <PackingListButton
                     handleGeneratePackingList={handleGeneratePackingList}
                     trip={trip}
-                    generatingPackingListForTripId={generatingPackingListForTripId}
+                    generatingPackingListForTripId={
+                      generatingPackingListForTripId
+                    }
                   />
-                  <button 
+                  <button
                     className="generate-button"
                     onClick={() => handleViewItinerary(trip)}
                     disabled={loading[trip.id]}
                   >
-                    {loading[trip.id] ? 'Loading...' : 'View Itinerary'}
+                    {loading[trip.id] ? "Loading..." : "View Itinerary"}
                   </button>
                 </div>
               </div>
@@ -55,8 +69,18 @@ const Trips = ({
 
   return (
     <>
-      {renderTripSection(trips.upcomingTrips, 'Upcoming Trips', isUpcomingTripsVisible, () => setIsUpcomingTripsVisible(!isUpcomingTripsVisible))}
-      {renderTripSection(trips.pastTrips, 'Past Trips', isPastTripsVisible, () => setIsPastTripsVisible(!isPastTripsVisible))}
+      {renderTripSection(
+        trips.upcomingTrips,
+        "Upcoming Trips",
+        isUpcomingTripsVisible,
+        () => setIsUpcomingTripsVisible(!isUpcomingTripsVisible)
+      )}
+      {renderTripSection(
+        trips.pastTrips,
+        "Past Trips",
+        isPastTripsVisible,
+        () => setIsPastTripsVisible(!isPastTripsVisible)
+      )}
     </>
   );
 };
