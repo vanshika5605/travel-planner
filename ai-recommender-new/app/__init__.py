@@ -35,7 +35,7 @@ def create_app(config_class=None):
 
     # Initialize services
     itinerary_service = ItineraryService(
-        huggingface_client=huggingface_client, 
+        # huggingface_client=huggingface_client, 
     )
     packing_list_service = PackingListService(
         huggingface_client=huggingface_client,
