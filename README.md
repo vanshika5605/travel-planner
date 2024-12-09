@@ -120,7 +120,6 @@ Now, navigate to IntelliJ and start the backend from TravelPlannerApplication cl
 cd /travel-planner //Navigate to the Project Directory
 mvn clean install //Clean and Build the Project
 mvn spring-boot:run //Run the Application
-java -jar //target/travel-planner
 ```
 
 ### **Setting Up the Backend (Flask)** 
@@ -138,11 +137,7 @@ Install the Python dependencies:
 ```
 pip install -r requirements.txt
 ```
-Start the Flask server(By default runs the app on port 5000): 
-```
-flask run
-```
-On MacOs, port 5000 is occupied with some other process. So run the backend on MacOs on a port other than 5000. Use the following command to run the backend on port 5050:
+Start the Flask server on port 5050: 
 ```
 flask run --port 5050
 ```
