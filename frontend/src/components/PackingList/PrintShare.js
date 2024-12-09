@@ -1,6 +1,9 @@
+import { faPrint, faShare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Button } from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 
+// Feature of Printing and Sharing the packing list
 const PrintShare = ({ tripDetails, packingList }) => {
   const generatePrintContent = () => {
     return Object.entries(packingList)
@@ -88,11 +91,12 @@ const PrintShare = ({ tripDetails, packingList }) => {
           variant="outline-secondary"
           className="me-2"
           onClick={handlePrint}
+          data-testid="print-btn"
         >
-          Print
+          <FontAwesomeIcon icon={faPrint} />
         </Button>
-        <Button variant="outline-primary" onClick={handleShare}>
-          Share
+        <Button variant="outline-primary" onClick={handleShare} data-testid="share-btn">
+          <FontAwesomeIcon icon={faShare} />
         </Button>
       </div>
     </>

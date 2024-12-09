@@ -25,7 +25,7 @@
 }
 
 .navbar-links a:hover {
-  color: lightyellow;
+  color: #aec1e2;
 }
 
 /* Add styles for the buttons */
@@ -87,7 +87,7 @@
 .custom-btn:hover,
 /* .custom-btn:focus, */
 .custom-btn:focus-visible {
-  background: lightyellow !important;
+  background: #aec1e2 !important;
   color: black !important;
 }
 
@@ -101,7 +101,7 @@
 .custom-filled-btn:hover,
 /* .custom-filled-btn:focus, */
 .custom-filled-btn:focus-visible {
-  background: lightyellow !important;
+  background: #aec1e2 !important;
   color: black !important;
 }
 
@@ -131,4 +131,11 @@
 .main-app-name {
   color: white;
   font-size: 1.5rem;
+}
+
+.logo-img {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 0.3rem;
+  margin-right: 10px;
 }

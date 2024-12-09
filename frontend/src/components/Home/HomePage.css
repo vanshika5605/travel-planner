@@ -25,7 +25,8 @@
 }
 
 .flex-right {
-text-align: left;  /* Aligns items to the right */
+text-align: left !important ; 
+padding-left: 1rem; /* Aligns items to the right */
 }
 
 
@@ -35,6 +36,7 @@ text-align: left;  /* Aligns items to the right */
   font-weight: 700;
   margin-bottom: 15px;
   letter-spacing: 1px;
+  /* margin-left: -20px; */
 }
 
 .header-section h3 {
@@ -184,7 +186,7 @@ text-align: left;  /* Aligns items to the right */
   white-space: nowrap;
   overflow: hidden;
   border-right: 4px solid black; /* Blinking cursor */
-  width: 0;
+  /* width: 0; */
   animation: 
     typing 4s steps(30, end) 1s forwards, 
     blink 0.75s step-end 4s; /* Stops blinking after typing finishes */

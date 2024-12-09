@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Features.css";
 import backend from "../Utils/backend";
 
+// Feature component on the home page to display the list of features that our website offers
 const Features = () => {
   const [features, setFeatures] = useState([]);
 
@@ -27,7 +28,7 @@ const Features = () => {
   return (
     <div className="features">
       <div className="left-div">
-        <h1>Our Services</h1>
+        <h2>Our Services</h2>
       </div>
       <div className="right-div">
         <div
@@ -40,7 +41,7 @@ const Features = () => {
               key={feature.id}
             >
               <div className="custom-accordion-header">
-                <h2 className="accordion-header" id={`heading-${feature.id}`}>
+                <h2 className="accordion-header" id={`heading-${feature.id}`} data-testid={`heading-${feature.id}`}>
                   <button
                     className="accordion-button collapsed d-flex justify-content-between align-items-center bg-white shadow-none custom-accordion-button"
                     type="button"
@@ -60,6 +61,7 @@ const Features = () => {
                 className="accordion-collapse collapse"
                 aria-labelledby={`heading-${feature.id}`}
                 data-bs-parent="#featuresAccordion"
+                data-testid={`collapse-${feature.id}`}
               >
                 <div className="accordion-body">{feature.description}</div>
               </div>

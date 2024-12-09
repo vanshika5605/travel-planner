@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Component Snapshot matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="home-container"
+  >
+    <section
+      class="header-section"
+    >
+      <div
+        class="flex-right"
+      >
+        <h2
+          class="typing"
+        >
+          Discover Your Next Adventure
+        </h2>
+        <p>
+          Welcome to your next adventure! Whether you're dreaming of a sunny beach escape or a mountain retreat, we're here to guide you every step of the way.
+        </p>
+        <button
+          class="custom-get-started-btn btn btn-outline-primary"
+          type="button"
+        >
+          Get Started
+        </button>
+      </div>
+      <div>
+         
+        <img
+          alt="Loading..."
+          class="home-page-img"
+          src="/images/home.png"
+        />
+      </div>
+    </section>
+    <div
+      data-testid="features-component"
+    >
+      Mocked Features
+    </div>
+    <div
+      data-testid="contact-us-component"
+    >
+      Mocked Contact Us
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -16,7 +16,13 @@ public class packingListController {
     @Autowired
     private packingListService mypackingListService;
 
-    @PostMapping("/saveList")
+    /**
+     * Endpoint to save a packing list for a specific trip.
+     * 
+     * @param packingList The packing list to be saved (in request body).
+     * @return A ResponseEntity with an ApiResponse indicating success or failure.
+     */
+    @PostMapping("/saveList") // POST request to save a packing list.
     public ResponseEntity<ApiResponse<String>> saveList(@RequestBody PackingList packingList) {
         try {
             mypackingListService.saveList(packingList);
@@ -28,7 +34,13 @@ public class packingListController {
         }
     }
 
-    @GetMapping("/getList/{tripId}")
+    /**
+     * Endpoint to retrieve a packing list based on a trip ID.
+     * 
+     * @param tripId The trip ID to fetch the packing list for (from the path variable).
+     * @return A ResponseEntity containing the ApiResponse with the packing list or error.
+     */
+    @GetMapping("/getList/{tripId}") // GET request to retrieve a packing list by trip ID.
     public ResponseEntity<ApiResponse<PackingList>> saveList(@PathVariable String tripId) {
         try{
             PackingList packingList = mypackingListService.getList(tripId);

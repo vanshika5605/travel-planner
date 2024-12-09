@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import axios from "axios";
 import "./CurrencyConverter.css";
-import backend from "../Utils/backend";
 
+// Currency converter component
 const CurrencyConverter = ({currencies, rates}) => {
   const [fromCurrency, setFromCurrency] = useState(null);
   const [toCurrency, setToCurrency] = useState(null);
@@ -36,7 +35,7 @@ const CurrencyConverter = ({currencies, rates}) => {
   return (
     <div className="currency-converter">
       <div className="converter-header">
-        <h3>Currency Converter</h3>
+        <h2>Currency Converter</h2>
       </div>
       <div className="converter-body">
         {/* From Section */}

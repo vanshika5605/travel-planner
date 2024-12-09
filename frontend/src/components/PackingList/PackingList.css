@@ -1,8 +1,9 @@
 .packing-list-container {
-    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
   }
   
   .trip-details {
@@ -15,6 +16,10 @@
   .trip-info h3 {
     margin-top: 0;
     color: #333;
+  }
+
+  .packing-list-content {
+    width: 70vw;
   }
   
   .packing-list-header {
@@ -42,10 +47,11 @@
     margin-bottom: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
+    font-size: 0.9rem;
   }
   
   .category-title {
-    background-color: #f8f9fa;
+    background-color: #f5e2db;
     padding: 10px;
     margin: 0;
     text-transform: capitalize;
@@ -110,8 +116,17 @@
     align-items: center;
     margin-top: 20px;
     padding: 10px;
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
     border-radius: 5px;
+    color: #c65d36;
+    font-weight: bold;
+  }
+
+  .item-count {
+    padding: 0.5rem;
+    color: #c65d36;
+    border: 1px solid #c65d36;
+    border-radius: 0.5rem;
   }
   
   .save-btn {
@@ -121,4 +136,9 @@
     padding: 10px 15px;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  .list-items {
+    max-height: 65vh;
+    overflow-y: scroll;
   }

@@ -23,6 +23,10 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Service class responsible for managing user itineraries.
+ * This includes retrieving, updating, and saving itinerary data for trips.
+ */
 @Service
 @Slf4j
 public class userItineraryService {
@@ -32,6 +36,13 @@ public class userItineraryService {
     @Autowired
     userDetailsService userDetailsService;
 
+    /**
+     * Retrieves the itinerary of a user by the trip ID.
+     * 
+     * @param tripId The ID of the trip.
+     * @return Optional containing UserItinerary if found.
+     * @throws IllegalArgumentException if tripId is null or empty.
+     */
     public Optional<UserItinerary> getUserItinerary(String tripId) {
         if (tripId == null || tripId.isEmpty()) {
             throw new IllegalArgumentException("tripId parameter is missing or empty.");
@@ -39,6 +50,12 @@ public class userItineraryService {
         return myUserItineraryRepo.findByTripID(tripId);
     }
 
+    /**
+     * Retrieves detailed trip data including user details and itinerary for a given trip ID.
+     * 
+     * @param tripId The ID of the trip.
+     * @return UserTripData containing trip and user details.
+     */
     public UserTripData getUserTripData(String tripId) {
         UserTripData userTripData = new UserTripData();
         userTripData.setTripId(tripId);
@@ -52,24 +69,48 @@ public class userItineraryService {
 
         return userTripData;
     }
+
+    /**
+     * Returns the number of past trips.
+     * 
+     * @return Integer count of past trips.
+     */
     public Integer pastTrips() {
         return myUserItineraryRepo.getPastTrips(LocalDate.now().toString()).size();
     }
 
+    /**
+     * Returns the number of upcoming trips.
+     * 
+     * @return Integer count of upcoming trips.
+     */
     public Integer upcomingTrips() {
         return myUserItineraryRepo.getUpcomingTrips(LocalDate.now().toString()).size();
     }
 
+    /**
+     * Retrieves the list of popular destinations.
+     * 
+     * @return List of popular destinations along with their visit counts.
+     */
     public List<AdminStatistics.PopularDestinations> getPopularDestination() {
         return myUserItineraryRepo.getPopularDestination();
     }
 
+    /**
+     * Saves the user itinerary. If a TripID is not provided, a new one is generated.
+     * If a trip with the provided TripID exists, it is updated.
+     * 
+     * @param userItinerary The itinerary to save or update.
+     */
     public void saveUserItinerary(UserItinerary userItinerary){
         if(StringUtils.isEmpty(userItinerary.getTripID())) {
+            // Generate a new TripID if not provided.
             String tripId = "TB-"+ UUID.randomUUID().toString().substring(0,4);
             userItinerary.setTripID(tripId);
             myUserItineraryRepo.insert(userItinerary);
         } else {
+            // Update existing itinerary if TripID exists.
             Optional<UserItinerary> existingItinerary = myUserItineraryRepo.findByTripID(userItinerary.getTripID());
             if (existingItinerary.isPresent()) {
                 UserItinerary existingItinerary1 = existingItinerary.get();
@@ -83,6 +124,22 @@ public class userItineraryService {
         }
     }
 
+    /**
+     * Saves a user itinerary, either by creating a new one or updating an existing one.
+     * 
+     * @param userItinerary The itinerary to save.
+     */
+    public void saveItinerary(UserItinerary userItinerary) {
+        myUserItineraryRepo.save(userItinerary);
+    }
+
+    /**
+     * Retrieves the trip details for a user by their email.
+     * 
+     * @param email The user's email.
+     * @return A UserTripsDetails object containing past, ongoing, and upcoming trips.
+     * @throws IllegalArgumentException if the email is null or empty.
+     */
     public UserTripsDetails getUserTripDetails(String email) {
         if (StringUtils.isEmpty(email)) {
             log.warn("Email is null or empty. Cannot retrieve trip details.");
@@ -98,6 +155,7 @@ public class userItineraryService {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        // Filter and map trip details into past, upcoming, and ongoing trips
         List<UserTripsDetails.TripDetails> pastTripsDetails = mapToTripDetails(tripDetails.stream()
                 .filter(trip -> LocalDate.parse(trip.getEndDate(), formatter).isBefore(today))
                 .collect(Collectors.toList()));
@@ -105,7 +163,8 @@ public class userItineraryService {
         List<UserTripsDetails.TripDetails> upcomingTripsDetails = mapToTripDetails(tripDetails.stream()
                 .filter(trip -> LocalDate.parse(trip.getStartDate(), formatter).isAfter(today))
                 .collect(Collectors.toList()));
-
+        
+        // Filter for ongoing trips (today's trips)
         List<UserItinerary>  todayDetailsList = tripDetails.stream()
                 .filter(trip -> !LocalDate.parse(trip.getStartDate(), formatter).isAfter(today) &&
                         !LocalDate.parse(trip.getEndDate(), formatter).isBefore(today))
@@ -130,6 +189,12 @@ public class userItineraryService {
         return userTripsDetails;
     }
 
+    /**
+     * Maps a list of UserItinerary objects to a list of UserTripsDetails.TripDetails.
+     * 
+     * @param itineraries The list of UserItinerary objects to map.
+     * @return A list of mapped trip details.
+     */
     private List<UserTripsDetails.TripDetails> mapToTripDetails(List<UserItinerary> itineraries) {
         return itineraries.stream().map(trip -> {
             UserTripsDetails.TripDetails temp = new UserTripsDetails.TripDetails();
@@ -144,6 +209,12 @@ public class userItineraryService {
         }).collect(Collectors.toList());
     }
 
+    /**
+     * Converts a date string from the format "yyyy-MM-dd" to a readable format "d MMMM yyyy" with an ordinal suffix.
+     * 
+     * @param date The date string in "yyyy-MM-dd" format.
+     * @return The formatted date string.
+     */
     public static String convertToReadableDate(String date) {
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(date, inputFormatter);

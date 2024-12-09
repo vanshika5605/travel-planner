@@ -10,13 +10,14 @@ import { Modal, Button, Alert } from "react-bootstrap";
 import ContactUs from "./ContactUs";
 import Features from "./Features";
 
+// Home component for the landing page
 const Home = () => {
 
   return (
-    <div className="home-container">
+    <div data-testid="home-container" className="home-container">
       <section className="header-section">
         <div class="flex-right">
-          <h1 className="typing">Discover Your Next Adventure</h1>
+          <h2 className="typing">Discover Your Next Adventure</h2>
           {/* <h3>Find Your Ideal Roommate with Ease</h3> */}
           <p>
             Welcome to your next adventure! Whether you're dreaming of a sunny

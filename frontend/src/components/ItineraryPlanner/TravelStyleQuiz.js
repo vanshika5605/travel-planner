@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import './TravelStyleQuiz.css';
 
+// Component for interactive quiz which gives a result as to what kind of a traveller is the user.
 const TravelStyleQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
@@ -120,7 +122,7 @@ const TravelStyleQuiz = () => {
               </p>
               <button 
                 onClick={resetQuiz} 
-                className="btn btn-primary w-100"
+                className="btn btn-primary w-100 quiz-btn"
               >
                 Take Quiz Again
               </button>
@@ -144,7 +146,7 @@ const TravelStyleQuiz = () => {
                 <button 
                   key={index} 
                   onClick={() => handleAnswer(option)} 
-                  className="btn btn-outline-primary"
+                  className="quiz-option-btn btn btn-outline-primary"
                 >
                   {option.text}
                 </button>

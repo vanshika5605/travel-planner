@@ -1,18 +1,26 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import Profile from './components/Profile/Profile';
-import Plan from './components/ItineraryPlanner/Plan';
-import Navbar from './components/Utils/Navbar';
-import Home from './components/Home/Home';
-import SignUp from './components/SignUp/SignUp';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Loader from './components/Utils/Loader';  // Import the loader component
-import backend from './components/Utils/backend';
-import Footer from './components/Utils/Footer';
-import PackingList from './components/PackingList/PackingList';
+import React, { useEffect, useState } from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import "./App.css";
+import AdminPage from "./components/AdminPage/AdminPage";
+import Home from "./components/Home/Home";
+import Plan from "./components/ItineraryPlanner/Plan";
+import Itinerary from "./components/ItineraryPlanner/Itinerary";
+import PackingList from "./components/PackingList/PackingList";
+import Profile from "./components/Profile/Profile";
+import SignUp from "./components/SignUp/SignUp";
+import backend from "./components/Utils/backend";
+import Footer from "./components/Utils/Footer";
+import Loader from "./components/Utils/Loader"; // Import the loader component
+import Navbar from "./components/Utils/Navbar";
+// import { useNavigate } from "react-router-dom";
 
+// Main App component
 const App = () => {
-  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -22,52 +30,64 @@ const App = () => {
   const [longWeekends, setLongWeekends] = useState([]);
   const [rates, setRates] = useState({});
   const [currencies, setCurrencies] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const fetchHolidays = async () => {
     try {
-      const response = await backend.getHolidays();
-      setHolidays(response.data);
-
+      const response1 = await backend.getHolidays('2024');
+      const response2 = await backend.getHolidays('2025');
+      const response = [...response1.data, ...response2.data]
+      setHolidays(response);
       // Determine long weekends
-      const longWeekendDates = getLongWeekends(response.data);
+      const longWeekendDates = findLongWeekends(response);
       setLongWeekends(longWeekendDates);
     } catch (error) {
       console.error("Error fetching holidays:", error);
     }
   };
 
-  const getLongWeekends = (holidays) => {
-    const longWeekendDates = [];
-    holidays.forEach((holiday) => {
-      const holidayDate = new Date(holiday.date);
-      const dayOfWeek = holidayDate.getDay();
+  const findLongWeekends = (holidays) => {
+    // Convert holiday dates to a Set for quick lookup, maintaining UTC format
+    const holidayDates = new Set(holidays.map(holiday => holiday.date));
 
-      if (dayOfWeek === 5) {
-        const nextMonday = new Date(holidayDate);
-        nextMonday.setDate(holidayDate.getDate() + 3);
-        if (
-          holidays.some(
-            (h) => new Date(h.date).toDateString() === nextMonday.toDateString()
-          )
-        ) {
-          longWeekendDates.push(holidayDate.toDateString());
-        }
-      }
+    // Helper function to check if a date (in UTC) is a holiday
+    const isHoliday = (date) => {
+        const isoDate = date.toISOString().split("T")[0]; // Ensure UTC format
+        return holidayDates.has(isoDate);
+    };
 
-      if (dayOfWeek === 1) {
-        const prevFriday = new Date(holidayDate);
-        prevFriday.setDate(holidayDate.getDate() - 3);
-        if (
-          holidays.some(
-            (h) => new Date(h.date).toDateString() === prevFriday.toDateString()
-          )
-        ) {
-          longWeekendDates.push(holidayDate.toDateString());
+    // Calculate long weekends
+    const longWeekendDates = holidays.reduce((longWeekends, holiday) => {
+        const holidayDate = new Date(holiday.date); // Parse the date as UTC
+        const dayOfWeek = holidayDate.getUTCDay(); // Get the day of the week in UTC
+
+        if (dayOfWeek === 5) { // Friday
+            const saturday = new Date(holidayDate);
+            saturday.setUTCDate(holidayDate.getUTCDate() + 1); // Add one day
+            const sunday = new Date(holidayDate);
+            sunday.setUTCDate(holidayDate.getUTCDate() + 2); // Add two days
+            if (!isHoliday(saturday) && !isHoliday(sunday)) {
+                longWeekends.push(holiday.date); // Friday
+                longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
+                longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
+            }
+        } else if (dayOfWeek === 1) { // Monday
+            const sunday = new Date(holidayDate);
+            sunday.setUTCDate(holidayDate.getUTCDate() - 1); // Subtract one day
+            const saturday = new Date(holidayDate);
+            saturday.setUTCDate(holidayDate.getUTCDate() - 2); // Subtract two days
+            if (!isHoliday(sunday) && !isHoliday(saturday)) {
+                longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
+                longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
+                longWeekends.push(holiday.date); // Monday
+            }
         }
-      }
-    });
+
+        return longWeekends;
+    }, []);
+
     return longWeekendDates;
-  };
+};
 
   const fetchExchangeRates = async () => {
     try {
@@ -108,49 +128,70 @@ const App = () => {
             setPassword={setPassword}
             userData={userData}
             setUserData={setUserData}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
           />
         )}
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route
-                  path="/signup"
-                  element={
-                    <SignUp
-                      isLoggedIn={isLoggedIn}
-                      setIsLoggedIn={setIsLoggedIn}
-                      userId={userId}
-                      setUserId={setUserId}
-                      setUserData={setUserData}
-                    />
-                  }
+              path="/signup"
+              element={
+                <SignUp
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                  userId={userId}
+                  setUserId={setUserId}
+                  setUserData={setUserData}
                 />
+              }
+            />
             {isLoggedIn ? (
-              <>
-                <Route path="/profile" element={<Profile userData={userData} />} />
-                <Route
-                  path="/plan"
-                  element={
-                    <Plan
-                      isLoggedIn={isLoggedIn}
-                      userId={userId}
-                      holidays={holidays}
-                      longWeekends={longWeekends}
-                      rates={rates}
-                      currencies={currencies}
-                    />
-                  }
-                />
-                <Route path="/packing-list" element={<PackingList />} />
-              </>
+              !isAdmin ? (
+                <>
+                  <Route
+                    path="/profile"
+                    element={<Profile userData={userData} />}
+                  />
+                  <Route
+                    path="/plan"
+                    element={
+                      <Plan
+                        isLoggedIn={isLoggedIn}
+                        userId={userId}
+                        holidays={holidays}
+                        longWeekends={longWeekends}
+                        rates={rates}
+                        currencies={currencies}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/packing-list/:tripId"
+                    element={<PackingList />}
+                  />
+                  <Route
+                    path="/itinerary"
+                    element={<Itinerary/>}
+                  />
+                </>
+              ) : (
+                <>
+                  <Route
+                    path="/admin"
+                    element={<AdminPage setIsAdmin={setIsAdmin} />}
+                  />
+                </>
+              )
             ) : (
               <></>
             )}
+            <Route path="*" element={<Navigate to="/" />} />{" "}
+            {/* Redirects all undefined routes */}
           </Routes>
         </div>
-        <div>
           <Footer></Footer>
-        </div>
       </Router>
     </>
   );

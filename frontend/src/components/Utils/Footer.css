@@ -2,8 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: #e8e8e3; /* Matches the light gray background */
-    padding: 2rem;
+    background-color: #589ea8; /* Matches the light gray background */
+    padding: 1rem;
     font-family: Arial, sans-serif;
   }
   
@@ -15,15 +15,16 @@
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    margin-top: 2rem;
   }
   
   .footer-left p {
-    margin: 0;
+    margin: 4;
     font-size: 1rem;
   }
   
   .footer-left a {
-    color: #0073e6; /* Blue link color */
+    color: white; /* Blue link color */
     text-decoration: none;
   }
   
@@ -34,6 +35,7 @@
   .footer-right {
     display: flex;
     gap: 2rem;
+    align-items: center;
   }
   
   .footer-section {
@@ -43,6 +45,7 @@
   .footer-section h3 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    margin-top: 1rem;
   }
   
   .footer-section p {
@@ -51,7 +54,7 @@
   }
   
   .footer-section a {
-    color: #0073e6; /* Blue link color */
+    color: white; /* Blue link color */
     text-decoration: none;
   }
   

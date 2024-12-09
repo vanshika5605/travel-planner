@@ -69,8 +69,8 @@
   }
   
   .cta-button {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
     font-weight: bold;
     color: black;
     background-color: white;
@@ -141,13 +141,13 @@
 /* Left column */
 .leftcolumn {
     float: left;
-    width: 75% !important;
+    width: 70% !important;
   }
   
   /* Right column */
   .rightcolumn {
     float: left;
-    width: 25% !important;
+    width: 30% !important;
     padding-left: 20px;
   }
   
@@ -178,16 +178,6 @@
       width: 100%;
       padding: 0;
     }
-}
-
-/* Highlight holidays with red background */
-.holiday {
-  background-color: red !important;
-}
-
-/* Highlight long weekends with green background */
-.long-weekend {
-  background-color: green !important;
 }
 
 .quiz-section {

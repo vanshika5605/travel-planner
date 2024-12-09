@@ -59,13 +59,46 @@ h1, h2, h3, h4, h5, h6 {
 .custom-get-started-btn {
   color: black !important;
     border: 1px solid black !important;
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
 }
 
 .custom-get-started-btn:hover,
 .custom-get-started-btn:focus-visible {
   color: black !important;
     border: 1px solid black !important;
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
     background: none !important;
+}
+
+.profile-page button, .trip-itinerary button , .packing-list-container button, .take-a-break button, .currency-converter button, .itinerary-container button{
+  background-color: #c65d36  ;
+  color: white;
+  /* padding: 10px 15px; */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-page button {
+  height: 2rem;
+  padding: 0 0.5rem;
+}
+
+.trips-section button {
+  width: 12rem;
+}
+
+.trip-itinerary button {
+  height: 2.5rem;
+  padding: 0 1rem;
+}
+
+.trip-itinerary button:hover, .profile-page button:hover, .packing-list-container button:hover, .take-a-break button:hover, .currency-converter button:hover, .itinerary-container button:hover{
+  background-color: #d89075;
+}
+
+button:disabled {
+  background-color: gray !important;
+  color: black !important;
 }

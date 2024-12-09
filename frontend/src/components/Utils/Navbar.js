@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./Navbar.css";
 
+// Navbar component displayed on top of every page
 const Navbar = ({
   isLoggedIn,
   setIsLoggedIn,
@@ -13,9 +14,10 @@ const Navbar = ({
   setPassword,
   userData,
   setUserData,
+  isAdmin,
+  setIsAdmin,
 }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
-
   const [isEmailValid, setIsEmailValid] = useState(true); // for email validation
   const [touched, setTouched] = useState(false); // for tracking interaction
   const [errorMessage, setErrorMessage] = useState("");
@@ -51,9 +53,15 @@ const Navbar = ({
       // Handle success response (status 200)
       if (response.status === 200) {
         setIsLoggedIn(true);
-        setShowLoginModal(false); 
-        navigate("/");
-        setUserData(response.data.data);
+        setShowLoginModal(false);
+        if (userId === "admin@umass.edu" && password === "Test@123") {
+          navigate("/admin");
+          setUserData(response.data.data); // Redirect to Admin Page
+          setIsAdmin(true);
+        } else {
+          navigate("/");
+          setUserData(response.data.data);
+        }
       }
     } catch (error) {
       if (error.response) {
@@ -87,33 +95,43 @@ const Navbar = ({
     setErrorMessage("");
   };
 
+  // useEffect(() => {
+  //   console.log("Changed")
+  // },[isAdmin])
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <div className="container custom-nav">
         <Link className="navbar-brand" to="/">
           {/* <img className="logo-class" src="/logo.jpg" alt="Loading..." /> */}
+          <img className="logo-img" src="/images/logo.jpeg" alt="Logo"></img>
           <span className="main-app-name">Travel Planner </span>
         </Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             {isLoggedIn ? (
-              <>
-                <li className="nav-item">
-                  <Link className=" nav-link custom-nav-link" to="/profile">
-                    Profile
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link custom-nav-link" to="/plan">
-                    Plan a Trip
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link custom-nav-link" to="/packing-list">
-                    Packing List Generator
-                  </Link>
-                </li>
-              </>
+              isAdmin ? (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link custom-nav-link" to="/admin">
+                      Dashboard
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link className=" nav-link custom-nav-link" to="/profile">
+                      Profile
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link custom-nav-link" to="/plan">
+                      Plan a Trip
+                    </Link>
+                  </li>
+                </>
+              )
             ) : (
               <></>
             )}
