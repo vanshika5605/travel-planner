@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+
+// Component to add a new item to the list
 const NewItemModal = ({
   showAddItemModal,
   setShowAddItemModal,

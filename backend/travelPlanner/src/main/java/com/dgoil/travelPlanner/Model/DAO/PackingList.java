@@ -1,19 +1,27 @@
 package com.dgoil.travelPlanner.Model.DAO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Document(collection = "packingList")
+/**
+ * Represents a document in the "packingList" MongoDB collection.
+ */
+@Document(collection = "packingList") // Maps this class to the "packingList" MongoDB collection.
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PackingList {
-    @Id
+    @Id // Unique identifier for the document.
+    /**
+     * List of packing list items associated with this document.
+     * Packing list items are divided into 5 buckets.
+     */
     private String _id;
     private String tripID;
     private PackingObj packingList;

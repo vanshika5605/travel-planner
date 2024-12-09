@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './TravelStyleQuiz.css';
 
+// Component for interactive quiz which gives a result as to what kind of a traveller is the user.
 const TravelStyleQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);

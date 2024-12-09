@@ -1,6 +1,7 @@
 import React from 'react';
 import './Footer.css';
 
+// Footer component displayed at the end of every page
 const Footer = () => {
   return (
     <footer className="footer">

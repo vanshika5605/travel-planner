@@ -6,6 +6,7 @@ import NewItemModal from "./NewItemModal";
 import "./PackingList.css";
 import PrintShare from "./PrintShare";
 
+// Packing List component to store packing list for a particular trip
 const PackingList = () => {
   const { tripId } = useParams();
   const location = useLocation();

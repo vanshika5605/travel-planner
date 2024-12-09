@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PackingListButton from "./PackingListButton";
 
+// Trips component to show upcoming and past trips for a user
 const Trips = ({
   userData,
   trips,

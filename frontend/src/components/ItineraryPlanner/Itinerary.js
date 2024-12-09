@@ -5,6 +5,7 @@ import "./Itinerary.css";
 import ItineraryBox from "./ItineraryBox";
 import TripDetailsBox from "./TripDetailsBox";
 
+// Itinerary component to display the itinerary for a particular trip for a user
 const Itinerary = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Initialize useNavigate
@@ -27,6 +28,7 @@ const Itinerary = () => {
   const [itineraryData, setItineraryData] = useState(initialItineraryData);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Copy itinerary to clipboard
   const copyToClipboard = () => {
     let formattedItinerary = "Itinerary:\n\n";
 

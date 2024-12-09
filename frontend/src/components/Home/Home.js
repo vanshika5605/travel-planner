@@ -10,6 +10,7 @@ import { Modal, Button, Alert } from "react-bootstrap";
 import ContactUs from "./ContactUs";
 import Features from "./Features";
 
+// Home component for the landing page
 const Home = () => {
 
   return (

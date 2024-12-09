@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Features.css";
 import backend from "../Utils/backend";
 
+// Feature component on the home page to display the list of features that our website offers
 const Features = () => {
   const [features, setFeatures] = useState([]);
 

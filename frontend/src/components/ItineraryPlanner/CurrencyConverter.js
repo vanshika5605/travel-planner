@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import "./CurrencyConverter.css";
 
+// Currency converter component
 const CurrencyConverter = ({currencies, rates}) => {
   const [fromCurrency, setFromCurrency] = useState(null);
   const [toCurrency, setToCurrency] = useState(null);
