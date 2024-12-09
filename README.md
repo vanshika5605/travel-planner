@@ -4,67 +4,94 @@
 
 The Travel Planner Application is an AI-powered platform designed to enhance and simplify the travel planning experience. By leveraging the capabilities of Llama-3.2-3B-Instruct, the application curates personalized itineraries, suggests destinations based on user moods, provides a comprehensive packing checklist, and more. It’s designed for users who seek seamless travel planning and for admins who want insights into user behavior and travel trends.
 
-### Video Walkthrough
+## Video Walkthrough
 
-### Table of Contents
-- Key Features
-- Tech Stack
-- Setup Instructions
-- Admin Dashboard
-- Usage Instructions
-- AI Models
-- Contributing
+## Table of Contents
+- [Key Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Setup Instructions](#setup-instructions)
+- [Admin Dashboard](#admin-dashboard)
+- [Usage Instructions](#usage-instructions)
+- [AI Models](#ai-models)
+- [Contributing](#contributing)
 
-### 🚀 Key Features
-**1. Personalized Itinerary Generator**
-Users can fill out a form specifying their preferences such as:
-- Destination
-- Dates of Travel
-- Budget
-- Travel Group Type (e.g., solo, couple, family, friends)
+## 🚀 Key Features
+### **1. Login/SignUp**  
+The Login/SignUp functionality ensures a secure and personalized platform for the users. Users can create an account or log in to access tailored travel plans, view trip history, and save itineraries for future reference. The authentication system ensures the data remains protected while enabling seamless access to all features.  
 
-The application generates a customized travel itinerary based on these inputs.
 
-**2. Mood-Based Travel Suggestions**
-If a user is unsure about where to go, they can share their mood, preferences, or thoughts (e.g., “I want a relaxing getaway” or “I feel adventurous”). The application suggests destinations and activities that align with the user’s input.
+---
 
-**3. Packing List Generator**
-- Generates a checklist of items to pack based on the travel destination, duration, season, and group type.
-- Users can customize and manage their packing list within the app.
 
-**4. Trip Management**
-Users can save and access their trips:
-- Past Trips: Review past itineraries.
-- Ongoing Trips: Track the current trip details.
-- Upcoming Trips: Plan future travel with all details saved.
+### **2. Itinerary Planning**  
+Our standout feature, Itinerary Planning, creates customized travel schedules based on the following user inputs:
 
-**5. Interactive Travel Style Quiz**
-A fun and engaging quiz that helps users discover their travel style (e.g., Adventure Seeker, Relaxation Enthusiast, Cultural Explorer). Based on quiz results, the app provides tailored travel suggestions.
+* Destination
+* Duration of trips
+* Type of travel group (e.g., solo, couple, family, friends)
+* Budget 
+* Interests 
 
-**6. Currency Converter**
-- Converts currencies in real-time based on the user’s travel destination.
-- Helps users plan their budget effectively with accurate currency conversion rates.
 
-**7. Long Weekend Calculator**
-- Displays long weekends month wise to keep the users updated of the upcoming holidays.
-  
-**8. Admin Dashboard**
-- A comprehensive dashboard for administrators to monitor user statistics:
-- Total Number of Users
-- Number of New Users
-- Number of upcoming and past trips
-- Popular Travel Months
-- Popular Destinations
-- Heatmap of Travelers per Country
+Even if the user is unsure about the trip details, they can simply share their mood and any little information they have (e.g., “I want a relaxing getaway” or “I feel adventurous”), and the system will generate an exciting and personalized itinerary for them. 
 
-### 🛠 Tech Stack
+
+With a focus on convenience and detail, the itinerary accounts for local attractions, travel distances, weather, and your preferences to ensure an unforgettable experience. The intuitive interface allows real-time editing, providing the flexibility to modify plans as needed.  
+
+
+---
+
+
+### **3. Smart Packing Assistant**  
+Say goodbye to overpacking or forgetting essentials! The Smart Packing Assistant
+* Generates personalized packing lists based on the user’s trip’s destination, duration, activities, and weather conditions. 
+* Allows users to customize and manage their packing list within the app.
+
+Users can also effortlessly share or print personalized packing lists. Whether they need to coordinate with travel companions or prefer a hard copy, this feature ensures they are always prepared for the trip.
+
+
+---
+
+
+### **4. Trip History**  
+Users can relive their adventures with the Trip History feature, which is perfect for referencing previous trips or reusing plans for similar destinations. 
+Users can save and access their trips: 
+* Past Trips: Review past itineraries. 
+* Ongoing Trips: Track the current trip details. 
+* Upcoming Trips: Plan future travel with all details saved
+
+
+---
+
+
+### **5. Admin Dashboard**  
+The Admin Dashboard is designed for efficient platform management. It provides comprehensive tools for managing user accounts, monitoring the system's performance, and overseeing travel data trends. With real-time analytics and an intuitive interface, admins can ensure a smooth experience for all users while continuously improving the platform. The dashboard displays:
+* Total Number of Users 
+* Number of New Users 
+* Number of upcoming and past trips 
+* Popular Travel Months 
+* Popular Destinations 
+* Heatmap of Travelers per Country
+
+
+---
+
+
+### **6. Travel Planning Essentials**
+The Travel Planner brings together practical tools to enhance the travel planning experience. It includes:
+* A Long Weekend Calculator which highlights weekends and long weekends. This makes it easier to spot the perfect time for a getaway without having to juggle multiple schedules. 
+* An Interactive Quiz which is a fun and engaging quiz that helps users discover their travel style (e.g., Adventure Seeker, Relaxation Enthusiast, Cultural Explorer). This feature not only helps users learn more about their preferences but also allows the website to tailor its itinerary suggestions to their unique travel style, ensuring every trip feels custom-made. 
+* A Currency Exchange calculator that easily converts one currency to another with our built-in currency exchange feature. It uses real-time exchange rates to provide accurate conversions, making international travel planning smoother.  
+
+
+## 🛠 Tech Stack
 - **Frontend:** React
 - **Backend:** SpringBoot
 - **Database:** MongoDB
 - **Cloud Storage:** AWS S3
 - **AI Integration:** LLM - Llama-3.2-3B-Instruct
 
-### 🔧 Setup Instructions
+## 🔧 Setup Instructions
 To get the project up and running locally, follow these steps:
 
 **Prerequisites**
@@ -115,11 +142,11 @@ DATABASE_NAME=your_database_name
 **Access the Application**
 Open a browser and navigate to http://localhost:3000 to access the frontend.
 
-### 📊 Admin Dashboard
+## 📊 Admin Dashboard
 Log in as an administrator using the credentials email = admin@umass.edu and password = Test@123.
 Navigate to /admin to access the dashboard and monitor user activity.
 
-### 📖 Usage Instructions
+## 📖 Usage Instructions
 **For Users**
 - Sign Up / Log In to the platform.
 - Find out the best long weekend that works out for you using our long weekend calendar.
