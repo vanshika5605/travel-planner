@@ -15,7 +15,7 @@ The Travel Planner Application is an AI-powered platform designed to enhance and
 - [AI Models](#ai-models)
 - [Contributing](#contributing)
 
-## 🚀 Key Features
+## <a id="key-features"></a> 🚀 Key Features
 ### **1. Login/SignUp**  
 The Login/SignUp functionality ensures a secure and personalized platform for the users. Users can create an account or log in to access tailored travel plans, view trip history, and save itineraries for future reference. The authentication system ensures the data remains protected while enabling seamless access to all features.  
 
