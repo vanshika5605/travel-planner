@@ -47,7 +47,7 @@ def generate_itinerary():
     try:
         # Validate input: Ensure JSON payload is provided
         if not request.json:
-            return jsonify({"error": "No input data provided"}), 400
+            return jsonify({"errorMessage": "No input data provided"}), 400
 
         # Create an instance of the itinerary service
         itinerary_service = ItineraryService()
@@ -63,13 +63,13 @@ def generate_itinerary():
         if "429" in str(e):  # Assuming the exception message contains the status code
 
             print(f"Itinerary Generation Error (429): {str(e)}")
-            return jsonify({"error": "Itinerary generation failed due to too many requests. Please try again in a few minutes."}), 429
+            return jsonify({"errorMessage": "Itinerary generation failed due to too many requests. Please try again in a few minutes."}), 429
         else:
             # Handle other cases of ItineraryGenerationError
             print(f"Itinerary Generation Error: {str(e)}")
-            return jsonify({"error": str(e)}), 500
+            return jsonify({"errorMessage": str(e)}), 500
     except Exception as e:
         # Catch all other unexpected exceptions
         print(f"Unexpected error: {str(e)}")
         print(traceback.format_exc())  # Print the full traceback for debugging
-        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+        return jsonify({"errorMessage": f"Unexpected error: {str(e)}"}), 500
