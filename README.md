@@ -94,43 +94,50 @@ The Travel Planner brings together practical tools to enhance the travel plannin
 ## <a id="setup-instructions"></a>  🔧 Setup Instructions
 To get the project up and running locally, follow these steps:
 
-**Prerequisites**
+### **Prerequisites**
 - Node.js and npm for the React frontend
-- JDK 23 for the backend
+- JDK 17 and Python 3 for the backend
 - MongoDB for the database
 
-**Clone the Repository**
+### **Clone the Repository**
 ```
 git clone https://github.com/vanshika5605/travel-planner.git
 cd travel-planner
 ```
-**Setting Up the Backend (SprintBoot)** 
+### **Setting Up the Backend (SprintBoot)** 
 Navigate to the backend directory:
 ```
-cd backend
+cd backend\travelPlanner
+```
+Set Environment Variables <br>
+Create a .env file in the this directory with the following variables:
+```
+MONGODB_URI=your_database_url
+DATABASE_NAME=your_database_name
 ```
 Now, navigate to IntelliJ and start the backend from TravelPlannerApplication class. Optionally, start the project from command line:
 ```
 cd /travel-planner //Navigate to the Project Directory
 mvn clean install //Clean and Build the Project
 mvn spring-boot:run //Run the Application
-java -jar //target/travel-planner
 ```
 
-**Setting Up the Backend (Flask)** 
+### **Setting Up the Backend (Flask)** 
 Navigate to the ai-recommender-new directory:
 ```
 cd ai-recommender-new
+```
+Set Environment Variables<br>
+Create a .env file in the this directory with the following variables:
+```
+FLASK_ENV=development
+HUGGINGFACE_API_KEY=<your-token>
 ```
 Install the Python dependencies:
 ```
 pip install -r requirements.txt
 ```
-Start the Flask server(By default runs the app on port 5000): 
-```
-flask run
-```
-On MacOs, port 5000 is occupied with some other process. So run the backend on MacOs on a port other than 5000. Use the following command to run the backend on port 5050:
+Start the Flask server on port 5050: 
 ```
 flask run --port 5050
 ```
@@ -142,7 +149,7 @@ pip3 install flask
 flask run --port 5050
 ```
 
-**Setting Up the Frontend (React)**
+### **Setting Up the Frontend (React)**
 Navigate to the frontend directory:
 ```
 cd frontend
@@ -155,16 +162,7 @@ npm install
 ```
 npm start
 ```
-
-**Set Environment Variables**
-Create a .env file in the backend directory with the following variables:
-```
-FLASK_ENV=development
-HUGGINGFACE_API_KEY='<your-token>'
-MONGODB_URI=your_database_url
-DATABASE_NAME=your_database_name
-```
-**Access the Application**
+### **Access the Application**
 Open a browser and navigate to http://localhost:3000 to access the frontend.
 
 ## <a id="admin-dashboard"></a>  📊 Admin Dashboard
