@@ -90,6 +90,31 @@ mvn spring-boot:run //Run the Application
 java -jar //target/travel-planner
 ```
 
+**Setting Up the Backend (Flask)** 
+Navigate to the ai-recommender-new directory:
+```
+cd ai-recommender-new
+```
+Install the Python dependencies:
+```
+pip install -r requirements.txt
+```
+Start the Flask server(By default runs the app on port 5000): 
+```
+flask run
+```
+On MacOs, port 5000 is occupied with some other process. So run the backend on MacOs on a port other than 5000. Use the following command to run the backend on port 5050:
+```
+flask run --port 5050
+```
+if the flask commmand does not work on local terminal, create a python virtual environment and download and run flask application:
+```
+python3 -m venv path/to/venv
+source path/to/venv/bin/activate
+pip3 install flask
+flask run --port 5050
+```
+
 **Setting Up the Frontend (React)**
 Navigate to the frontend directory:
 ```
@@ -132,7 +157,7 @@ Navigate to /admin to access the dashboard and monitor user activity.
 **For Admins**
 - Access the Admin Dashboard for a detailed overview of user engagement and travel trends.
 
-###AI Models
+### AI Models
 - This project leverages the Llama 3.2-3B-Instruct AI model from Hugging Face for generating travel itineraries and packing lists.
 - The AI models are accessed via API calls and are hosted on Hugging Face's infrastructure, ensuring accurate and efficient outputs.
 - Model name: meta-llama/Llama-3.2-3B-Instruct
