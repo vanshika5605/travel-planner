@@ -1,8 +1,8 @@
 import json
 import re
+import os
 import requests
-from datetime import datetime
-from ..utils.exceptions import ItineraryGenerationError, DatabaseOperationError
+from ..utils.exceptions import ItineraryGenerationError
 from huggingface_hub import InferenceClient
 
 class ItineraryService:
@@ -34,7 +34,7 @@ class ItineraryService:
             
             # Try to fetch start point, fallback to a default if API fails
             try:
-                start_point = self._get_start_point_from_api()
+                start_point = self._get_start_point_from_api(0)
             except Exception as api_error:
                 print(f"API Error: {api_error}. Using default start point.")
                 start_point = "Boston, MA"
@@ -50,7 +50,7 @@ class ItineraryService:
         except Exception as e:
             raise ItineraryGenerationError(f"Itinerary generation failed: {str(e)}")
 
-    def _get_start_point_from_api(self):
+    def _get_start_point_from_api(self, flag):
         """
         Fetch the start point from the API (userDetails.location).
         
@@ -74,8 +74,13 @@ class ItineraryService:
             
             # Check if the API response is successful
             if response_data is not None:
-                start_point = response_data['data']['userDetails']['location']
-                return start_point
+                if(flag==0):
+                    start_point = response_data['data']['userDetails']['location']
+                    return start_point
+                elif(flag==1) :
+                    gender = response_data['data']['userDetails']['gender']
+                    itinerary = response_data['data']['tripDetails']['itinerary']
+                    return {'gender': gender , 'itinerary': itinerary }
             else:
                 raise Exception(f"API call failed: {response_data.get('errorMessage', 'Unknown error')}")
         
@@ -166,7 +171,7 @@ class ItineraryService:
 
 
     def call_llama_api(self, messages):
-        api_key = "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"
+        api_key = os.getenv("HUGGINGFACE_API_KEY")
         client = InferenceClient(api_key=api_key)
         stream = client.chat.completions.create(
             model="meta-llama/Llama-3.2-3B-Instruct",
