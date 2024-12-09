@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import backend from "../Utils/backend";
 import "./CustomCalendar.css";
 
 // Calendar component that calculates long weekends
-const CustomCalendar = ({holidays, longWeekends}) => {
-
+const CustomCalendar = ({ holidays, longWeekends }) => {
   const tileClassName = ({ date }) => {
     const dateStr = date.toDateString();
     const today = new Date();
@@ -17,7 +15,11 @@ const CustomCalendar = ({holidays, longWeekends}) => {
       return "long-weekend";
     }
 
-    if (holidays.some((holiday) => new Date(holiday.date).toDateString() === dateStr)) {
+    if (
+      holidays.some(
+        (holiday) => new Date(holiday.date).toDateString() === dateStr
+      )
+    ) {
       return "holiday";
     }
 
@@ -31,7 +33,8 @@ const CustomCalendar = ({holidays, longWeekends}) => {
   const tileContent = ({ date, view }) => {
     if (view === "month") {
       const holiday = holidays.find(
-        (holiday) => date.toDateString() === new Date(holiday.date).toDateString()
+        (holiday) =>
+          date.toDateString() === new Date(holiday.date).toDateString()
       );
 
       if (holiday) {
@@ -61,7 +64,7 @@ const CustomCalendar = ({holidays, longWeekends}) => {
             <span className="legend-box long-weekend"></span> Long Weekend
           </li>
           <li>
-            <span className="legend-box holiday"></span> Public Holiday 
+            <span className="legend-box holiday"></span> Public Holiday
           </li>
           <li>
             <span className="legend-box weekend"></span> Weekend

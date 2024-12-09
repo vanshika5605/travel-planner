@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import TripDetailsBox from "../ItineraryPlanner/TripDetailsBox";
 import backend from "../Utils/backend";
 import NewItemModal from "./NewItemModal";
@@ -8,9 +8,7 @@ import PrintShare from "./PrintShare";
 
 // Packing List component to store packing list for a particular trip
 const PackingList = () => {
-  const { tripId } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
 
   // State for trip details and packing list
   const [tripDetails, setTripDetails] = useState(
@@ -55,7 +53,7 @@ const PackingList = () => {
 
   const handleSaveChanges = async (tripId) => {
     try {
-      const response = await backend.savePackingList({
+      await backend.savePackingList({
         tripID: tripId,
         packingList: packingList,
       });

@@ -52,7 +52,7 @@ const Profile = ({ userData }) => {
     };
 
     fetchTrips().catch((error) => {
-      console.log(error)
+      console.log(error);
       if (error.response) {
         setErrorMessage(error.response.data.errorMessage);
       } else {
