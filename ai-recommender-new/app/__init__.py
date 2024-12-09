@@ -26,25 +26,23 @@ def create_app(config_class=None):
     # Enable CORS
     CORS(app)
 
-    # Initialize Hugging Face service
-    # Note: Replace with your actual API key and model
-    huggingface_client = HuggingFaceClient(
-        api_token='HUGGINGFACE_API_KEY', 
-        model='meta-llama/Llama-3.2-3B-Instruct'
-    )
+    # # Initialize Hugging Face service
+    # # Note: Replace with your actual API key and model
+    # huggingface_client = HuggingFaceClient(
+    #     api_token='HUGGINGFACE_API_KEY', 
+    #     model='meta-llama/Llama-3.2-3B-Instruct'
+    # )
 
     # Initialize services
-    itinerary_service = ItineraryService(
-        # huggingface_client=huggingface_client, 
-    )
-    packing_list_service = PackingListService(
-        huggingface_client=huggingface_client,
-    )
+    itinerary_service = ItineraryService()
+    # packing_list_service = PackingListService(
+    #     huggingface_client=huggingface_client,
+    # )
 
     # Register blueprints
     from .api.itinerary_routes import itinerary_blueprint
-    from .api.packing_list_routes import packing_list_blueprint
+    # from .api.packing_list_routes import packing_list_blueprint
     app.register_blueprint(itinerary_blueprint)
-    app.register_blueprint(packing_list_blueprint)
+    # app.register_blueprint(packing_list_blueprint)
 
     return app
