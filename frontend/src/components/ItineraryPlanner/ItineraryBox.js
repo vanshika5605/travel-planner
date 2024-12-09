@@ -21,6 +21,7 @@ const categoryIcons = {
   Sightseeing: faVanShuttle,
 };
 
+// Itinerary Box component to display the itinerary day wise
 const ItineraryBox = ({ itineraryData, setItineraryData }) => {
   const [activeTab, setActiveTab] = useState(0);
 

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Form,
-  Modal
-} from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
+
+// Component to add a new item to the list
 const NewItemModal = ({
   showAddItemModal,
   setShowAddItemModal,
@@ -155,6 +153,7 @@ const NewItemModal = ({
           <Form.Group>
             <Form.Label>Quantity</Form.Label>
             <Form.Control
+              data-testid="quantity-input"
               type="number"
               value={newItem.quantity}
               onChange={(e) =>

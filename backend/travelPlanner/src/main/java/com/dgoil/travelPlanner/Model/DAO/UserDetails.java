@@ -1,19 +1,23 @@
 package com.dgoil.travelPlanner.Model.DAO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Document(collection = "userDetails")
+/**
+ * Represents a document in the "userDetails" MongoDB collection.
+ */
+@Document(collection = "userDetails") // Maps this class to the "userDetails" MongoDB collection.
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDetails {
-    @Id
+    @Id // Unique identifier for the document.
     private String _id;
     private String email;
     private String name;

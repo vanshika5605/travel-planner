@@ -1,11 +1,13 @@
 package com.dgoil.travelPlanner.Model.DTO;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-
+/**
+ * Represents statistical data for administrative purposes.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +17,9 @@ public class AdminStatistics {
     private Integer upcomingTrips;
     private Integer pastTrips;
     private List<PopularDestinations> popularDestinations;
-
+    /**
+     * Represents a popular destination with its name and occurrence count.
+     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

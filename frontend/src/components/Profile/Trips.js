@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import PackingListButton from "./PackingListButton";
-import backend from "../Utils/backend";
 
+// Trips component to show upcoming and past trips for a user
 const Trips = ({
   userData,
   trips,

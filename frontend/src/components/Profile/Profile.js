@@ -23,7 +23,8 @@ const categoryIcons = {
   Sightseeing: faVanShuttle,
 };
 
-    const Profile = ({ userData }) => {
+// Profile component to display profile details and trip details for a user
+const Profile = ({ userData }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState({});
     const [trips, setTrips] = useState({});

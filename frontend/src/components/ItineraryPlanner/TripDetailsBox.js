@@ -1,6 +1,7 @@
 import React from 'react';
 import './TripDetailsBox.css';
 
+// Trip Details Box component that shows information about the trip and budget details
 const TripDetailsBox = ({ tripDetails }) => {
   const { activities, miscellaneous, accommodation, food, travel } = tripDetails.budget || {};
   const totalBudget = activities + miscellaneous + accommodation + food + travel;

@@ -21,6 +21,12 @@ public class userItineraryController {
     @Autowired
     private userItineraryService myUserItineraryService;
 
+    /**
+     * Endpoint to fetch a user's itinerary for a specific trip.
+     * 
+     * @param tripId The unique identifier of the trip.
+     * @return Response containing the itinerary for the specified trip ID.
+     */
     @GetMapping("/getItinerary/{tripId}")
     public ResponseEntity<ApiResponse<Optional<UserItinerary>>> getUserItinerary(@PathVariable(required=false) String tripId) {
         try {
@@ -43,6 +49,12 @@ public class userItineraryController {
         }
     }
 
+    /**
+     * Endpoint to retrieve detailed trip and user data for a specific trip.
+     * 
+     * @param tripId The unique identifier of the trip.
+     * @return Response containing detailed trip and user data.
+     */
     @GetMapping("/tripAndUserDetails/{tripId}")
     public ResponseEntity<ApiResponse<UserTripData>> getUserTripData(@PathVariable String tripId) {
         UserTripData userTripData = myUserItineraryService.getUserTripData(tripId);
@@ -50,6 +62,12 @@ public class userItineraryController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * Endpoint to add a new itinerary for a user.
+     * 
+     * @param userItinerary The itinerary to be added.
+     * @return Response indicating whether the itinerary was successfully added.
+     */
     @PostMapping("/addItinerary")
     public ResponseEntity<ApiResponse<String>> saveUserItinerary(@RequestBody UserItinerary userItinerary){
         try {
@@ -62,6 +80,12 @@ public class userItineraryController {
         }
     }
 
+    /**
+     * Endpoint to retrieve trip details for a user by their email address.
+     * 
+     * @param email The email address of the user.
+     * @return Response containing trip details for the user.
+     */
     @GetMapping("/user/tripDetails/{email}")
     public ResponseEntity<ApiResponse<UserTripsDetails>> userTripDetails(@PathVariable String email) {
         try {

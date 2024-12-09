@@ -10,6 +10,7 @@ import React, { useState, useMemo } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./ItineraryPlannerForm.css";
 
+// Itinerary planner form component to take inputs from the user
 const ItineraryPlannerForm = ({
   formType,
   getItinerary,

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./Navbar.css";
 
+// Navbar component displayed on top of every page
 const Navbar = ({
   isLoggedIn,
   setIsLoggedIn,
