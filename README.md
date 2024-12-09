@@ -84,14 +84,14 @@ The Travel Planner brings together practical tools to enhance the travel plannin
 * A Currency Exchange calculator that easily converts one currency to another with our built-in currency exchange feature. It uses real-time exchange rates to provide accurate conversions, making international travel planning smoother.  
 
 
-## 🛠 Tech Stack
+## <a id="tech-stack"></a>  🛠 Tech Stack
 - **Frontend:** React
 - **Backend:** SpringBoot
 - **Database:** MongoDB
 - **Cloud Storage:** AWS S3
 - **AI Integration:** LLM - Llama-3.2-3B-Instruct
 
-## 🔧 Setup Instructions
+## <a id="setup-instructions"></a>  🔧 Setup Instructions
 To get the project up and running locally, follow these steps:
 
 **Prerequisites**
@@ -142,11 +142,11 @@ DATABASE_NAME=your_database_name
 **Access the Application**
 Open a browser and navigate to http://localhost:3000 to access the frontend.
 
-## 📊 Admin Dashboard
+## <a id="admin-dashboard"></a>  📊 Admin Dashboard
 Log in as an administrator using the credentials email = admin@umass.edu and password = Test@123.
 Navigate to /admin to access the dashboard and monitor user activity.
 
-## 📖 Usage Instructions
+##  <a id="usage-instructions"></a> 📖 Usage Instructions
 **For Users**
 - Sign Up / Log In to the platform.
 - Find out the best long weekend that works out for you using our long weekend calendar.
@@ -159,14 +159,14 @@ Navigate to /admin to access the dashboard and monitor user activity.
 **For Admins**
 - Access the Admin Dashboard for a detailed overview of user engagement and travel trends.
 
-###AI Models
+##  <a id="ai-models"></a> AI Models
 - This project leverages the Llama 3.2-3B-Instruct AI model from Hugging Face for generating travel itineraries and packing lists.
 - The AI models are accessed via API calls and are hosted on Hugging Face's infrastructure, ensuring accurate and efficient outputs.
 - Model name: meta-llama/Llama-3.2-3B-Instruct
 - Purpose: Used for text generation tasks such as creating itineraries and packing lists based on user inputs.
 - Integration: The model is integrated using Hugging Face's Inference API
   
-### 🤝 Contributing
+## <a id="contributing"></a>  🤝 Contributing
 We welcome contributions from the community! To contribute:
 
 - Fork the repository.
