@@ -41,11 +41,10 @@ class ItineraryService:
 
             if(got_message):
                 response_text = self.create_itinerary_from_message(message)
-                response = self.extract_json_from_text_for_message(response_text)
             else:
                 response_text = self.get_itinerary(destination, travel_type, budget, start_date, end_date, start_point, note)
-                response = self.extract_json_from_text(response_text)
-           
+            
+            response = self.extract_json_from_text_for_message(response_text)
             return response
 
         except Exception as e:
@@ -156,13 +155,14 @@ class ItineraryService:
         - dict: The extracted JSON as a Python dictionary, or None if no valid JSON is found.
         """
         try:
+            print(text)
             json_match = re.search(r'{.*}', text, re.DOTALL)
             if json_match:
                 json_text = json_match.group(0)
                 return json.loads(json_text)  # Convert JSON string to dictionary
         except json.JSONDecodeError as e:
     
-            return {"Error": f"{e} AI couldn't recommend"}
+            return {"errorMessage": f"{e} AI couldn't recommend"}
 
 
     def call_llama_api(self, messages):
@@ -267,7 +267,7 @@ class ItineraryService:
                 # Parse and return the JSON object
                 return json.loads(json_string)
             except json.JSONDecodeError as e:
-                return {"Error": f"Error decoding JSON: {e}"}
+                return {"errorMessage": f"Error decoding JSON: {e}"}
         else:
             print("No JSON found in the input string.")
-            return {"Error": "No JSON found in the input string."}
+            return {"errorMessage": "No JSON found in the input string."}
