@@ -107,7 +107,13 @@ cd travel-planner
 ### **Setting Up the Backend (SprintBoot)** 
 Navigate to the backend directory:
 ```
-cd backend
+cd backend\travelPlanner
+```
+Set Environment Variables <br>
+Create a .env file in the this directory with the following variables:
+```
+MONGODB_URI=your_database_url
+DATABASE_NAME=your_database_name
 ```
 Now, navigate to IntelliJ and start the backend from TravelPlannerApplication class. Optionally, start the project from command line:
 ```
@@ -121,6 +127,12 @@ java -jar //target/travel-planner
 Navigate to the ai-recommender-new directory:
 ```
 cd ai-recommender-new
+```
+Set Environment Variables<br>
+Create a .env file in the this directory with the following variables:
+```
+FLASK_ENV=development
+HUGGINGFACE_API_KEY=<your-token>
 ```
 Install the Python dependencies:
 ```
@@ -155,16 +167,7 @@ npm install
 ```
 npm start
 ```
-
-**Set Environment Variables**
-Create a .env file in the backend directory with the following variables:
-```
-FLASK_ENV=development
-HUGGINGFACE_API_KEY='<your-token>'
-MONGODB_URI=your_database_url
-DATABASE_NAME=your_database_name
-```
-**Access the Application**
+### **Access the Application**
 Open a browser and navigate to http://localhost:3000 to access the frontend.
 
 ## <a id="admin-dashboard"></a>  📊 Admin Dashboard
