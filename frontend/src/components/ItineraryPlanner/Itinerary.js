@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./Itinerary.css";
 import ItineraryBox from "./ItineraryBox";
 import TripDetailsBox from "./TripDetailsBox";
 
+// Itinerary component to display the itinerary for a particular trip for a user
 const Itinerary = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Extract data from location state with fallback
   const {
@@ -26,25 +28,7 @@ const Itinerary = () => {
   const [itineraryData, setItineraryData] = useState(initialItineraryData);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Ensure we have at least one day when component loads
-  useEffect(() => {
-    if (!itineraryData.itinerary || itineraryData.itinerary.length === 0) {
-      setItineraryData({
-        summary: "",
-        itinerary: [
-          {
-            date: new Date().toISOString().split("T")[0],
-            day: "Day 1",
-            activities: [],
-            note: "",
-          },
-        ],
-        note: "",
-      });
-    }
-  }, []);
-
-  // Copy to clipboard
+  // Copy itinerary to clipboard
   const copyToClipboard = () => {
     let formattedItinerary = "Itinerary:\n\n";
 
@@ -83,6 +67,7 @@ const Itinerary = () => {
       const response = await backend.saveTrip(tripDataNew);
       if (response.status === 200) {
         console.log("Trip saved");
+        navigate("/profile");
       }
     } catch (error) {
       if (error.response) {

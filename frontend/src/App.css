@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
     background: none !important;
 }
 
-.profile-page button, .trip-itinerary button , .packing-list-container button, .take-a-break button, .currency-converter button{
+.profile-page button, .trip-itinerary button , .packing-list-container button, .take-a-break button, .currency-converter button, .itinerary-container button{
   background-color: #c65d36  ;
   color: white;
   /* padding: 10px 15px; */
@@ -94,6 +94,11 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 1rem;
 }
 
-.trip-itinerary button:hover, .profile-page button:hover, .packing-list-container button:hover, .take-a-break button:hover, .currency-converter button:hover{
+.trip-itinerary button:hover, .profile-page button:hover, .packing-list-container button:hover, .take-a-break button:hover, .currency-converter button:hover, .itinerary-container button:hover{
   background-color: #d89075;
+}
+
+button:disabled {
+  background-color: gray !important;
+  color: black !important;
 }

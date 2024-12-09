@@ -1,7 +1,13 @@
 import axios from "axios";
 
+// Defining the API base URLs
 export const CONNECTION_URL = `http://localhost:8081/api/v1`;
 
+export const CONNECTION_URL_2 = `http://localhost:5050/api/v1`;
+
+/*
+* This file contains all calls to backend.
+*/
 const getFeaturesList = () => {
   return axios.get(CONNECTION_URL + `/getFeatures`);
 };
@@ -46,6 +52,14 @@ const getTripDetails = (tripId) => {
   return axios.get(CONNECTION_URL + '/getItinerary/' + tripId);
 }
 
+const generatePackingList = (formData) => {
+  return axios.post(CONNECTION_URL_2 + '/packingList/create', formData);
+}
+
+const generateItinerary = (formData) => {
+  return axios.post(CONNECTION_URL_2 + '/itinerary/create', formData);
+}
+
 const backend = {
   getFeaturesList,
   addUser,
@@ -57,7 +71,9 @@ const backend = {
   getUserStatistics,
   getPackingList,
   savePackingList,
-  getTripDetails
+  getTripDetails,
+  generatePackingList,
+  generateItinerary
 };
 
 export default backend;

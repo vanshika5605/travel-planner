@@ -16,11 +16,12 @@ const categoryIcons = {
   Travel: faPlane,
   Adventure: faHiking,
   Food: faUtensils,
-  Hotel: faBed,
+  Accommodation: faBed,
   Shopping: faCartShopping,
   Sightseeing: faVanShuttle,
 };
 
+// Itinerary Box component to display the itinerary day wise
 const ItineraryBox = ({ itineraryData, setItineraryData }) => {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -41,7 +42,6 @@ const ItineraryBox = ({ itineraryData, setItineraryData }) => {
   const handleNoteChange = (dayIndex, value) => {
     const newItinerary = [...itineraryData.itinerary];
     newItinerary[dayIndex].note = value;
-    console.log(newItinerary);
     setItineraryData({ ...itineraryData, itinerary: newItinerary });
   };
 

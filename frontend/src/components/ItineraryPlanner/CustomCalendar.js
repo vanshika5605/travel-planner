@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import backend from "../Utils/backend";
 import "./CustomCalendar.css";
 
-const CustomCalendar = ({holidays, longWeekends}) => {
-
+// Calendar component that calculates long weekends
+const CustomCalendar = ({ holidays, longWeekends }) => {
   const tileClassName = ({ date }) => {
     const dateStr = date.toDateString();
     const today = new Date();
     if (dateStr === today.toDateString()) {
       return "custom-today";
     }
-    console.log(new Date(dateStr).toISOString().split("T")[0])
     if (longWeekends.includes(new Date(dateStr).toISOString().split("T")[0])) {
-      console.log("enetered")
       return "long-weekend";
     }
 
-    if (holidays.some((holiday) => new Date(holiday.date).toDateString() === dateStr)) {
+    if (
+      holidays.some(
+        (holiday) => new Date(holiday.date).toDateString() === dateStr
+      )
+    ) {
       return "holiday";
     }
 
@@ -32,7 +33,8 @@ const CustomCalendar = ({holidays, longWeekends}) => {
   const tileContent = ({ date, view }) => {
     if (view === "month") {
       const holiday = holidays.find(
-        (holiday) => date.toDateString() === new Date(holiday.date).toDateString()
+        (holiday) =>
+          date.toDateString() === new Date(holiday.date).toDateString()
       );
 
       if (holiday) {
@@ -48,21 +50,21 @@ const CustomCalendar = ({holidays, longWeekends}) => {
   };
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center">Holiday Calendar</h1>
+    <div className="container">
+      <h2 className="text-center">Holiday Calendar</h2>
       <Calendar
         tileClassName={tileClassName}
         tileContent={tileContent}
         className="border rounded"
       />
       <div className="mt-3">
-        <h5>Legend:</h5>
+        {/* <h5>Legend:</h5> */}
         <ul className="list-unstyled">
           <li>
             <span className="legend-box long-weekend"></span> Long Weekend
           </li>
           <li>
-            <span className="legend-box holiday"></span> Public Holiday 
+            <span className="legend-box holiday"></span> Public Holiday
           </li>
           <li>
             <span className="legend-box weekend"></span> Weekend

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./Navbar.css";
 
+// Navbar component displayed on top of every page
 const Navbar = ({
   isLoggedIn,
   setIsLoggedIn,
@@ -103,6 +104,7 @@ const Navbar = ({
       <div className="container custom-nav">
         <Link className="navbar-brand" to="/">
           {/* <img className="logo-class" src="/logo.jpg" alt="Loading..." /> */}
+          <img className="logo-img" src="/images/logo.jpeg" alt="Logo"></img>
           <span className="main-app-name">Travel Planner </span>
         </Link>
         <div className="collapse navbar-collapse">
@@ -173,7 +175,7 @@ const Navbar = ({
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {errorMessage != "" ? (
+          {errorMessage !== "" ? (
             <>
               <Alert variant="danger">{errorMessage}</Alert>
             </>

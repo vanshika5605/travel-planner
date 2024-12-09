@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Features Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="features"
+  >
+    <div
+      class="left-div"
+    >
+      <h2>
+        Our Services
+      </h2>
+    </div>
+    <div
+      class="right-div"
+    >
+      <div
+        class="accordion custom-accordion border-0"
+        id="featuresAccordion"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

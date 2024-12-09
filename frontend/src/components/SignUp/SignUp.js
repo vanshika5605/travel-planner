@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 
+// SignUp component to let a new user sign up
 const SignUp = (props) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -14,7 +15,6 @@ const SignUp = (props) => {
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
   const [passwordChecks, setPasswordChecks] = useState({
     length: false,

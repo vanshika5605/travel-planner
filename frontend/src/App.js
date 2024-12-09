@@ -19,6 +19,7 @@ import Loader from "./components/Utils/Loader"; // Import the loader component
 import Navbar from "./components/Utils/Navbar";
 // import { useNavigate } from "react-router-dom";
 
+// Main App component
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState("");

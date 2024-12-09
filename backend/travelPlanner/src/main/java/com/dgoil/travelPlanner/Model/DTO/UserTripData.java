@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-
+/**
+ * Represents Trip data for a particular user.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
