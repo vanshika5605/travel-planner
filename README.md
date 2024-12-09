@@ -94,17 +94,17 @@ The Travel Planner brings together practical tools to enhance the travel plannin
 ## <a id="setup-instructions"></a>  🔧 Setup Instructions
 To get the project up and running locally, follow these steps:
 
-**Prerequisites**
+### **Prerequisites**
 - Node.js and npm for the React frontend
-- JDK 23 for the backend
+- JDK 17 and Python 3 for the backend
 - MongoDB for the database
 
-**Clone the Repository**
+### **Clone the Repository**
 ```
 git clone https://github.com/vanshika5605/travel-planner.git
 cd travel-planner
 ```
-**Setting Up the Backend (SprintBoot)** 
+### **Setting Up the Backend (SprintBoot)** 
 Navigate to the backend directory:
 ```
 cd backend
@@ -117,7 +117,7 @@ mvn spring-boot:run //Run the Application
 java -jar //target/travel-planner
 ```
 
-**Setting Up the Backend (Flask)** 
+### **Setting Up the Backend (Flask)** 
 Navigate to the ai-recommender-new directory:
 ```
 cd ai-recommender-new
@@ -142,7 +142,7 @@ pip3 install flask
 flask run --port 5050
 ```
 
-**Setting Up the Frontend (React)**
+### **Setting Up the Frontend (React)**
 Navigate to the frontend directory:
 ```
 cd frontend
