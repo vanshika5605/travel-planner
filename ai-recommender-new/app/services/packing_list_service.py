@@ -1,15 +1,12 @@
 import os
 import json
 from huggingface_hub import InferenceClient
-from ..utils.huggingface_client import HuggingFaceClient
+from .itinerary_service import ItineraryService
 from ..utils.exceptions import PackingListGenerationError
 
 class PackingListService:
     """Service for generating packing lists based on travel itineraries."""
     
-    def __init__(self, huggingface_client: HuggingFaceClient):
-        self.huggingface_client = huggingface_client  # Updated to use the new HuggingFaceClient
-
     def generate_packing_list(self, gender, itinerary):
         """
         Generate a packing list based on the provided itinerary and gender.
@@ -22,6 +19,7 @@ class PackingListService:
             dict: The generated packing list as a Python dictionary.
         """
         try:
+
             # Create a formatted message to send to the Hugging Face API
             list_message = self._create_packing_list_message(gender, itinerary)
 

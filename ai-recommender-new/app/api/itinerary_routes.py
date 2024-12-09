@@ -14,13 +14,11 @@ Dependencies:
     - Flask-CORS: For handling Cross-Origin Resource Sharing (CORS) requests
     - ItineraryService: Custom service class for generating itineraries
     - ItineraryGenerationError: Custom exception for itinerary generation failures
-    - HuggingFaceClient: Utility for interacting with the Hugging Face API
 """
 
 from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
 from ..services.itinerary_service import ItineraryService
-from ..utils.huggingface_client import HuggingFaceClient
 from ..utils.exceptions import ItineraryGenerationError
 import traceback
 

@@ -11,12 +11,6 @@ class PackingListGenerationError(Exception):
         self.message = message
         super().__init__(self.message)
 
-class HuggingFaceClientError(Exception):
-    """Exception raised for Hugging Face API client errors."""
-    def __init__(self, message="Error in Hugging Face API client"):
-        self.message = message
-        super().__init__(self.message)
-
 class DatabaseConnectionError(Exception):
     """Exception raised for database connection errors."""
     def __init__(self, message="Failed to connect to database"):
