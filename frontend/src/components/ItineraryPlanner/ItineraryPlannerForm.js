@@ -45,7 +45,7 @@ const ItineraryPlannerForm = ({
   const isSubmitDisabled = useMemo(() => {
     if (formType === "unknown") {
       // For unknown form type, check if custom details are present
-      return !formData.customDetails || formData.customDetails.trim() === "";
+      return !formData.message || formData.message.trim() === "";
     }
     
     // For known form type, check if destination, start date, end date, and budget are filled
@@ -124,7 +124,7 @@ const ItineraryPlannerForm = ({
   );
 
   return (
-    <Container className="itinerary-container py-4">
+    <>
       <h2 className="text-center mb-4">
         {formType === "known"
           ? "Plan Your Specific Trip"
@@ -135,8 +135,8 @@ const ItineraryPlannerForm = ({
           renderTextareaField(
             "Share Your Thoughts",
             faSmile,
-            "customDetails",
-            formData.customDetails || "",
+            "message",
+            formData.message || "",
             "Tell us about your ideas for this trip...",
             5
           )}
@@ -167,8 +167,8 @@ const ItineraryPlannerForm = ({
             {renderTextareaField(
               "Additional Details",
               faSmile,
-              "customDetails",
-              formData.customDetails,
+              "message",
+              formData.message,
               "Share any special requirements or preferences...",
               3
             )}
@@ -184,7 +184,7 @@ const ItineraryPlannerForm = ({
           {formType === "known" ? "Plan My Trip" : "Get Trip Recommendations"}
         </Button>
       </Form>
-    </Container>
+      </>
   );
 };
 

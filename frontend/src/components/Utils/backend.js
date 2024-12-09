@@ -3,7 +3,7 @@ import axios from "axios";
 // Defining the API base URLs
 export const CONNECTION_URL = `http://localhost:8081/api/v1`;
 
-export const CONNECTION_URL_2 = `http://localhost:5050/api/v1`;
+export const CONNECTION_URL_2 = `http://localhost:5000/api/v1`;
 
 /*
 * This file contains all calls to backend.

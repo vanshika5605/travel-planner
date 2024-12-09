@@ -25,36 +25,41 @@ const categoryIcons = {
 
 // Profile component to display profile details and trip details for a user
 const Profile = ({ userData }) => {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState({});
-    const [trips, setTrips] = useState({});
-    const [generatingPackingListForTripId, setGeneratingPackingListForTripId] =
-        useState(null);
-    // State for user details
-    const [staticUserData] = useState({
-        travelStats: {
-        totalCountriesVisited: 12,
-        totalCitiesVisited: 25,
-        totalDistanceTraveled: "12000 miles",
-        flightsTaken: 20,
-        },
-        travelGoals: {
-        tripsPlanned: 5,
-        newDestinations: 3,
-        travelMiles: "10,000 km",
-        },
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState({});
+  const [trips, setTrips] = useState({});
+  const [generatingPackingListForTripId, setGeneratingPackingListForTripId] =
+    useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [staticUserData] = useState({
+    travelStats: {
+      totalCountriesVisited: 12,
+      totalCitiesVisited: 25,
+      totalDistanceTraveled: "12000 miles",
+      flightsTaken: 20,
+    },
+    travelGoals: {
+      tripsPlanned: 5,
+      newDestinations: 3,
+      travelMiles: "10,000 km",
+    },
+  });
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      const response = await backend.getTrips(userData.email);
+      setTrips(response.data.data);
+    };
+
+    fetchTrips().catch((error) => {
+      console.log(error)
+      if (error.response) {
+        setErrorMessage(error.response.data.errorMessage);
+      } else {
+        setErrorMessage("Error fetching trips");
+      }
     });
-
-    useEffect(() => {
-        const fetchTrips = async () => {
-        const response = await backend.getTrips(userData.email);
-        setTrips(response.data.data);
-        };
-
-        fetchTrips().catch((error) =>
-        console.error("Error fetching trips:", error)
-        );
-    }, []);
+  }, []);
 
   const handleGeneratePackingList = async (trip) => {
     try {
@@ -65,18 +70,24 @@ const Profile = ({ userData }) => {
         const response = await backend.getPackingList(trip.tripId);
         packingList = response.data.data.packingList;
       } else {
-        const response = await backend.generatePackingList({tripID: trip.tripId});
-        packingList = response.data.packingList
+        const response = await backend.generatePackingList({
+          tripID: trip.tripId,
+        });
+        packingList = response.data.packingList;
       }
 
-      navigate('/packing-list/'+`${trip.tripId}`, {
+      navigate("/packing-list/" + `${trip.tripId}`, {
         state: {
           tripDetails: trip,
           packingList: packingList,
         },
       });
     } catch (error) {
-      console.error("Error generating packing list:", error);
+      if (error.response) {
+        setErrorMessage(error.response.data.errorMessage);
+      } else {
+        setErrorMessage("Error fetching packing list");
+      }
     } finally {
       // Reset the generating state
       setGeneratingPackingListForTripId(null);
@@ -87,8 +98,6 @@ const Profile = ({ userData }) => {
     try {
       // Set loading state for the specific trip
       setLoading((prev) => ({ ...prev, [trip.id]: true }));
-
-      // Assuming you have an API endpoint to fetch trip details
       const response = await backend.getTripDetails(trip.tripId);
       // Navigate to itinerary page with trip data
       navigate("/itinerary", {
@@ -99,47 +108,54 @@ const Profile = ({ userData }) => {
         },
       });
     } catch (error) {
-      console.error("Error fetching itinerary:", error);
-      // Optionally show an error message to the user
-      alert("Failed to load itinerary. Please try again.");
+      if (error.response) {
+        setErrorMessage(error.response.data.errorMessage);
+      } else {
+        setErrorMessage("Error fetching itinerary");
+      }
     } finally {
       // Clear loading state
       setLoading((prev) => ({ ...prev, [trip.id]: false }));
     }
   };
 
-    return (
-        <div className="profile-page">
-        {/* Main Profile Section */}
-        <div className="profile-main">
-            {/* Profile Information */}
-            <div className="profile-info">
-            <h2>Profile Details</h2>
-            <p>
-                <strong>Name:</strong> {userData.name}
-            </p>
-            <p>
-                <strong>Email:</strong> {userData.email}
-            </p>
-            <p>
-                <strong>Gender:</strong> {userData.gender}
-            </p>
-            <p>
-                <strong>Location:</strong> {userData.location}
-            </p>
-            <p>
-                <strong>Default Currency:</strong> {userData.defaultCurrency}
-            </p>
-            </div>
-            {/* Trips Section */}
-            <Trips
-            userData={userData}
-            trips={trips}
-            handleGeneratePackingList={handleGeneratePackingList}
-            generatingPackingListForTripId={generatingPackingListForTripId}
-            handleViewItinerary={handleViewItinerary}
-            />
+  return (
+    <div className="profile-page">
+      {/* Main Profile Section */}
+      <div className="profile-main">
+        {errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {errorMessage}
+          </div>
+        )}
+        {/* Profile Information */}
+        <div className="profile-info">
+          <h2>Profile Details</h2>
+          <p>
+            <strong>Name:</strong> {userData.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {userData.email}
+          </p>
+          <p>
+            <strong>Gender:</strong> {userData.gender}
+          </p>
+          <p>
+            <strong>Location:</strong> {userData.location}
+          </p>
+          <p>
+            <strong>Default Currency:</strong> {userData.defaultCurrency}
+          </p>
         </div>
+        {/* Trips Section */}
+        <Trips
+          userData={userData}
+          trips={trips}
+          handleGeneratePackingList={handleGeneratePackingList}
+          generatingPackingListForTripId={generatingPackingListForTripId}
+          handleViewItinerary={handleViewItinerary}
+        />
+      </div>
 
       {/* Sidebar with Statistics and Goals */}
       <div className="profile-sidebar">
