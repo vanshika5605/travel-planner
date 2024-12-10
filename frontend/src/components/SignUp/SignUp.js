@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 
 // SignUp component to let a new user sign up
-const SignUp = (props) => {
+const SignUp = ({
+  isLoggedIn,
+  setIsLoggedIn,
+  userId,
+  setUserId,
+  setUserData,
+  errorMessage,
+  setErrorMessage,
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,7 +22,6 @@ const SignUp = (props) => {
     password: "",
     confirmPassword: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [passwordChecks, setPasswordChecks] = useState({
     length: false,
@@ -42,6 +49,7 @@ const SignUp = (props) => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setErrorMessage(null);
     if (
       !formData.email ||
       !formData.password ||
@@ -56,9 +64,9 @@ const SignUp = (props) => {
     try {
       const response = await backend.addUser(formData);
       if (response.status === 200) {
-        props.setUserId(formData.email);
-        props.setUserData(formData);
-        props.setIsLoggedIn(true);
+        setUserId(formData.email);
+        setUserData(formData);
+        setIsLoggedIn(true);
         navigate("/");
       }
     } catch (error) {
@@ -76,10 +84,14 @@ const SignUp = (props) => {
             setErrorMessage("An unknown error occurred.");
         }
       } else {
-        setErrorMessage("Error: Could not connect to the server.");
+        setErrorMessage("Error: Could not connect to the server");
       }
     }
   };
+
+  useEffect(() => {
+    setErrorMessage(null);
+  }, []);
 
   // Dynamically generate input fields based on `formData` keys
   const renderInputFields = () => {
@@ -186,12 +198,6 @@ const SignUp = (props) => {
   return (
     <div className="container mt-4" style={{ maxWidth: "600px" }}>
       <h2>Start Your Journey!</h2>
-      {/* Display error message if it exists */}
-      {errorMessage && (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
-        </div>
-      )}
       <form onSubmit={handleRegister}>
         {renderInputFields()}
         <button type="submit" className="btn btn-primary custom-filled-btn">

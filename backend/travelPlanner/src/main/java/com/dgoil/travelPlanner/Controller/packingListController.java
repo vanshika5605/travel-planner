@@ -30,7 +30,7 @@ public class packingListController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             ApiResponse<String> response = new ApiResponse<String>(false, "Exception thrown!", e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -23,7 +23,7 @@ public class UserDetails {
     private String name;
     private String password;
     private String location;
-    private enum role{user,tester,admin};
+    private String role;
     private String gender;
     private LocalDateTime updatedAt;
     private String defaultCurrency;

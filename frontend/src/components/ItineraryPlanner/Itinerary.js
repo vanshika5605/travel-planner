@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./Itinerary.css";
@@ -6,7 +6,8 @@ import ItineraryBox from "./ItineraryBox";
 import TripDetailsBox from "./TripDetailsBox";
 
 // Itinerary component to display the itinerary for a particular trip for a user
-const Itinerary = () => {
+const Itinerary = ({errorMessage,
+  setErrorMessage}) => {
   const location = useLocation();
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -24,10 +25,12 @@ const Itinerary = () => {
       note: "",
     },
   };
-
   const [itineraryData, setItineraryData] = useState(initialItineraryData);
-  const [errorMessage, setErrorMessage] = useState("");
 
+  useEffect(() => {
+    setErrorMessage(null);
+  }, []);
+  
   // Copy itinerary to clipboard
   const copyToClipboard = () => {
     let formattedItinerary = "Itinerary:\n\n";
@@ -64,10 +67,10 @@ const Itinerary = () => {
     };
 
     try {
+      setErrorMessage(null);
       const response = await backend.saveTrip(tripDataNew);
       if (response.status === 200) {
-        console.log("Trip saved");
-        navigate("/profile");
+        navigate('/profile');
       }
     } catch (error) {
       if (error.response) {
@@ -89,14 +92,10 @@ const Itinerary = () => {
     return <div>Loading...</div>;
   }
 
+
+
   return (
     <>
-      {errorMessage && (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
-        </div>
-      )}
-
       <div className="trip-itinerary">
         <TripDetailsBox tripDetails={tripData}></TripDetailsBox>
         <div className="itinerary-details-box">
