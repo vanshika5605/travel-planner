@@ -16,7 +16,7 @@
   1. Two variants for the itinerary creation API (`http://127.0.0.1:5050/api/v1/itinerary/create`):
      - One variant requires only a message from the user to generate the itinerary (e.g., "I want to plan a trip by the water for about 3 days near Goa India, my budget is 900 USD").
      - The second variant requires detailed information, including travel type, budget, start and end dates, and a note (e.g., "travel_type": "Business", "budget": 500, "start_date": "2025-01-07", "end_date": "2025-01-09", "note": "My trip to Madrid is important because I want to explore the culture and cuisine").
-  2. Created another API (`http://localhost:5050/api/v1/packingList/create`) for generating packing lists for any saved itinerary.
+  2. Created another API (`http://127.0.0.1:5050/api/v1/packingList/create`) for generating packing lists for any saved itinerary.
 - Optimized and tested AI outputs to ensure alignment with user expectations, including improving prompt designs for better results.
 
 ## 3. Mustafa Ali
