@@ -120,7 +120,7 @@ class ItineraryService:
                 summary: 'summary of the trip in a line detail'
                 itinerary: [
                     {{
-                        date: '2024-03-30',
+                        date: '{start_date} in yyyy-mm-dd format',
                         day: 'Day 1',
                         weekDay: '---day of the week---',
                         activities: [
@@ -132,7 +132,7 @@ class ItineraryService:
                         ],
                     }},
                     {{
-                        date: '2024-03-31',
+                        date: 'next date after above in yyyy-mm-dd',
                         day: 'Day 2',
                         weekDay: '---day of the week---',
                         activities: [
