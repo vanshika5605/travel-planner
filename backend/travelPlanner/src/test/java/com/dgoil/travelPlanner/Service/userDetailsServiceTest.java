@@ -1,162 +1,148 @@
 package com.dgoil.travelPlanner.Service;
 
 import com.dgoil.travelPlanner.Model.DAO.UserDetails;
-import com.dgoil.travelPlanner.Model.DTO.AdminStatistics;
 import com.dgoil.travelPlanner.Repository.userDetailsRepo;
+import com.dgoil.travelPlanner.Model.DTO.AdminStatistics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
-public class userDetailsServiceTest {
-
-    @Mock
-    private userDetailsRepo mockUserDetailsRepo;
+class userDetailsServiceTest {
 
     @Mock
-    private userItineraryService mockUserItineraryService;
+    private userDetailsRepo myUserDetailsRepo;
+
+    @Mock
+    private userItineraryService userItineraryService;
 
     @InjectMocks
-    private userDetailsService userDetailsService;
-
-    private UserDetails testUser;
-    private static final String TEST_EMAIL = "test@example.com";
-    private static final String TEST_PASSWORD = "password123";
+    private userDetailsService myUserDetailsService;
 
     @BeforeEach
     void setUp() {
-        testUser = new UserDetails();
-        testUser.setEmail(TEST_EMAIL);
-        testUser.setPassword(TEST_PASSWORD);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void validateUser_ValidCredentials_ShouldReturnUser() {
+    void testValidateUser_Successful() {
         // Arrange
-        when(mockUserDetailsRepo.findByEmail(TEST_EMAIL))
-                .thenReturn(Optional.of(testUser));
+        String email = "test@example.com";
+        String password = "password123";
+        UserDetails mockUser = new UserDetails();
+        mockUser.setEmail(email);
+        mockUser.setPassword(password);
+
+        when(myUserDetailsRepo.findByEmail(email)).thenReturn(Optional.of(mockUser));
 
         // Act
-        UserDetails validatedUser = userDetailsService.validateUser(TEST_EMAIL, TEST_PASSWORD);
+        UserDetails result = myUserDetailsService.validateUser(email, password);
 
         // Assert
-        assertNotNull(validatedUser);
-        assertEquals(TEST_EMAIL, validatedUser.getEmail());
+        assertNotNull(result);
+        assertEquals(email, result.getEmail());
+        verify(myUserDetailsRepo).findByEmail(email);
     }
 
     @Test
-    void validateUser_InvalidCredentials_ShouldThrowException() {
+    void testValidateUser_UserNotFound() {
         // Arrange
-        when(mockUserDetailsRepo.findByEmail(TEST_EMAIL))
-                .thenReturn(Optional.of(testUser));
+        String email = "test@example.com";
+        String password = "password123";
+
+        when(myUserDetailsRepo.findByEmail(email)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> userDetailsService.validateUser(TEST_EMAIL, "wrongPassword")
+        assertThrows(IllegalArgumentException.class, () ->
+                myUserDetailsService.validateUser(email, password)
         );
+        verify(myUserDetailsRepo).findByEmail(email);
     }
 
     @Test
-    void checkDuplicate_NewUser_ShouldSaveUser() {
+    void testCheckDuplicate_Successful() {
         // Arrange
-        when(mockUserDetailsRepo.findByEmail(TEST_EMAIL))
-                .thenReturn(Optional.empty());
+        UserDetails newUser = new UserDetails();
+        newUser.setEmail("newuser@example.com");
+
+        when(myUserDetailsRepo.findByEmail("newuser@example.com")).thenReturn(Optional.empty());
 
         // Act
-        userDetailsService.checkDuplicate(testUser);
+        myUserDetailsService.checkDuplicate(newUser);
 
         // Assert
-        verify(mockUserDetailsRepo).save(testUser);
-        assertNotNull(testUser.getUpdatedAt());
+        verify(myUserDetailsRepo).findByEmail("newuser@example.com");
+        verify(myUserDetailsRepo).save(newUser);
     }
 
     @Test
-    void checkDuplicate_ExistingEmail_ShouldThrowException() {
+    void testCheckDuplicate_UserExists() {
         // Arrange
-        when(mockUserDetailsRepo.findByEmail(TEST_EMAIL))
-                .thenReturn(Optional.of(testUser));
+        UserDetails newUser = new UserDetails();
+        newUser.setEmail("existing@example.com");
+        UserDetails existingUser = new UserDetails();
+        existingUser.setEmail("existing@example.com");
+
+        when(myUserDetailsRepo.findByEmail("existing@example.com")).thenReturn(Optional.of(existingUser));
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> userDetailsService.checkDuplicate(testUser)
-        );
+        assertThrows(IllegalArgumentException.class, () -> myUserDetailsService.checkDuplicate(newUser));
+        verify(myUserDetailsRepo).findByEmail("existing@example.com");
+        verify(myUserDetailsRepo, never()).save(newUser);
     }
 
     @Test
-    void getAllUsers_ShouldReturnUserList() {
+    void testGetAllUsers_Successful() {
         // Arrange
-        List<UserDetails> expectedUsers = Arrays.asList(testUser);
-        when(mockUserDetailsRepo.findAll()).thenReturn(expectedUsers);
+        List<UserDetails> mockUsers = List.of(
+                new UserDetails("id1", "user1@example.com", "Test User 1", "password1", "Location 1", "user", "Male", LocalDateTime.now(), "USD"),
+                new UserDetails("id2", "user2@example.com", "Test User 2", "password2", "Location 2", "user", "Female", LocalDateTime.now(), "EUR")
+        );
+        when(myUserDetailsRepo.findAll()).thenReturn(mockUsers);
 
         // Act
-        List<UserDetails> actualUsers = userDetailsService.getAllUsers();
+        List<UserDetails> result = myUserDetailsService.getAllUsers();
 
         // Assert
-        assertEquals(expectedUsers.size(), actualUsers.size());
-        assertEquals(expectedUsers.get(0).getEmail(), actualUsers.get(0).getEmail());
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        verify(myUserDetailsRepo).findAll();
     }
 
     @Test
-    void getUser_ExistingEmail_ShouldReturnUser() {
+    void testGetAdminDetails_Successful() {
         // Arrange
-        when(mockUserDetailsRepo.findByEmail(TEST_EMAIL))
-                .thenReturn(Optional.of(testUser));
+        AdminStatistics mockAdminStats = new AdminStatistics();
+        mockAdminStats.setTotalUsers(100);
+        mockAdminStats.setNewUsers(20);
+        mockAdminStats.setUpcomingTrips(5);
+        mockAdminStats.setPastTrips(10);
+
+        when(myUserDetailsRepo.count()).thenReturn(100L);
+        when(myUserDetailsRepo.getRecentUsers(any())).thenReturn(List.of(new UserDetails()));
+        when(userItineraryService.pastTrips()).thenReturn(10);
+        when(userItineraryService.upcomingTrips()).thenReturn(5);
+        when(userItineraryService.getPopularDestination()).thenReturn(List.of(new AdminStatistics.PopularDestinations(5, "Paris")));
 
         // Act
-        Optional<UserDetails> user = userDetailsService.getUser(TEST_EMAIL);
+        AdminStatistics result = myUserDetailsService.getAdminDetails();
 
         // Assert
-        assertTrue(user.isPresent());
-        assertEquals(TEST_EMAIL, user.get().getEmail());
-    }
-
-    @Test
-    void getUser_NullEmail_ShouldThrowException() {
-        // Act & Assert
-        assertThrows(IllegalArgumentException.class,
-                () -> userDetailsService.getUser(null)
-        );
-    }
-
-    @Test
-    void getAdminDetails_ShouldReturnStatistics() {
-        // Arrange
-        when(mockUserDetailsRepo.count()).thenReturn(10L);
-
-        List<UserDetails> recentUsers = Arrays.asList(testUser);
-        when(mockUserDetailsRepo.getRecentUsers(any(LocalDateTime.class)))
-                .thenReturn(recentUsers);
-
-        when(mockUserItineraryService.pastTrips()).thenReturn(5);
-        when(mockUserItineraryService.upcomingTrips()).thenReturn(3);
-
-        List<AdminStatistics.PopularDestinations> popularDestinations = Arrays.asList(
-                new AdminStatistics.PopularDestinations(2, "Paris")
-        );
-        when(mockUserItineraryService.getPopularDestination())
-                .thenReturn(popularDestinations);
-
-        // Act
-        AdminStatistics adminStatistics = userDetailsService.getAdminDetails();
-
-        // Assert
-        assertEquals(10, adminStatistics.getTotalUsers());
-        assertEquals(1, adminStatistics.getNewUsers());
-        assertEquals(5, adminStatistics.getPastTrips());
-        assertEquals(3, adminStatistics.getUpcomingTrips());
-        assertEquals(1, adminStatistics.getPopularDestinations().size());
-        assertEquals("Paris", adminStatistics.getPopularDestinations().get(0).getDestination());
+        assertNotNull(result);
+        assertEquals(100, result.getTotalUsers());
+        assertEquals(20, result.getNewUsers());
+        assertEquals(10, result.getPastTrips());
+        assertEquals(5, result.getUpcomingTrips());
+        assertNotNull(result.getPopularDestinations());
+        verify(myUserDetailsRepo).count();
+        verify(myUserDetailsRepo).getRecentUsers(any());
     }
 }

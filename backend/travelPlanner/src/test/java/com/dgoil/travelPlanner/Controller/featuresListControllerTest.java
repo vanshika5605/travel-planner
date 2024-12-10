@@ -10,16 +10,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 public class featuresListControllerTest {
@@ -46,13 +47,8 @@ public class featuresListControllerTest {
         Features feature1 = new Features("Accommodation", "Find best places to stay");
         Features feature2 = new Features("Transportation", "Manage travel routes");
 
-        FeaturesList featuresList1 = new FeaturesList();
-        featuresList1._id = "1";
-        featuresList1.features = Arrays.asList(feature1);
-
-        FeaturesList featuresList2 = new FeaturesList();
-        featuresList2._id = "2";
-        featuresList2.features = Arrays.asList(feature2);
+        FeaturesList featuresList1 = new FeaturesList("1", Arrays.asList(feature1));
+        FeaturesList featuresList2 = new FeaturesList("2", Arrays.asList(feature2));
 
         List<FeaturesList> featuresLists = Arrays.asList(featuresList1, featuresList2);
 
@@ -60,7 +56,7 @@ public class featuresListControllerTest {
         when(myfeaturesListService.getAllFeatures()).thenReturn(featuresLists);
 
         // Perform the request and validate
-        mockMvc.perform(get("/api/v1/getFeatures"))
+        mockMvc.perform(get("/api/v1/getFeatures").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0]._id").value("1"))
@@ -80,7 +76,7 @@ public class featuresListControllerTest {
         when(myfeaturesListService.getAllFeatures()).thenReturn(Arrays.asList());
 
         // Perform the request and validate
-        mockMvc.perform(get("/api/v1/getFeatures"))
+        mockMvc.perform(get("/api/v1/getFeatures").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
 
@@ -91,15 +87,13 @@ public class featuresListControllerTest {
     @Test
     public void testGetAllFeaturesWithEmptyFeatures() throws Exception {
         // Prepare test data with empty features
-        FeaturesList featuresList = new FeaturesList();
-        featuresList._id = "1";
-        featuresList.features = Arrays.asList();
+        FeaturesList featuresList = new FeaturesList("1", Arrays.asList());
 
         // Mock service method
         when(myfeaturesListService.getAllFeatures()).thenReturn(Arrays.asList(featuresList));
 
         // Perform the request and validate
-        mockMvc.perform(get("/api/v1/getFeatures"))
+        mockMvc.perform(get("/api/v1/getFeatures").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0]._id").value("1"))
@@ -109,17 +103,24 @@ public class featuresListControllerTest {
         verify(myfeaturesListService, times(1)).getAllFeatures();
     }
 
-//    @Test
-//    public void testGetAllFeaturesServiceException() throws Exception {
-//        // Mock service method to throw an exception
-//        when(myfeaturesListService.getAllFeatures())
-//                .thenThrow(new RuntimeException("Service error"));
-//
-//        // Perform the request and validate
-//        mockMvc.perform(get("/api/v1/getFeatures"))
-//                .andExpect(status().is5xxServerError());
-//
-//        // Verify service method was called
-//        verify(myfeaturesListService, times(1)).getAllFeatures();
-//    }
+    @Test
+    public void testGetAllFeaturesHandlesServiceException() throws Exception {
+        // Mock service method to throw an exception
+        when(myfeaturesListService.getAllFeatures()).thenThrow(new RuntimeException("Service error"));
+
+        // Perform the request and validate
+        mockMvc.perform(get("/api/v1/getFeatures").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().string(containsString("Service error")));
+
+        // Verify service method was called
+        verify(myfeaturesListService, times(1)).getAllFeatures();
+    }
+
+    @Test
+    public void testGetAllFeaturesInvalidEndpoint() throws Exception {
+        // Attempting to hit an invalid endpoint
+        mockMvc.perform(get("/api/v1/invalidEndpoint").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }

@@ -217,4 +217,82 @@ public class userItineraryServiceTest {
         assertFalse(result.isEmpty());
         assertEquals("Paris", result.get(0).getDestination());
     }
+
+    // Additional Tests
+
+    @Test
+    void getUserTripData_UserNotFound_ShouldReturnEmptyData() {
+        // Arrange
+        when(mockUserItineraryRepo.findByTripID(TEST_TRIP_ID))
+                .thenReturn(Optional.of(testItinerary));
+        when(mockUserDetailsService.getUser(TEST_EMAIL))
+                .thenReturn(Optional.empty());
+
+        // Act
+        UserTripData result = userItineraryService.getUserTripData(TEST_TRIP_ID);
+
+        // Assert
+        assertNull(result.getUserDetails());
+    }
+
+    @Test
+    void saveUserItinerary_InvalidData_ShouldThrowException() {
+        // Arrange
+        UserItinerary invalidItinerary = new UserItinerary();
+        invalidItinerary.setTripID("TB-5678");
+        invalidItinerary.setDestination("");  // Invalid destination
+
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> userItineraryService.saveUserItinerary(invalidItinerary)
+        );
+    }
+
+    @Test
+    void getUserItinerary_RepositoryFailure_ShouldReturnEmpty() {
+        // Arrange
+        when(mockUserItineraryRepo.findByTripID(TEST_TRIP_ID))
+                .thenThrow(new RuntimeException("Database error"));
+
+        // Act & Assert
+        assertThrows(RuntimeException.class,
+                () -> userItineraryService.getUserItinerary(TEST_TRIP_ID)
+        );
+    }
+
+    @Test
+    void getPopularDestination_EmptyList_ShouldReturnEmpty() {
+        // Arrange
+        when(mockUserItineraryRepo.getPopularDestination()).thenReturn(new ArrayList<>());
+
+        // Act
+        List<AdminStatistics.PopularDestinations> result = userItineraryService.getPopularDestination();
+
+        // Assert
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void getUserTripDetails_NoTrips_ShouldReturnEmpty() {
+        // Arrange
+        when(mockUserItineraryRepo.getUserTrips(TEST_EMAIL)).thenReturn(new ArrayList<>());
+
+        // Act
+        UserTripsDetails result = userItineraryService.getUserTripDetails(TEST_EMAIL);
+
+        // Assert
+        assertTrue(result.getUpcomingTrips().isEmpty());
+    }
+
+    @Test
+    void saveUserItinerary_InvalidTripID_ShouldThrowException() {
+        // Arrange
+        UserItinerary invalidItinerary = new UserItinerary();
+        invalidItinerary.setTripID("InvalidTripID");  // Invalid format
+
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> userItineraryService.saveUserItinerary(invalidItinerary)
+        );
+    }
 }

@@ -22,6 +22,7 @@ public class FeaturesList {
      * List of features associated with this document.
      * Each feature contains a name and description.
      */
+    public String _id;
     public List<Features> features;
     /**
      * Represents an individual feature with its name and description.

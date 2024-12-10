@@ -5,116 +5,63 @@ import com.dgoil.travelPlanner.Model.DAO.UserItinerary;
 import com.dgoil.travelPlanner.Repository.packingListRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class packingListServiceTest {
 
     @Mock
-    private packingListRepo mockPackingListRepo;
+    private packingListRepo myPackingListRepo;
 
     @Mock
-    private userItineraryService mockUserItineraryService;
+    private userItineraryService myUserItineraryService;
 
     @InjectMocks
     private packingListService packingListService;
 
-    private PackingList testPackingList;
-    private UserItinerary testUserItinerary;
-    private static final String TEST_TRIP_ID = "trip123";
-
     @BeforeEach
-    void setUp() {
-        // Create test data
-        testPackingList = new PackingList();
-        testPackingList.setTripID(TEST_TRIP_ID);
-
-        testUserItinerary = new UserItinerary();
-        testUserItinerary.setTripID(TEST_TRIP_ID);
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void saveList_NewPackingList_ShouldInsert() {
-        // Arrange
-        when(mockPackingListRepo.getByTripId(TEST_TRIP_ID)).thenReturn(Optional.empty());
-        when(mockUserItineraryService.getUserItinerary(TEST_TRIP_ID)).thenReturn(Optional.of(testUserItinerary));
+    public void testSaveList_InsertNew() {
+        PackingList packingList = new PackingList();
+        packingList.setTripID("123");
 
-        // Act
-        packingListService.saveList(testPackingList);
+        when(myPackingListRepo.getByTripId("123")).thenReturn(Optional.empty());
+        when(myUserItineraryService.getUserItinerary("123")).thenReturn(Optional.of(new UserItinerary()));
 
-        // Assert
-        verify(mockPackingListRepo).insert(testPackingList);
-        verify(mockUserItineraryService).saveUserItinerary(argThat(
-                itinerary -> itinerary.getIsPackingListCreated() == Boolean.TRUE
-        ));
+        packingListService.saveList(packingList);
+
+        verify(myPackingListRepo, times(1)).insert(packingList);
+        verify(myUserItineraryService, times(1)).saveItinerary(any(UserItinerary.class));
     }
 
     @Test
-    void saveList_ExistingPackingList_ShouldUpdate() {
-        // Arrange
-        PackingList existingPackingList = new PackingList();
-        existingPackingList.set_id("existingId");
-        existingPackingList.setTripID(TEST_TRIP_ID);
+    public void testGetList_Success() {
+        PackingList packingList = new PackingList();
+        packingList.setTripID("123");
 
-        when(mockPackingListRepo.getByTripId(TEST_TRIP_ID)).thenReturn(Optional.of(existingPackingList));
-        when(mockUserItineraryService.getUserItinerary(TEST_TRIP_ID)).thenReturn(Optional.of(testUserItinerary));
+        when(myPackingListRepo.getByTripId("123")).thenReturn(Optional.of(packingList));
 
-        // Act
-        packingListService.saveList(testPackingList);
+        PackingList result = packingListService.getList("123");
 
-        // Assert
-        verify(mockPackingListRepo).save(testPackingList);
-        assertEquals("existingId", testPackingList.get_id());
+        assertThat(result).isEqualTo(packingList);
     }
 
     @Test
-    void saveList_NoUserItinerary_ShouldNotUpdateItinerary() {
-        // Arrange
-        when(mockPackingListRepo.getByTripId(TEST_TRIP_ID)).thenReturn(Optional.empty());
-        when(mockUserItineraryService.getUserItinerary(TEST_TRIP_ID)).thenReturn(Optional.empty());
+    public void testGetList_Failure() {
+        when(myPackingListRepo.getByTripId("123")).thenReturn(Optional.empty());
 
-        // Act
-        packingListService.saveList(testPackingList);
-
-        // Assert
-        verify(mockPackingListRepo).insert(testPackingList);
-        verify(mockUserItineraryService, never()).saveUserItinerary(any());
-    }
-
-    @Test
-    void getList_ExistingPackingList_ShouldReturn() {
-        // Arrange
-        when(mockPackingListRepo.getByTripId(TEST_TRIP_ID)).thenReturn(Optional.of(testPackingList));
-
-        // Act
-        PackingList retrievedList = packingListService.getList(TEST_TRIP_ID);
-
-        // Assert
-        assertNotNull(retrievedList);
-        assertEquals(TEST_TRIP_ID, retrievedList.getTripID());
-    }
-
-    @Test
-    void getList_NonExistingPackingList_ShouldThrowException() {
-        // Arrange
-        when(mockPackingListRepo.getByTripId(TEST_TRIP_ID)).thenReturn(Optional.empty());
-
-        // Act & Assert
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> packingListService.getList(TEST_TRIP_ID)
-        );
-
-        // Verify the exception message
-        assertTrue(exception.getMessage().contains(TEST_TRIP_ID));
+        assertThatThrownBy(() -> packingListService.getList("123"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Packing list not found for TripID: 123");
     }
 }

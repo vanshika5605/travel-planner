@@ -154,6 +154,22 @@ class userDetailsControllerTest {
     }
 
     @Test
+    void testGetAllUsers_Exception() {
+        // Arrange
+        when(myUserDetailsService.getAllUsers()).thenThrow(new IllegalArgumentException("Service Error"));
+
+        // Act
+        ResponseEntity<ApiResponse<List<UserDetails>>> response = userController.getAllUsers();
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertFalse(response.getBody().isSuccess());
+        assertEquals("Service Error", response.getBody().getErrorMessage());
+        verify(myUserDetailsService).getAllUsers();
+    }
+
+    @Test
     void testGetAdminDetails_Successful() {
         // Arrange
         AdminStatistics mockAdminStats = new AdminStatistics();
@@ -209,6 +225,24 @@ class userDetailsControllerTest {
         assertFalse(response.getBody().isSuccess());
         assertEquals("No records found for the given emailId: " + emailId,
                 response.getBody().getErrorMessage());
+        verify(myUserDetailsService).getUser(emailId);
+    }
+
+    @Test
+    void testGetUser_InvalidEmail() {
+        // Arrange
+        String emailId = ""; // Empty email should trigger an error
+
+        when(myUserDetailsService.getUser(emailId)).thenThrow(new IllegalArgumentException("tripId parameter is missing or empty."));
+
+        // Act
+        ResponseEntity<ApiResponse<Optional<UserDetails>>> response = userController.getUser(emailId);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertFalse(response.getBody().isSuccess());
+        assertEquals("tripId parameter is missing or empty.", response.getBody().getErrorMessage());
         verify(myUserDetailsService).getUser(emailId);
     }
 }
