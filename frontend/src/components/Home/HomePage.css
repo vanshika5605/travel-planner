@@ -185,11 +185,6 @@ padding-left: 1rem; /* Aligns items to the right */
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 4px solid black; /* Blinking cursor */
-  /* width: 0; */
-  animation: 
-    typing 4s steps(30, end) 1s forwards, 
-    blink 0.75s step-end 4s; /* Stops blinking after typing finishes */
 }
 
 /* Typing Animation */
