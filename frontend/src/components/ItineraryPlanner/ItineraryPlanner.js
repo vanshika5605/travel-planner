@@ -29,13 +29,26 @@ const ItineraryPlanner = ({
     setLoading(true); // Show loading GIF
     try {
       const response = await backend.generateItinerary(formData);
-      navigate("/itinerary", {
-        state: {
-          tripData: { ...formData, budget: response.data.budget },
-          userId: userId,
-          itineraryData: response.data,
-        },
-      });
+      if(formType === "unknown"){
+        const itinerary = response.data.itinerary;
+        if (response.data.itinerary.length > 0) {
+          navigate("/itinerary", {
+            state: {
+              tripData: { ...formData, budget: response.data.budget, startDate: itinerary[0].date, endDate: itinerary[itinerary.length - 1].date },
+              userId: userId,
+              itineraryData: response.data,
+            },
+          });
+        }
+      } else {
+        navigate("/itinerary", {
+          state: {
+            tripData: { ...formData, budget: response.data.budget },
+            userId: userId,
+            itineraryData: response.data,
+          },
+        });
+      }      
     } catch (error) {
       if (error.response && error.response.status === "500") {
         setErrorMessage("Internal server error. Please try again later.");
