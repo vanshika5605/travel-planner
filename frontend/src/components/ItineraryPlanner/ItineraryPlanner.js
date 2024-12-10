@@ -34,7 +34,7 @@ const ItineraryPlanner = ({
         if (response.data.itinerary.length > 0) {
           navigate("/itinerary", {
             state: {
-              tripData: { ...formData, budget: response.data.budget, startDate: itinerary[0].date, endDate: itinerary[itinerary.length - 1].date },
+              tripData: { ...formData, budget: response.data.budget, startDate: itinerary[0].date, endDate: itinerary[itinerary.length - 1].date, destination: itinerary[0].destination },
               userId: userId,
               itineraryData: response.data,
             },
@@ -50,8 +50,8 @@ const ItineraryPlanner = ({
         });
       }      
     } catch (error) {
-      if (error.response && error.response.status === "500") {
-        setErrorMessage("Internal server error. Please try again later.");
+      if (error.response && error.response.status === 500) {
+        setErrorMessage("Service unavailable. Please try again later.");
       } else {
         setErrorMessage("Error: Could not connect to the server.");
       }
