@@ -212,7 +212,7 @@ class ItineraryService:
             The output should follow this JSON format if dates are not specified assume any in future:
 
             itinerary: [
-                {{
+                {{  "destination" : "Mention the city, state and country for the vacation"
                     "date": "2025-01-30",
                     "day": "Day 1",
                     "activities": [
