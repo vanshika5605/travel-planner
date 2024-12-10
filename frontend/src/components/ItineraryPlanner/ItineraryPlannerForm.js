@@ -6,8 +6,8 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useMemo } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import React, { useMemo } from "react";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import "./ItineraryPlannerForm.css";
 
 // Itinerary planner form component to take inputs from the user
@@ -17,14 +17,6 @@ const ItineraryPlannerForm = ({
   formData,
   setFormData,
 }) => {
-  const [peopleCount, setPeopleCount] = useState(1);
-
-  const vacationTypes = [
-    { value: "relaxed", label: "Relaxed" },
-    { value: "tourist", label: "Tourist" },
-    { value: "workation", label: "Workation" },
-  ];
-
   const groupTypes = [
     { value: "solo", label: "Solo" },
     { value: "couple", label: "Couple" },
@@ -45,12 +37,12 @@ const ItineraryPlannerForm = ({
   const isSubmitDisabled = useMemo(() => {
     if (formType === "unknown") {
       // For unknown form type, check if custom details are present
-      return !formData.customDetails || formData.customDetails.trim() === "";
+      return !formData.message || formData.message.trim() === "";
     }
-    
+
     // For known form type, check if destination, start date, end date, and budget are filled
     return (
-      !formData.destination || 
+      !formData.destination ||
       formData.destination.trim() === "" ||
       !formData.startDate ||
       !formData.endDate ||
@@ -124,7 +116,7 @@ const ItineraryPlannerForm = ({
   );
 
   return (
-    <Container className="itinerary-container py-4">
+    <>
       <h2 className="text-center mb-4">
         {formType === "known"
           ? "Plan Your Specific Trip"
@@ -135,8 +127,8 @@ const ItineraryPlannerForm = ({
           renderTextareaField(
             "Share Your Thoughts",
             faSmile,
-            "customDetails",
-            formData.customDetails || "",
+            "message",
+            formData.message || "",
             "Tell us about your ideas for this trip...",
             5
           )}
@@ -167,24 +159,24 @@ const ItineraryPlannerForm = ({
             {renderTextareaField(
               "Additional Details",
               faSmile,
-              "customDetails",
-              formData.customDetails,
+              "message",
+              formData.message,
               "Share any special requirements or preferences...",
               3
             )}
           </>
         )}
 
-        <Button 
-          type="submit" 
-          className="w-100" 
+        <Button
+          type="submit"
+          className="w-100"
           onClick={getItinerary}
           disabled={isSubmitDisabled}
         >
           {formType === "known" ? "Plan My Trip" : "Get Trip Recommendations"}
         </Button>
       </Form>
-    </Container>
+    </>
   );
 };
 

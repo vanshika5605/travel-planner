@@ -27,3 +27,5 @@ data/
 
 # Node.js (if applicable for the microservice)
 node_modules/
+
+.DS_Store

@@ -15,7 +15,6 @@ const SignUp = (props) => {
     confirmPassword: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
   const [passwordChecks, setPasswordChecks] = useState({
     length: false,

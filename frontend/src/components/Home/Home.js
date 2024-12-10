@@ -1,18 +1,11 @@
-import React, { useState } from "react";
-import "./HomePage.css";
-import {
-  faUserPlus,
-  faHeart,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Modal, Button, Alert } from "react-bootstrap";
+import React from "react";
+import { Button } from "react-bootstrap";
 import ContactUs from "./ContactUs";
 import Features from "./Features";
+import "./HomePage.css";
 
 // Home component for the landing page
 const Home = () => {
-
   return (
     <div data-testid="home-container" className="home-container">
       <section className="header-section">

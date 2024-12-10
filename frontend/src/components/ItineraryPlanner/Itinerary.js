@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./Itinerary.css";
@@ -67,7 +67,7 @@ const Itinerary = () => {
       const response = await backend.saveTrip(tripDataNew);
       if (response.status === 200) {
         console.log("Trip saved");
-        navigate('/profile');
+        navigate("/profile");
       }
     } catch (error) {
       if (error.response) {

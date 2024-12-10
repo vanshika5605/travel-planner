@@ -175,7 +175,7 @@ const Navbar = ({
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {errorMessage != "" ? (
+          {errorMessage !== "" ? (
             <>
               <Alert variant="danger">{errorMessage}</Alert>
             </>
