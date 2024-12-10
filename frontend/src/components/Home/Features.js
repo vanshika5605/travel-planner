@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./Features.css";
 import backend from "../Utils/backend";
+import "./Features.css";
 
 // Feature component on the home page to display the list of features that our website offers
-const Features = () => {
+const Features = ({errorMessage, setErrorMessage}) => {
   const [features, setFeatures] = useState([]);
 
   const getFeatureList = async () => {
+    setErrorMessage(null)
     try {
       const response = await backend.getFeaturesList();
       const updatedFeatures = response.data[0].features.map(
@@ -17,7 +18,11 @@ const Features = () => {
       );
       setFeatures(updatedFeatures);
     } catch (error) {
-      console.error("Something went wrong");
+      if (error.response && error.response.status === "500") {
+        setErrorMessage("Internal server error. Please try again later.");
+      } else {
+        setErrorMessage("Error: Could not connect to the server");
+      }
     }
   };
 
@@ -26,6 +31,7 @@ const Features = () => {
   }, []);
 
   return (
+    <>
     <div className="features">
       <div className="left-div">
         <h2>Our Services</h2>
@@ -41,7 +47,11 @@ const Features = () => {
               key={feature.id}
             >
               <div className="custom-accordion-header">
-                <h2 className="accordion-header" id={`heading-${feature.id}`} data-testid={`heading-${feature.id}`}>
+                <h2
+                  className="accordion-header"
+                  id={`heading-${feature.id}`}
+                  data-testid={`heading-${feature.id}`}
+                >
                   <button
                     className="accordion-button collapsed d-flex justify-content-between align-items-center bg-white shadow-none custom-accordion-button"
                     type="button"
@@ -70,6 +80,7 @@ const Features = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

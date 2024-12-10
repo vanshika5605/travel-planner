@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
@@ -15,13 +15,13 @@ const Navbar = ({
   userData,
   setUserData,
   isAdmin,
-  setIsAdmin,
+  setIsAdmin
 }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true); // for email validation
   const [touched, setTouched] = useState(false); // for tracking interaction
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLoginModalShow = () => setShowLoginModal(true);
   const handleLoginModalClose = () => {
@@ -45,6 +45,7 @@ const Navbar = ({
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setErrorMessage(null);
       const response = await backend.login({
         email: userId,
         password: password,
@@ -95,9 +96,9 @@ const Navbar = ({
     setErrorMessage("");
   };
 
-  // useEffect(() => {
-  //   console.log("Changed")
-  // },[isAdmin])
+  useEffect(() => {
+    setErrorMessage(null);
+  }, []);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -175,13 +176,11 @@ const Navbar = ({
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {errorMessage !== "" ? (
+          {errorMessage &&(
             <>
               <Alert variant="danger">{errorMessage}</Alert>
             </>
-          ) : (
-            <></>
-          )}
+          ) }
           <form onSubmit={handleLogin}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">

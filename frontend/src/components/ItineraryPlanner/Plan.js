@@ -6,7 +6,15 @@ import "./Plan.css";
 import TravelStyleQuiz from "./TravelStyleQuiz";
 
 // Plan component that gives the users two options - plan an itinerary or let us suggest you
-const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
+const Plan = ({
+  userId,
+  holidays,
+  longWeekends,
+  rates,
+  currencies,
+  errorMessage,
+  setErrorMessage,
+}) => {
   const [isPlanModeOn, setIsPlanModeOn] = useState(false);
   const [planModeType, setPlanModeType] = useState("");
 
@@ -142,7 +150,12 @@ const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
               <button className="back-button" onClick={handleGoBack}>
                 ← Back to Options
               </button>
-              <ItineraryPlanner userId={userId} formType={planModeType} />
+              <ItineraryPlanner
+                userId={userId}
+                formType={planModeType}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+              />
             </div>
           ) : (
             <>
@@ -152,11 +165,6 @@ const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
                   <TravelStyleQuiz />
                 </div>
                 <div className="card">
-                  {/* <h2>Trips that'll have you trippin</h2>
-                  <h5>Some popular itineraries</h5>
-                  <div className="fakeimg" style={{ height: "200px" }}>
-                    Image
-                  </div> */}
                   <CurrencyConverter rates={rates} currencies={currencies} />
                 </div>
               </div>
@@ -167,9 +175,6 @@ const Plan = ({ userId, holidays, longWeekends, rates, currencies }) => {
                     longWeekends={longWeekends}
                   />
                 </div>
-                {/* <div className="card">
-                  <CurrencyConverter rates={rates} currencies={currencies} />
-                </div> */}
               </div>
             </>
           )}

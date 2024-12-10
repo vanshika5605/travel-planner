@@ -1,13 +1,18 @@
-import React, { useState } from "react";
-import { Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useEffect, useMemo, useState } from "react";
+import { Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import backend from "../Utils/backend";
 import "./ItineraryPlanner.css";
 import ItineraryPlannerForm from "./ItineraryPlannerForm";
 
-const ItineraryPlanner = ({ userId, formType }) => {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [errorMessage, setErrorMessage] = useState("");
+const ItineraryPlanner = ({
+  userId,
+  formType,
+  errorMessage,
+  setErrorMessage,
+}) => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // Loading state
   const [formData, setFormData] = useState({
     destination: "",
     startDate: "",
@@ -15,45 +20,74 @@ const ItineraryPlanner = ({ userId, formType }) => {
     budget: "",
     groupType: "solo",
     message: "",
+    email: userId,
   });
 
   const getItinerary = async (e) => {
     e.preventDefault();
+    setErrorMessage(null);
+    setLoading(true); // Show loading GIF
     try {
-      // Call API to generate itinerary
       const response = await backend.generateItinerary(formData);
-
-      // Navigate to itinerary route with data in location state
       navigate("/itinerary", {
         state: {
-          tripData: { ...formData, budget: response.data.itinerary.budget },
+          tripData: { ...formData, budget: response.data.budget },
           userId: userId,
-          itineraryData: response.data.itinerary,
+          itineraryData: response.data,
         },
       });
     } catch (error) {
-      console.log(error)
       if (error.response && error.response.status === "500") {
-        setErrorMessage(error.response.data.errorMessage);
+        setErrorMessage("Internal server error. Please try again later.");
       } else {
-        setErrorMessage("Error generating itinerary");
+        setErrorMessage("Error: Could not connect to the server.");
       }
+    } finally {
+      setLoading(false); // Hide loading GIF
     }
   };
 
+  const isSubmitDisabled = useMemo(() => {
+    if (formType === "unknown") {
+      return !formData.message || formData.message.trim() === "";
+    }
+    return (
+      !formData.destination ||
+      formData.destination.trim() === "" ||
+      !formData.startDate ||
+      !formData.endDate ||
+      !formData.budget ||
+      formData.budget === ""
+    );
+  }, [formType, formData]);
+
+  useEffect(() => {
+    setErrorMessage(null);
+  }, []);
+
   return (
     <Container className="itinerary-container py-4">
-      {errorMessage && (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
+      {loading ? (
+        <div data-testid="loader-container" className="trip-loader-container">
+          <img src="/loader.gif" alt="Loading..." />
         </div>
+      ) : (
+        <>
+          <ItineraryPlannerForm
+            formType={formType}
+            formData={formData}
+            setFormData={setFormData}
+          />
+          <Button
+            type="submit"
+            className="w-100"
+            onClick={getItinerary}
+            disabled={isSubmitDisabled}
+          >
+            {formType === "known" ? "Plan My Trip" : "Get Trip Recommendations"}
+          </Button>
+        </>
       )}
-      <ItineraryPlannerForm
-        formType={formType}
-        getItinerary={getItinerary}
-        formData={formData}
-        setFormData={setFormData}
-      />
     </Container>
   );
 };

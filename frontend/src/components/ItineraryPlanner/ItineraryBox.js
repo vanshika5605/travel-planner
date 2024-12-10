@@ -17,6 +17,7 @@ const categoryIcons = {
   Adventure: faHiking,
   Food: faUtensils,
   Accommodation: faBed,
+  Hotel: faBed,
   Shopping: faCartShopping,
   Sightseeing: faVanShuttle,
 };

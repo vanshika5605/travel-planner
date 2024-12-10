@@ -8,3 +8,11 @@
     width: 70vw;
     text-align: center;
 }
+
+.trip-loader-container {
+    height: 55vh;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

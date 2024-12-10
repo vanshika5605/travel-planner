@@ -6,17 +6,12 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useMemo } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import React from "react";
+import { Col, Form, Row } from "react-bootstrap";
 import "./ItineraryPlannerForm.css";
 
 // Itinerary planner form component to take inputs from the user
-const ItineraryPlannerForm = ({
-  formType,
-  getItinerary,
-  formData,
-  setFormData,
-}) => {
+const ItineraryPlannerForm = ({ formType, formData, setFormData }) => {
   const groupTypes = [
     { value: "solo", label: "Solo" },
     { value: "couple", label: "Couple" },
@@ -32,24 +27,6 @@ const ItineraryPlannerForm = ({
       [name]: value,
     }));
   };
-
-  // Memoized validation for submission button
-  const isSubmitDisabled = useMemo(() => {
-    if (formType === "unknown") {
-      // For unknown form type, check if custom details are present
-      return !formData.message || formData.message.trim() === "";
-    }
-
-    // For known form type, check if destination, start date, end date, and budget are filled
-    return (
-      !formData.destination ||
-      formData.destination.trim() === "" ||
-      !formData.startDate ||
-      !formData.endDate ||
-      !formData.budget ||
-      formData.budget === ""
-    );
-  }, [formType, formData]);
 
   const renderInputField = (label, icon, type, name, value, placeholder) => (
     <Form.Group className="mb-3">
@@ -166,15 +143,6 @@ const ItineraryPlannerForm = ({
             )}
           </>
         )}
-
-        <Button
-          type="submit"
-          className="w-100"
-          onClick={getItinerary}
-          disabled={isSubmitDisabled}
-        >
-          {formType === "known" ? "Plan My Trip" : "Get Trip Recommendations"}
-        </Button>
       </Form>
     </>
   );
