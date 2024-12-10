@@ -2,9 +2,21 @@
 
 ## 1. Anusha Agrawal
 
-- 
-- 
-- 
+#### API Development
+- Developed the Packing List API to dynamically generate packing lists tailored to user-specific itineraries and details.
+- Implemented functionality to fetch itineraries from a backend API that stores user details and generated itineraries.
+- Designed and sent requests to the Llama 3.2 model on Hugging Face, using a custom prompt to generate practical packing lists.
+- Constructed a detailed custom prompt to ensure the packing list includes - Essential documents, Clothing, Toiletries, Personal essentials, Medicines and first aid, Electronics and Miscellaneous items
+- Ensured the response was formatted in JSON and adhered to predefined data structure requirements
+  
+#### Testing
+- Wrote comprehensive test cases for the itinerary and packing list services, ensuring functionality and robustness.
+- Simulated API responses and validated the expected itinerary output against user inputs.
+- Handled edge cases such as invalid JSON and unexpected exceptions.
+- Mocked external dependencies (e.g., Hugging Face API calls) for isolated and reliable testing.
+- Validated that the packing list output was consistent with the itinerary and user preferences.
+- Achieved significant code coverage for both generate_itinerary and generate_packing_list services.
+
 
 ## 2. Fabeha Fatima
 
