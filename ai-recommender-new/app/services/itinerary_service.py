@@ -76,9 +76,6 @@ class ItineraryService:
                 raise Exception(f"API returned status code {response.status_code}")
             
             response_data = response.json()
-            
-           
-            
             # Check if the API response is successful
             if response_data is not None:
                 # print(response_data['data'])
@@ -211,7 +208,7 @@ class ItineraryService:
         {
             "role": "user",
             "content": message + f"""
-            Based on the above details, please generate a detailed travel itinerary. 
+            Based on the above details, please generate a detailed travel itinerary. Assume Budget currency to be in USD
             The output should follow this JSON format:
 
             itinerary: [
