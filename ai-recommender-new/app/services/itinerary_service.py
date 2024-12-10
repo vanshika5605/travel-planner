@@ -32,9 +32,11 @@ class ItineraryService:
                 end_date = params.get('end_date', '2024-12-26')
                 note = params.get('note', '')
             
+            email = params.get('email', 'candaceadams9@gmail.com')
+            
             # Try to fetch start point, fallback to a default if API fails
             try:
-                start_point = self._get_start_point_from_api(0)
+                start_point = self._get_start_point_from_api(0, email)
             except Exception as api_error:
                 print(f"API Error: {api_error}. Using default start point.")
                 start_point = "Boston, MA"
@@ -50,7 +52,7 @@ class ItineraryService:
         except Exception as e:
             raise ItineraryGenerationError(f"Itinerary generation failed: {str(e)}")
 
-    def _get_start_point_from_api(self, flag):
+    def _get_start_point_from_api(self, flag, id):
         """
         Fetch the start point from the API (userDetails.location).
         
@@ -62,7 +64,10 @@ class ItineraryService:
         """
         try:
             # Define the API URL
-            api_url = "https://39da-128-119-202-80.ngrok-free.app/api/v1/tripAndUserDetails/TB-x6W0"
+            if (flag == 1):
+                api_url = f"http://localhost:8081/api/v1/tripAndUserDetails/{id}"
+            else :
+                api_url = f"http://localhost:8081/api/v1/getUser/{id}"
             
             # Make the API call with a timeout
             response = requests.get(api_url, timeout=40)
@@ -72,14 +77,17 @@ class ItineraryService:
             
             response_data = response.json()
             
+           
+            
             # Check if the API response is successful
             if response_data is not None:
+                # print(response_data['data'])
                 if(flag==0):
-                    start_point = response_data['data']['userDetails']['location']
+                    start_point = response_data['data']['location']
                     return start_point
                 elif(flag==1) :
                     gender = response_data['data']['userDetails']['gender']
-                    itinerary = response_data['data']['tripDetails']['itinerary']
+                    itinerary = response_data['data']['userItinerary']['tripDetails']['itinerary']
                     return {'gender': gender , 'itinerary': itinerary }
             else:
                 raise Exception(f"API call failed: {response_data.get('errorMessage', 'Unknown error')}")
@@ -160,7 +168,6 @@ class ItineraryService:
         - dict: The extracted JSON as a Python dictionary, or None if no valid JSON is found.
         """
         try:
-            print(text)
             json_match = re.search(r'{.*}', text, re.DOTALL)
             if json_match:
                 json_text = json_match.group(0)
@@ -168,7 +175,6 @@ class ItineraryService:
         except json.JSONDecodeError as e:
     
             return {"errorMessage": f"{e} AI couldn't recommend"}
-
 
     def call_llama_api(self, messages):
         api_key = os.getenv("HUGGINGFACE_API_KEY")
@@ -185,7 +191,7 @@ class ItineraryService:
         for chunk in stream:
             delta = chunk.choices[0].delta.content
             output += delta
-        
+
         return output
 
 
