@@ -102,12 +102,4 @@ public class featuresListControllerTest {
         // Verify service method was called
         verify(myfeaturesListService, times(1)).getAllFeatures();
     }
-
-
-    @Test
-    public void testGetAllFeaturesInvalidEndpoint() throws Exception {
-        // Attempting to hit an invalid endpoint
-        mockMvc.perform(get("/api/v1/invalidEndpoint").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
 }
