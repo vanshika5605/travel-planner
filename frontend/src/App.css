@@ -50,9 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content{
-  margin-left: 0.5rem !important;
-  margin-top: 0.5rem !important;
-  margin-right: 0.5rem !important;
+  margin: 0.5rem !important;
 }
 
 
@@ -101,4 +99,8 @@ h1, h2, h3, h4, h5, h6 {
 button:disabled {
   background-color: gray !important;
   color: black !important;
+}
+
+.custom-alert{
+  margin: 0.5rem;
 }

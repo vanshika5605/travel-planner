@@ -8,8 +8,8 @@ import {
 import "./App.css";
 import AdminPage from "./components/AdminPage/AdminPage";
 import Home from "./components/Home/Home";
-import Plan from "./components/ItineraryPlanner/Plan";
 import Itinerary from "./components/ItineraryPlanner/Itinerary";
+import Plan from "./components/ItineraryPlanner/Plan";
 import PackingList from "./components/PackingList/PackingList";
 import Profile from "./components/Profile/Profile";
 import SignUp from "./components/SignUp/SignUp";
@@ -31,66 +31,71 @@ const App = () => {
   const [rates, setRates] = useState({});
   const [currencies, setCurrencies] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchHolidays = async () => {
     try {
-      const response1 = await backend.getHolidays('2024');
-      const response2 = await backend.getHolidays('2025');
-      const response = [...response1.data, ...response2.data]
+      setErrorMessage(null);
+      const response1 = await backend.getHolidays("2024");
+      const response2 = await backend.getHolidays("2025");
+      const response = [...response1.data, ...response2.data];
       setHolidays(response);
       // Determine long weekends
       const longWeekendDates = findLongWeekends(response);
       setLongWeekends(longWeekendDates);
     } catch (error) {
-      console.error("Error fetching holidays:", error);
+      setErrorMessage("Error fetching holidays");
     }
   };
 
   const findLongWeekends = (holidays) => {
     // Convert holiday dates to a Set for quick lookup, maintaining UTC format
-    const holidayDates = new Set(holidays.map(holiday => holiday.date));
+    const holidayDates = new Set(holidays.map((holiday) => holiday.date));
 
     // Helper function to check if a date (in UTC) is a holiday
     const isHoliday = (date) => {
-        const isoDate = date.toISOString().split("T")[0]; // Ensure UTC format
-        return holidayDates.has(isoDate);
+      const isoDate = date.toISOString().split("T")[0]; // Ensure UTC format
+      return holidayDates.has(isoDate);
     };
 
     // Calculate long weekends
     const longWeekendDates = holidays.reduce((longWeekends, holiday) => {
-        const holidayDate = new Date(holiday.date); // Parse the date as UTC
-        const dayOfWeek = holidayDate.getUTCDay(); // Get the day of the week in UTC
+      const holidayDate = new Date(holiday.date); // Parse the date as UTC
+      const dayOfWeek = holidayDate.getUTCDay(); // Get the day of the week in UTC
 
-        if (dayOfWeek === 5) { // Friday
-            const saturday = new Date(holidayDate);
-            saturday.setUTCDate(holidayDate.getUTCDate() + 1); // Add one day
-            const sunday = new Date(holidayDate);
-            sunday.setUTCDate(holidayDate.getUTCDate() + 2); // Add two days
-            if (!isHoliday(saturday) && !isHoliday(sunday)) {
-                longWeekends.push(holiday.date); // Friday
-                longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
-                longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
-            }
-        } else if (dayOfWeek === 1) { // Monday
-            const sunday = new Date(holidayDate);
-            sunday.setUTCDate(holidayDate.getUTCDate() - 1); // Subtract one day
-            const saturday = new Date(holidayDate);
-            saturday.setUTCDate(holidayDate.getUTCDate() - 2); // Subtract two days
-            if (!isHoliday(sunday) && !isHoliday(saturday)) {
-                longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
-                longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
-                longWeekends.push(holiday.date); // Monday
-            }
+      if (dayOfWeek === 5) {
+        // Friday
+        const saturday = new Date(holidayDate);
+        saturday.setUTCDate(holidayDate.getUTCDate() + 1); // Add one day
+        const sunday = new Date(holidayDate);
+        sunday.setUTCDate(holidayDate.getUTCDate() + 2); // Add two days
+        if (!isHoliday(saturday) && !isHoliday(sunday)) {
+          longWeekends.push(holiday.date); // Friday
+          longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
+          longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
         }
+      } else if (dayOfWeek === 1) {
+        // Monday
+        const sunday = new Date(holidayDate);
+        sunday.setUTCDate(holidayDate.getUTCDate() - 1); // Subtract one day
+        const saturday = new Date(holidayDate);
+        saturday.setUTCDate(holidayDate.getUTCDate() - 2); // Subtract two days
+        if (!isHoliday(sunday) && !isHoliday(saturday)) {
+          longWeekends.push(saturday.toISOString().split("T")[0]); // Saturday
+          longWeekends.push(sunday.toISOString().split("T")[0]); // Sunday
+          longWeekends.push(holiday.date); // Monday
+        }
+      }
 
-        return longWeekends;
+      return longWeekends;
     }, []);
 
     return longWeekendDates;
-};
+  };
 
   const fetchExchangeRates = async () => {
     try {
+      setErrorMessage(null);
       const response = await backend.getExchangeRates();
       setRates(response.data.rates);
       const currencyOptions = Object.keys(response.data.rates).map(
@@ -101,7 +106,7 @@ const App = () => {
       );
       setCurrencies(currencyOptions);
     } catch (error) {
-      console.error("Error fetching exchange rates:", error);
+      setErrorMessage("Error fetching exchange rates");
     }
   };
 
@@ -132,9 +137,22 @@ const App = () => {
             setIsAdmin={setIsAdmin}
           />
         )}
+        {errorMessage && (
+          <div className="alert alert-danger custom-alert" role="alert">
+            {errorMessage}
+          </div>
+        )}
         <div className="content">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={
+                <Home
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                />
+              }
+            />
             <Route
               path="/signup"
               element={
@@ -144,6 +162,8 @@ const App = () => {
                   userId={userId}
                   setUserId={setUserId}
                   setUserData={setUserData}
+                  errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
                 />
               }
             />
@@ -152,7 +172,13 @@ const App = () => {
                 <>
                   <Route
                     path="/profile"
-                    element={<Profile userData={userData} />}
+                    element={
+                      <Profile
+                        userData={userData}
+                        errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
+                      />
+                    }
                   />
                   <Route
                     path="/plan"
@@ -164,23 +190,41 @@ const App = () => {
                         longWeekends={longWeekends}
                         rates={rates}
                         currencies={currencies}
+                        errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
                       />
                     }
                   />
                   <Route
                     path="/packing-list/:tripId"
-                    element={<PackingList />}
+                    element={
+                      <PackingList
+                        errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
+                      />
+                    }
                   />
                   <Route
                     path="/itinerary"
-                    element={<Itinerary/>}
+                    element={
+                      <Itinerary
+                        errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
+                      />
+                    }
                   />
                 </>
               ) : (
                 <>
                   <Route
                     path="/admin"
-                    element={<AdminPage setIsAdmin={setIsAdmin} />}
+                    element={
+                      <AdminPage
+                        setIsAdmin={setIsAdmin}
+                        errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
+                      />
+                    }
                   />
                 </>
               )
@@ -191,7 +235,7 @@ const App = () => {
             {/* Redirects all undefined routes */}
           </Routes>
         </div>
-          <Footer></Footer>
+        <Footer></Footer>
       </Router>
     </>
   );

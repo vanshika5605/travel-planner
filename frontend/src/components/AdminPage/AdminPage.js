@@ -37,7 +37,7 @@ const userData = [
 ];
 
 // Admin page component to display all user statistics
-const AdminPage = () => {
+const AdminPage = ({ errorMessage, setErrorMessage }) => {
   const [stats, setStats] = useState({
     totalUsers: 5234,
     newUsers: 456,
@@ -77,17 +77,21 @@ const AdminPage = () => {
       { code: "IN", name: "India", users: 100 },
     ],
   });
-
+  const fetchAdminStats = async () => {
+    try {
+      setErrorMessage(null);
+      const response = await backend.getUserStatistics();
+      setStats({ ...stats, ...response.data.data });
+    } catch (error) {
+      if (error.response && error.response.status === "500") {
+        setErrorMessage("Internal server error. Please try again later.");
+      } else {
+        setErrorMessage("Error: Could not connect to the server.");
+      }
+    }
+  };
   // Simulated data fetching
   useEffect(() => {
-    const fetchAdminStats = async () => {
-      try {
-        const response = await backend.getUserStatistics();
-        setStats({ ...stats, ...response.data.data });
-      } catch (error) {
-        console.error("Failed to fetch admin statistics", error);
-      }
-    };
     fetchAdminStats();
   }, []);
 
@@ -181,7 +185,6 @@ const AdminPage = () => {
               const countryInfo = userData.find(
                 (item) => item.country === country.id
               );
-              console.log(countryInfo); // Access the data for the hovered country
             }}
           />
         </div>

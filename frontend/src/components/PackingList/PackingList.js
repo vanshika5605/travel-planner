@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import TripDetailsBox from "../ItineraryPlanner/TripDetailsBox";
 import backend from "../Utils/backend";
@@ -7,9 +7,9 @@ import "./PackingList.css";
 import PrintShare from "./PrintShare";
 
 // Packing List component to store packing list for a particular trip
-const PackingList = () => {
+const PackingList = ({errorMessage,
+  setErrorMessage}) => {
   const location = useLocation();
-
   // State for trip details and packing list
   const [tripDetails, setTripDetails] = useState(
     location.state?.tripDetails || {
@@ -20,14 +20,12 @@ const PackingList = () => {
       tripType: "",
     }
   );
-
   const [packingList, setPackingList] = useState(
     location.state?.packingList || {
       essentials: [],
       clothing: [],
     }
   );
-
   const [showAddItemModal, setShowAddItemModal] = useState(false);
 
   const toggleItemPacked = (category, name) => {
@@ -51,20 +49,34 @@ const PackingList = () => {
     return { packedCount, totalCount };
   };
 
+  const { packedCount, totalCount } = calculatePackedItemsCount();
+
   const handleSaveChanges = async (tripId) => {
     try {
+      setErrorMessage(null);
       await backend.savePackingList({
         tripID: tripId,
         packingList: packingList,
       });
       // Optionally show a success message
     } catch (error) {
-      console.error("Error saving packing list:", error);
-      // Optionally show an error message
+      if (error.response) {
+        switch (error.response.status) {
+          case 500:
+            setErrorMessage("Internal server error. Please try again later.");
+            break;
+          default:
+            setErrorMessage("An unknown error occurred.");
+        }
+      } else {
+        setErrorMessage("Error: Could not connect to the server.");
+      }
     }
   };
 
-  const { packedCount, totalCount } = calculatePackedItemsCount();
+  useEffect(() => {
+    setErrorMessage(null);
+  }, []);
 
   return (
     <div className="packing-list-container">

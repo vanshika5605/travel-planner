@@ -24,13 +24,13 @@ const categoryIcons = {
 };
 
 // Profile component to display profile details and trip details for a user
-const Profile = ({ userData }) => {
+const Profile = ({ userData, errorMessage,
+  setErrorMessage }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState({});
   const [trips, setTrips] = useState({});
   const [generatingPackingListForTripId, setGeneratingPackingListForTripId] =
     useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
   const [staticUserData] = useState({
     travelStats: {
       totalCountriesVisited: 12,
@@ -45,24 +45,26 @@ const Profile = ({ userData }) => {
     },
   });
 
-  useEffect(() => {
-    const fetchTrips = async () => {
+  const fetchTrips = async () => {
+    try{
       const response = await backend.getTrips(userData.email);
       setTrips(response.data.data);
-    };
-
-    fetchTrips().catch((error) => {
-      console.log(error);
+    } catch(error){
       if (error.response) {
-        setErrorMessage(error.response.data.errorMessage);
+        setErrorMessage("Internal server error. Please try again later.");
       } else {
-        setErrorMessage("Error fetching trips");
+        setErrorMessage("Error: Could not connect to the server");
       }
-    });
+    }
+  };
+
+  useEffect(() => {
+    fetchTrips()
   }, []);
 
   const handleGeneratePackingList = async (trip) => {
     try {
+      setErrorMessage(null);
       // Set the current trip as generating packing list
       setGeneratingPackingListForTripId(trip.tripId);
       let packingList;
@@ -84,9 +86,9 @@ const Profile = ({ userData }) => {
       });
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data.errorMessage);
+        setErrorMessage("Internal server error. Please try again later.");
       } else {
-        setErrorMessage("Error fetching packing list");
+        setErrorMessage("Error: Could not connect to the server");
       }
     } finally {
       // Reset the generating state
@@ -96,6 +98,7 @@ const Profile = ({ userData }) => {
 
   const handleViewItinerary = async (trip) => {
     try {
+      setErrorMessage(null);
       // Set loading state for the specific trip
       setLoading((prev) => ({ ...prev, [trip.id]: true }));
       const response = await backend.getTripDetails(trip.tripId);
@@ -109,9 +112,9 @@ const Profile = ({ userData }) => {
       });
     } catch (error) {
       if (error.response) {
-        setErrorMessage(error.response.data.errorMessage);
+        setErrorMessage("Internal server error. Please try again later.");
       } else {
-        setErrorMessage("Error fetching itinerary");
+        setErrorMessage("Error: Could not connect to the server");
       }
     } finally {
       // Clear loading state
@@ -123,11 +126,6 @@ const Profile = ({ userData }) => {
     <div className="profile-page">
       {/* Main Profile Section */}
       <div className="profile-main">
-        {errorMessage && (
-          <div className="alert alert-danger" role="alert">
-            {errorMessage}
-          </div>
-        )}
         {/* Profile Information */}
         <div className="profile-info">
           <h2>Profile Details</h2>

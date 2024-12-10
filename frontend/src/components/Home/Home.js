@@ -5,7 +5,7 @@ import Features from "./Features";
 import "./HomePage.css";
 
 // Home component for the landing page
-const Home = () => {
+const Home = ({errorMessage, setErrorMessage}) => {
   return (
     <div data-testid="home-container" className="home-container">
       <section className="header-section">
@@ -30,7 +30,7 @@ const Home = () => {
           />
         </div>
       </section>
-      <Features></Features>
+      <Features errorMessage={errorMessage} setErrorMessage={setErrorMessage}></Features>
       <ContactUs></ContactUs>
     </div>
   );
