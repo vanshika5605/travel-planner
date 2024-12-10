@@ -51,7 +51,7 @@ const Profile = ({ userData, errorMessage,
       setTrips(response.data.data);
     } catch(error){
       if (error.response) {
-        setErrorMessage("Internal server error. Please try again later.");
+        setErrorMessage("Service unavailable. Please try again later.");
       } else {
         setErrorMessage("Error: Could not connect to the server");
       }
@@ -86,7 +86,7 @@ const Profile = ({ userData, errorMessage,
       });
     } catch (error) {
       if (error.response) {
-        setErrorMessage("Internal server error. Please try again later.");
+        setErrorMessage("Service unavailable. Please try again later.");
       } else {
         setErrorMessage("Error: Could not connect to the server");
       }
@@ -112,7 +112,7 @@ const Profile = ({ userData, errorMessage,
       });
     } catch (error) {
       if (error.response) {
-        setErrorMessage("Internal server error. Please try again later.");
+        setErrorMessage("Service unavailable. Please try again later.");
       } else {
         setErrorMessage("Error: Could not connect to the server");
       }

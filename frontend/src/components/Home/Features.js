@@ -18,8 +18,9 @@ const Features = ({errorMessage, setErrorMessage}) => {
       );
       setFeatures(updatedFeatures);
     } catch (error) {
-      if (error.response && error.response.status === "500") {
-        setErrorMessage("Internal server error. Please try again later.");
+      console.log(error.response)
+      if (error.response && error.response.status === 500) {
+        setErrorMessage("Service unavailable. Please try again later.");
       } else {
         setErrorMessage("Error: Could not connect to the server");
       }
