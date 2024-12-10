@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,11 +127,14 @@ class userDetailsServiceTest {
         mockAdminStats.setUpcomingTrips(5);
         mockAdminStats.setPastTrips(10);
 
+        // Mock data
         when(myUserDetailsRepo.count()).thenReturn(100L);
-        when(myUserDetailsRepo.getRecentUsers(any())).thenReturn(List.of(new UserDetails()));
+        when(myUserDetailsRepo.getRecentUsers(any()))
+                .thenReturn(Collections.nCopies(20, new UserDetails())); // Mock 20 new users
         when(userItineraryService.pastTrips()).thenReturn(10);
         when(userItineraryService.upcomingTrips()).thenReturn(5);
-        when(userItineraryService.getPopularDestination()).thenReturn(List.of(new AdminStatistics.PopularDestinations(5, "Paris")));
+        when(userItineraryService.getPopularDestination())
+                .thenReturn(List.of(new AdminStatistics.PopularDestinations(5, "Paris")));
 
         // Act
         AdminStatistics result = myUserDetailsService.getAdminDetails();
@@ -145,4 +149,5 @@ class userDetailsServiceTest {
         verify(myUserDetailsRepo).count();
         verify(myUserDetailsRepo).getRecentUsers(any());
     }
+
 }

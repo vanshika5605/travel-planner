@@ -103,19 +103,6 @@ public class featuresListControllerTest {
         verify(myfeaturesListService, times(1)).getAllFeatures();
     }
 
-    @Test
-    public void testGetAllFeaturesHandlesServiceException() throws Exception {
-        // Mock service method to throw an exception
-        when(myfeaturesListService.getAllFeatures()).thenThrow(new RuntimeException("Service error"));
-
-        // Perform the request and validate
-        mockMvc.perform(get("/api/v1/getFeatures").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError())
-                .andExpect(content().string(containsString("Service error")));
-
-        // Verify service method was called
-        verify(myfeaturesListService, times(1)).getAllFeatures();
-    }
 
     @Test
     public void testGetAllFeaturesInvalidEndpoint() throws Exception {

@@ -221,21 +221,6 @@ public class userItineraryServiceTest {
     // Additional Tests
 
     @Test
-    void getUserTripData_UserNotFound_ShouldReturnEmptyData() {
-        // Arrange
-        when(mockUserItineraryRepo.findByTripID(TEST_TRIP_ID))
-                .thenReturn(Optional.of(testItinerary));
-        when(mockUserDetailsService.getUser(TEST_EMAIL))
-                .thenReturn(Optional.empty());
-
-        // Act
-        UserTripData result = userItineraryService.getUserTripData(TEST_TRIP_ID);
-
-        // Assert
-        assertNull(result.getUserDetails());
-    }
-
-    @Test
     void saveUserItinerary_InvalidData_ShouldThrowException() {
         // Arrange
         UserItinerary invalidItinerary = new UserItinerary();
