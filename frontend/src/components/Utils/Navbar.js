@@ -74,7 +74,7 @@ const Navbar = ({
             setErrorMessage("User not found. Please check your email.");
             break;
           case 500:
-            setErrorMessage("Internal server error. Please try again later.");
+            setErrorMessage("Service unavailable. Please try again later.");
             break;
           default:
             setErrorMessage("An unknown error occurred.");

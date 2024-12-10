@@ -107,7 +107,7 @@ class userDetailsControllerTest {
 
         // Assert
         assertNotNull(response);
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertFalse(response.getBody().isSuccess());
         assertEquals("User already exists", response.getBody().getErrorMessage());
         verify(myUserDetailsService).checkDuplicate(duplicateUser);

@@ -8,7 +8,7 @@ const TripDetailsBox = ({ tripDetails }) => {
 
   return (
     <div className="trip-details-box">
-      <h3>📍 Trip to {tripDetails.destination}</h3>
+      <h4>📍 Trip to {tripDetails.destination}</h4>
       <p><strong>Start Date:</strong> {tripDetails.startDate}</p>
       <p><strong>End Date:</strong> {tripDetails.endDate}</p>
       <p><strong>Group Type:</strong> {tripDetails.groupType}</p>

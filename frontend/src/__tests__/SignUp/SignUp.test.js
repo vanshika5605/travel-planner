@@ -175,7 +175,7 @@ describe('SignUp Component', () => {
       },
       // { 
       //   errorResponse: { response: { status: 500 } },
-      //   expectedMessage: 'Internal server error. Please try again later.'
+      //   expectedMessage: 'Service unavailable. Please try again later.'
       // },
       // { 
       //   errorResponse: {},
