@@ -113,7 +113,7 @@ class ItineraryService:
                 5. **End Date:** {end_date}
                 6. **Travelling from** {start_point}
 
-                The itinerary should include a detailed activity for all day-wise plan like Day 1, Day 2 and so on.
+                The itinerary should include a detailed activity for all day-wise plan like Day 1, Day 2 and so on starting from {start_date} and ending on {end_date}.
                 Assume any information not provided for better results. Also consider {note}
                 Add budget spent for the whole trip and keep total budget under the {budget_str}
                 The itinerary should be displayed in the following format and the budget in the following:
