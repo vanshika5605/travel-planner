@@ -11,7 +11,7 @@
   
 #### Testing
 - Wrote comprehensive test cases for the itinerary and packing list services, ensuring functionality and robustness.
-- Simulated API responses and validated the expected itinerary output against user inputs.
+- Simulated API responses and validated the expected itinerary and packing list outputs against user inputs.
 - Handled edge cases such as invalid JSON and unexpected exceptions.
 - Mocked external dependencies (e.g., Hugging Face API calls) for isolated and reliable testing.
 - Validated that the packing list output was consistent with the itinerary and user preferences.
