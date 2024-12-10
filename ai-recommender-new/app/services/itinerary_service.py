@@ -209,11 +209,11 @@ class ItineraryService:
             "role": "user",
             "content": message + f"""
             Based on the above details, please generate a detailed travel itinerary. Assume Budget currency to be in USD
-            The output should follow this JSON format:
+            The output should follow this JSON format if dates are not specified assume any in future:
 
             itinerary: [
                 {{
-                    "date": "2024-03-30",
+                    "date": "2025-01-30",
                     "day": "Day 1",
                     "activities": [
                         {{ "category": "Travel", "activity": "Travel description, you can add time when to start each and end activity" }},
@@ -223,7 +223,7 @@ class ItineraryService:
                     ],
                 }},
                 {{
-                    "date": "2024-03-31",
+                    "date": "2024-01-31",
                     "day": "Day 2",
                     "activities": [
                         {{ "category": "Adventure", "activity": "Adventure activity description"}},
