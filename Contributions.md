@@ -10,7 +10,7 @@
 - Ensured the response was formatted in JSON and adhered to predefined data structure requirements
   
 #### Testing
-- Wrote comprehensive test cases for the itinerary and packing list services, ensuring functionality and robustness.
+- Wrote comprehensive test cases for the itinerary and packing list services with a coverage of 53% and 72% respectively, ensuring functionality and robustness.
 - Simulated API responses and validated the expected itinerary and packing list outputs against user inputs.
 - Handled edge cases such as invalid JSON and unexpected exceptions.
 - Mocked external dependencies (e.g., Hugging Face API calls) for isolated and reliable testing.
