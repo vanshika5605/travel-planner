@@ -16,7 +16,7 @@ The Travel Planner Application is an AI-powered platform designed to enhance and
 - [Usage Instructions](#usage-instructions)
 - [AI Models](#ai-models)
 - [Testing](#testing)
-- [Contributing](#contributing)
+- [Contributions](#contributions)
 
 ## <a id="key-features"></a> 🚀 Key Features
 ### **1. Login/SignUp**  
