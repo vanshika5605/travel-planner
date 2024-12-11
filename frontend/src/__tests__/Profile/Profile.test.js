@@ -28,6 +28,11 @@ const mockUserData = {
   id: '123'
 };
 
+const mockProps = {
+  userData: mockUserData,
+  setErrorMessage: jest.fn()
+};
+
 const mockTrips = {
   onGoingTrips: [
     {
@@ -78,7 +83,7 @@ describe('Profile Component', () => {
     test('renders user profile details correctly', async () => {
       render(
         <MemoryRouter>
-          <Profile userData={mockUserData} />
+          <Profile {...mockProps} />
         </MemoryRouter>
       );
       
@@ -90,7 +95,7 @@ describe('Profile Component', () => {
     test('renders ongoing trips correctly', async () => {
       render(
         <MemoryRouter>
-          <Profile userData={mockUserData} />
+          <Profile {...mockProps} />
         </MemoryRouter>
       );
       
@@ -105,7 +110,7 @@ describe('Profile Component', () => {
     test('generates packing list when button is clicked', async () => {
       render(
         <MemoryRouter>
-          <Profile userData={mockUserData} />
+          <Profile {...mockProps} />
         </MemoryRouter>
       );
       
@@ -128,7 +133,7 @@ describe('Profile Component', () => {
     test('views itinerary when button is clicked', async () => {
       render(
         <MemoryRouter>
-          <Profile userData={mockUserData} />
+          <Profile {...mockProps} />
         </MemoryRouter>
       );
       
@@ -154,7 +159,7 @@ describe('Profile Component', () => {
     test('renders travel statistics correctly', async () => {
       render(
         <MemoryRouter>
-          <Profile userData={mockUserData} />
+          <Profile {...mockProps} />
         </MemoryRouter>
       );
       
@@ -178,7 +183,7 @@ describe('Profile Component', () => {
 
       render(
         <MemoryRouter>
-          <Profile userData={mockUserData} />
+          <Profile {...mockProps} />
         </MemoryRouter>
       );
       

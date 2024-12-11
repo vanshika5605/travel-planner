@@ -6,6 +6,8 @@ The Travel Planner Application is an AI-powered platform designed to enhance and
 
 ## Video Walkthrough
 
+[Video Demo](https://drive.google.com/file/d/16Z2IUn3nuYQjUEDLXxhnpP7U1M_sfy6B/view?usp=sharing)
+
 ## Table of Contents
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack)
@@ -13,7 +15,8 @@ The Travel Planner Application is an AI-powered platform designed to enhance and
 - [Admin Dashboard](#admin-dashboard)
 - [Usage Instructions](#usage-instructions)
 - [AI Models](#ai-models)
-- [Contributing](#contributing)
+- [Testing](#testing)
+- [Contributions](#contributions)
 
 ## <a id="key-features"></a> 🚀 Key Features
 ### **1. Login/SignUp**  
@@ -188,14 +191,13 @@ Navigate to /admin to access the dashboard and monitor user activity.
 - Model name: meta-llama/Llama-3.2-3B-Instruct
 - Purpose: Used for text generation tasks such as creating itineraries and packing lists based on user inputs.
 - Integration: The model is integrated using Hugging Face's Inference API
-  
-## <a id="contributing"></a>  🤝 Contributing
-We welcome contributions from the community! To contribute:
 
-- Fork the repository.
-- Create a new feature branch (git checkout -b feature/new-feature).
-- Commit your changes (git commit -m "Add new feature").
-- Push to the branch (git push origin feature/new-feature).
-- Open a Pull Request.
+## <a id="testing"></a>  Testing
+
+Please refer the file: https://github.com/vanshika5605/travel-planner/blob/main/TestCases.md for comprehensive documentation of the code coverage and testing performed.
+
+## <a id="contributions"></a>  🤝 Contributions
+
+Please refer the file: https://github.com/vanshika5605/travel-planner/blob/main/Contributions.md for detailed contributions made by each team member.
 
 Happy Travels! 🌍✈️
