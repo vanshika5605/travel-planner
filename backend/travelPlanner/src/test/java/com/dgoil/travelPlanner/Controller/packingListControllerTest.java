@@ -28,6 +28,45 @@ class packingListControllerTest {
     }
 
     @Test
+    void testSaveList_Successful() {
+        // Arrange
+        PackingList packingList = new PackingList();
+        packingList.setTripID("trip123");
+
+        doNothing().when(myPackingListService).saveList(packingList);
+
+        // Act
+        ResponseEntity<ApiResponse<String>> response = packingListController.saveList(packingList);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody().isSuccess());
+        assertEquals("Packing List saved!", response.getBody().getData());
+        verify(myPackingListService).saveList(packingList);
+    }
+
+    @Test
+    void testSaveList_ExceptionThrown() {
+        // Arrange
+        PackingList packingList = new PackingList();
+        packingList.setTripID("trip123");
+
+        doThrow(new IllegalArgumentException("Invalid packing list"))
+                .when(myPackingListService).saveList(packingList);
+
+        // Act
+        ResponseEntity<ApiResponse<String>> response = packingListController.saveList(packingList);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertFalse(response.getBody().isSuccess());
+        assertEquals("Invalid packing list", response.getBody().getErrorMessage());
+        verify(myPackingListService).saveList(packingList);
+    }
+
+    @Test
     void testGetList_Successful() {
         // Arrange
         String tripId = "trip123";
