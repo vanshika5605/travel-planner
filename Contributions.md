@@ -52,7 +52,6 @@
    - Authored 55 robust unit tests using JUnit and Mockito, achieving **86% code coverage**, ensuring the reliability and quality of the backend codebase.  
    - Conducted regular test-driven development (TDD) cycles, identifying and fixing potential issues early in the development lifecycle.  
 
----
 
 #### **Database Design and Implementation**
 
@@ -95,25 +94,20 @@
 
 ## 5. Devyani Goil
 
-#### Backend
+#### <ins> Backend </ins>
 - **Spring Boot Application Setup** - Set up the core Spring Boot application for the backend, enabling a robust foundation for development.
-
 - **Integrated CORS** - Configured Cross-Origin Resource Sharing (CORS) to facilitate smooth communication between the backend and frontend, resolving issues related to restricted resource access.
-
 - **Layered Architecture Implementation** - Implemented a clean layered architecture, separating concerns into distinct layers such as controller, service, and repository for better scalability and maintainability.
-
 - **Documentation and Comments** - Added detailed documentation and in-line comments across the backend codebase to ensure clarity and ease of understanding for future development.
 
 
-#### Database
+#### <ins> Database </ins>
 - **MongoDB Setup** - Installed and configured MongoDB to serve as the database for the application.
-
 - **Schema Design** - Designed the database schema to support efficient storage and retrieval of application data.
 
 
-#### Frontend
+#### <ins> Frontend </ins>
 - **Designed the Admin Page** - Created an admin dashboard displaying key user statistics, such as total number of users, number of upcoming trips, heatmap visualizing the distribution of users across countries. Integrated the dashboard with backend APIs for real-time data visualization.
-
 - **Designed the User Profile Page** - Developed the user profile page to showcase user details and trip history, user-specific statistics. Integrated the page with appropriate backend APIs to fetch and display the required data.
 
 
