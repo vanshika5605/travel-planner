@@ -4,134 +4,152 @@ import '@testing-library/jest-dom';
 import Features from '../../components/Home/Features';
 import backend from '../../components/Utils/backend';
 
-// Mock the backend
+// Mock backend
 jest.mock('../../components/Utils/backend', () => ({
   getFeaturesList: jest.fn()
 }));
 
 describe('Features Component', () => {
-  // Sample mock data for features
+  // Mock features data
   const mockFeatures = [{
     features: [
       {
         feature: 'Trip Planning',
-        description: 'Comprehensive trip planning service',
+        description: 'Comprehensive trip planning services'
       },
       {
         feature: 'Packing Assistance',
-        description: 'Smart packing recommendations',
+        description: 'Smart packing list generator'
       }
     ]
   }];
 
+  // Setup function to render component with mocked data
+  const renderComponent = (features = mockFeatures) => {
+    // Mock successful data fetch
+    backend.getFeaturesList.mockResolvedValue({ data: features });
+
+    return render(
+      <Features 
+        errorMessage=""
+        setErrorMessage={jest.fn()}
+      />
+    );
+  };
+
   beforeEach(() => {
-    // Clear all mocks before each test
     jest.clearAllMocks();
   });
 
-  describe('Initial Rendering', () => {
-    test('renders "Our Services" heading', async () => {
-      // Mock successful API call
-      backend.getFeaturesList.mockResolvedValue({ data: mockFeatures });
+  test('renders component title', async () => {
+    renderComponent();
 
-      render(<Features />);
-
-      // Check for the section heading
-      const headingElement = screen.getByText('Our Services');
-      expect(headingElement).toBeInTheDocument();
-    });
-
-    test('fetches and renders features correctly', async () => {
-      // Mock successful API call
-      backend.getFeaturesList.mockResolvedValue({ data: mockFeatures });
-
-      render(<Features />);
-
-      // Wait for features to be rendered
-      await waitFor(() => {
-        const tripPlanningFeature = screen.getByText('Trip Planning');
-        const packingAssistanceFeature = screen.getByText('Packing Assistance');
-        
-        expect(tripPlanningFeature).toBeInTheDocument();
-        expect(packingAssistanceFeature).toBeInTheDocument();
-      });
-    });
-  });
-
-  describe('API Interaction', () => {
-    test('calls getFeaturesList on component mount', async () => {
-      // Mock successful API call
-      backend.getFeaturesList.mockResolvedValue({ data: mockFeatures });
-
-      render(<Features />);
-
-      // Verify that getFeaturesList was called
-      await waitFor(() => {
-        expect(backend.getFeaturesList).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    test('handles API error gracefully', async () => {
-      // Mock console.error to prevent error logging in test output
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-      // Mock API error
-      backend.getFeaturesList.mockRejectedValue(new Error('API Error'));
-
-      render(<Features />);
-
-      // Wait for error handling
-      await waitFor(() => {
-        expect(backend.getFeaturesList).toHaveBeenCalledTimes(1);
-        expect(consoleErrorSpy).toHaveBeenCalledWith('Something went wrong');
-      });
-
-      // Restore console.error
-      consoleErrorSpy.mockRestore();
-    });
-  });
-
-  describe('Accordion Rendering', () => {
-    test('renders accordion with correct structure', async () => {
-      // Mock successful API call
-      backend.getFeaturesList.mockResolvedValue({ data: mockFeatures });
-
-      render(<Features />);
-
-      // Wait for features to be rendered
-      await waitFor(() => {
-        const features = mockFeatures[0].features;
-        
-        features.forEach((feature, index) => {
-          // Check feature button
-          const featureButton = screen.getByText(feature.feature);
-          expect(featureButton).toBeInTheDocument();
-          
-          // Check feature description in accordion body
-          const featureDescription = screen.getByText(feature.description);
-          expect(featureDescription).toBeInTheDocument();
-
-          // Check unique IDs for accordion items
-          const accordionHeader = screen.getByTestId(`heading-${index + 1}`);
-          const accordionCollapse = screen.getByTestId(`collapse-${index + 1}`);
-          
-          expect(accordionHeader).toBeInTheDocument();
-          expect(accordionCollapse).toBeInTheDocument();
-        });
-      });
-    });
-  });
-
-  // Snapshot test
-  test('matches snapshot', async () => {
-    // Mock successful API call
-    backend.getFeaturesList.mockResolvedValue({ data: mockFeatures });
-
-    const { asFragment } = render(<Features />);
-
-    // Wait for features to be rendered
+    // Wait for features to load
     await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
+      const titleElement = screen.getByText('Our Services');
+      expect(titleElement).toBeInTheDocument();
+    });
+  });
+
+  test('fetches and displays features correctly', async () => {
+    renderComponent();
+
+    // Wait for features to load
+    await waitFor(() => {
+      // Check if feature titles are rendered
+      expect(screen.getByText('Trip Planning')).toBeInTheDocument();
+      expect(screen.getByText('Packing Assistance')).toBeInTheDocument();
+    });
+  });
+
+  test('renders accordion items with correct structure', async () => {
+    renderComponent();
+
+    await waitFor(() => {
+      // Check accordion items
+      const featureButtons = screen.getAllByRole('button', { expanded: false });
+      expect(featureButtons).toHaveLength(2);
+
+      // Check data attributes
+      featureButtons.forEach((button, index) => {
+        expect(button).toHaveAttribute('data-bs-target', `#collapse-${index + 1}`);
+      });
+    });
+  });
+
+  test('handles error when fetching features fails', async () => {
+    // Mock error response
+    const mockSetErrorMessage = jest.fn();
+    backend.getFeaturesList.mockRejectedValue({
+      response: { status: 500 }
+    });
+
+    render(
+      <Features 
+        errorMessage=""
+        setErrorMessage={mockSetErrorMessage}
+      />
+    );
+
+    // Wait for error handling
+    await waitFor(() => {
+      expect(mockSetErrorMessage).toHaveBeenCalledWith(
+        "Service unavailable. Please try again later."
+      );
+    });
+  });
+
+  test('handles network error when fetching features', async () => {
+    // Mock network error
+    const mockSetErrorMessage = jest.fn();
+    backend.getFeaturesList.mockRejectedValue(new Error('Network Error'));
+
+    render(
+      <Features 
+        errorMessage=""
+        setErrorMessage={mockSetErrorMessage}
+      />
+    );
+
+    // Wait for error handling
+    await waitFor(() => {
+      expect(mockSetErrorMessage).toHaveBeenCalledWith(
+        "Error: Could not connect to the server"
+      );
+    });
+  });
+
+  test('adds unique ids to features', async () => {
+    renderComponent();
+
+    await waitFor(() => {
+      // Check if features have correct ids
+      const firstFeatureHeading = screen.getByTestId('heading-1');
+      const secondFeatureHeading = screen.getByTestId('heading-2');
+
+      expect(firstFeatureHeading).toBeInTheDocument();
+      expect(secondFeatureHeading).toBeInTheDocument();
+    });
+  });
+
+  test('renders feature descriptions', async () => {
+    renderComponent();
+
+    await waitFor(() => {
+      // Check feature descriptions
+      expect(screen.getByText('Comprehensive trip planning services')).toBeInTheDocument();
+      expect(screen.getByText('Smart packing list generator')).toBeInTheDocument();
+    });
+  });
+
+  test('handles empty features list', async () => {
+    // Render with empty features
+    renderComponent([{ features: [] }]);
+
+    await waitFor(() => {
+      // Verify no accordion items are rendered
+      const featureButtons = screen.queryAllByRole('button', { expanded: false });
+      expect(featureButtons).toHaveLength(0);
     });
   });
 });
