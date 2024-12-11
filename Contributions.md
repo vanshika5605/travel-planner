@@ -94,21 +94,19 @@
 
 ## 5. Devyani Goil
 
+#### <ins> Frontend </ins>
+- **Designed the Admin Page** - Created an admin dashboard displaying key user statistics, such as total number of users, number of upcoming trips, heatmap visualizing the distribution of users across countries. Integrated the dashboard with backend APIs for real-time data visualization.
+- **Designed the User Profile Page** - Developed the user profile page to showcase user details and trip history, user-specific statistics. Integrated the page with appropriate backend APIs to fetch and display the required data.
+
 #### <ins> Backend </ins>
 - **Spring Boot Application Setup** - Set up the core Spring Boot application for the backend, enabling a robust foundation for development.
 - **Integrated CORS** - Configured Cross-Origin Resource Sharing (CORS) to facilitate smooth communication between the backend and frontend, resolving issues related to restricted resource access.
 - **Layered Architecture Implementation** - Implemented a clean layered architecture, separating concerns into distinct layers such as controller, service, and repository for better scalability and maintainability.
 - **Documentation and Comments** - Added detailed documentation and in-line comments across the backend codebase to ensure clarity and ease of understanding for future development.
 
-
 #### <ins> Database </ins>
-- **MongoDB Setup** - Installed and configured MongoDB to serve as the database for the application.
-- **Schema Design** - Designed the database schema to support efficient storage and retrieval of application data.
-
-
-#### <ins> Frontend </ins>
-- **Designed the Admin Page** - Created an admin dashboard displaying key user statistics, such as total number of users, number of upcoming trips, heatmap visualizing the distribution of users across countries. Integrated the dashboard with backend APIs for real-time data visualization.
-- **Designed the User Profile Page** - Developed the user profile page to showcase user details and trip history, user-specific statistics. Integrated the page with appropriate backend APIs to fetch and display the required data.
+- **MongoDB Setup** - Set up a MongoDB database environment from scratch, including installation, configuration, and integration with the backend. Implemented secure database connection settings, including authentication and SSL.
+- **Schema Design** - Designed normalized and optimized schemas for various collections, such as featuresList, packingList, userDetails, and userItinerary, to efficiently store and retrieve data. Established relationships and indexing strategies to enable faster query execution.
 
 
 ## General Contributions
