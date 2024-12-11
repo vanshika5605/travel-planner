@@ -1,11 +1,23 @@
 # Travel Planner - Test Cases Documentation
 
 ## Overview
-This document outlines test cases designed to ensure the smooth functionality of the Travel Planner application. Each test case includes its unique identifier, description, test steps, and expected results.
+This document outlines test cases designed to ensure the smooth functionality of the Travel Planner application. Each test case includes its unique identifier, description, test steps, and expected results. It also outlines the test coverage achieved for each module.
 
----
+## Code Coverage (Unit Testing)
 
-## **1. Signup for Already Existing User**
+**UI**: 55.12%
+
+![image](https://github.com/user-attachments/assets/21c900e9-f2f6-4895-b08a-04357356513e)
+
+**Flask Backend**: 60%
+
+![WhatsApp Image 2024-12-10 at 20 45 36_e5d19836](https://github.com/user-attachments/assets/cfcc4258-6e7f-4b34-b49f-9a90d1c5b56b)
+
+**SpringBoot Backend**: 
+
+## Test Cases
+
+### **1. Signup for Already Existing User**
 **Test Case ID:** TC001  
 **Description:** Attempt to sign up with an email already registered.  
 **Test Steps:**  
@@ -17,7 +29,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **2. Signup with Non-matching Passwords**
+### **2. Signup with Non-matching Passwords**
 **Test Case ID:** TC002  
 **Description:** Attempt to sign up with different passwords in the password and confirm password fields.  
 **Test Steps:**  
@@ -29,7 +41,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **3. Successful Signup**
+### **3. Successful Signup**
 **Test Case ID:** TC003  
 **Description:** Successfully sign up with valid credentials.  
 **Test Steps:**  
@@ -40,7 +52,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **4. Login with Wrong Password**
+### **4. Login with Wrong Password**
 **Test Case ID:** TC004  
 **Description:** Attempt to log in with a valid email but an incorrect password.  
 **Test Steps:**  
@@ -51,7 +63,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **5. Login with Correct Password**
+### **5. Login with Correct Password**
 **Test Case ID:** TC005  
 **Description:** Attempt to log in with valid credentials.  
 **Test Steps:**  
@@ -62,7 +74,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **6. Application Unable to Connect to Database**
+### **6. Application Unable to Connect to Database**
 **Test Case ID:** TC006  
 **Description:** Application fails to connect to the database.  
 **Test Steps:**  
@@ -72,7 +84,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **7. Spring Application Down**
+### **7. Spring Application Down**
 **Test Case ID:** TC007  
 **Description:** Simulate Spring application server downtime.  
 **Test Steps:**  
@@ -82,7 +94,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **8. Flask Application Down**
+### **8. Flask Application Down**
 **Test Case ID:** TC008  
 **Description:** Simulate Flask application server downtime.  
 **Test Steps:**  
@@ -92,7 +104,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **9. Itinerary Generate and Save**
+### **9. Itinerary Generate and Save**
 **Test Case ID:** TC009  
 **Description:** Generate and save an itinerary.  
 **Test Steps:**  
@@ -103,7 +115,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **10. Generate Packing List, Mark as Packed**
+### **10. Generate Packing List, Mark as Packed**
 **Test Case ID:** TC010  
 **Description:** Generate a packing list and mark items as packed.  
 **Test Steps:**  
@@ -115,7 +127,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **11. Admin Dashboard**
+### **11. Admin Dashboard**
 **Test Case ID:** TC011  
 **Description:** Access and view statistics on the admin dashboard.  
 **Test Steps:**  
@@ -125,7 +137,7 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ---
 
-## **12. Long Weekends**
+### **12. Long Weekends**
 **Test Case ID:** TC012  
 **Description:** Calculate long weekends using the Long Weekend Calculator.  
 **Test Steps:**  
@@ -134,5 +146,3 @@ This document outlines test cases designed to ensure the smooth functionality of
 **Expected Result:** Long weekends are highlighted based on holidays and weekends.
 
 ---
-
-**End of Test Cases**
