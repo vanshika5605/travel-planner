@@ -47,9 +47,10 @@
 #### Feature Development (UI + Integration):
 - **Authentication System:** Designed and implemented the complete login and sign-up feature, including form validation, error handling, and secure API integration.
 - **Landing Page:** Built and integrated a fully responsive landing page with dynamic content, ensuring cross-browser and mobile compatibility.
-- **Plan an Itinerary:** Designed and implemented the core itinerary planning feature with interactive UI elements, calendar views, and real-time updates. To enhance usability, added functionality allowing users to copy itineraries for easy reuse or sharing with fellow travelers.
-- **Travel Planning Essentials:** Expanded the feature set by adding a long weekend calculator, a travel style quiz, and a currency converter, helping users better prepare for trips. Sourced and integrated public APIs to fetch relevant travel data, ensuring accurate and up-to-date information.
+- **Plan an Itinerary:** Developed a comprehensive itinerary planning feature with interactive UI elements, enabling users to save itineraries for future reference, add personalized notes, and easily copy itineraries for reuse or sharing with fellow travelers.
 - **Smart Packing Assistant:** Built an intelligent packing assistant that generates personalized packing lists based on user preferences, trip duration, and weather conditions. Strengthened the feature by enabling users to print and share packing lists, while also tracking items already packed to reduce last-minute stress.
+- **Travel Planning Essentials:** Expanded the feature set by adding a long weekend calculator, a travel style quiz, and a currency converter, helping users better prepare for trips. Sourced and integrated public APIs to fetch relevant travel data, ensuring accurate and up-to-date information.
+
 
 #### Quality Assurance:
 - Wrote comprehensive unit tests using Jest and React Testing Library, achieving approximately 55% test coverage across key application components.
