@@ -20,16 +20,22 @@
 
 ## 2. Fabeha Fatima
 
-- Integrated the Llama-3.2-3B-Instruct model using the Hugging Face Inference API to power itinerary generation and packing lists.
-- Conducted research on user needs, travel trends, and AI applications for itinerary and packing assistance. Optimized and tested AI outputs to ensure alignment with user expectations, including improving prompt designs for better results.
-- Implemented AI-powered features for generating personalized itineraries based on user inputs (destination, duration, mood, etc.).
-- Designed the Smart Packing Assistant to create tailored packing lists based on destination, activities, and weather.
-- Worked on the "ai-recommender-new" project, where she set up the Flask API from scratch, ensuring it followed a modular structure. Created three APIs:
-  1. Two variants for the itinerary creation API (`http://127.0.0.1:5050/api/v1/itinerary/create`):
-     - One variant requires only a message from the user to generate the itinerary (e.g., "I want to plan a trip by the water for about 3 days near Goa India, my budget is 900 USD").
-     - The second variant requires detailed information, including travel type, budget, start and end dates, and a note (e.g., "travel_type": "Business", "budget": 500, "start_date": "2025-01-07", "end_date": "2025-01-09", "note": "My trip to Madrid is important because I want to explore the culture and cuisine").
-  2. Created another API (`http://127.0.0.1:5050/api/v1/packingList/create`) for generating packing lists for any saved itinerary.
-- Optimized and tested AI outputs to ensure alignment with user expectations, including improving prompt designs for better results.
+#### **AI Integration and Model Utilization:**
+- Integrated the **Llama-3.2-3B-Instruct** model via the **Hugging Face Inference API**, enabling the generation of both personalized itineraries and packing lists.
+- Conducted extensive research on user needs, travel preferences, and AI use cases, optimizing prompt designs to ensure AI outputs align with user expectations, resulting in more accurate, context-aware responses.
+- Implemented a **Smart Itinerary Generation System**, utilizing AI to craft personalized travel plans based on user inputs such as destination, travel style, duration, and budget. This system adapts to specific travel preferences, creating dynamic and tailored itineraries.
+- Developed the **AI-Powered Smart Packing Assistant**, using real-time data inputs (weather, destination, activities) to create packing lists, ensuring users are fully prepared for their trips.
+  
+#### **API Development:**
+- Spearheaded the development of the **Flask API** architecture, ensuring it adhered to a modular and scalable structure. Created a suite of APIs to seamlessly integrate with the frontend and backend systems:
+  1. Developed two variants of the **itinerary creation API** (`http://127.0.0.1:5050/api/v1/itinerary/create`):
+     - One variant requires minimal input from users (e.g., a brief message about the trip, such as “Plan a 3-day trip near Goa, India, budget 900 USD”).
+     - The second variant allows users to provide detailed trip information, such as travel type, budget, start and end dates, and special notes, enhancing the AI's ability to tailor the itinerary to specific needs.
+  2. Designed and developed the **packing list API** (`http://127.0.0.1:5050/api/v1/packingList/create`), which generates packing lists based on any saved itinerary, factoring in activities, weather, and destination-specific requirements.
+
+#### **Optimization and Testing:**
+- Continuously optimized AI outputs to improve response quality, leveraging prompt engineering to generate more accurate, context-sensitive itineraries and packing suggestions.
+- Implemented rigorous **AI output testing**, ensuring responses are coherent, contextually appropriate, and adhere to user preferences. Enhanced the model's adaptability by refining prompt structures based on iterative feedback.
 
 
 ## 3. Mustafa Ali
