@@ -33,9 +33,44 @@
 
 ## 3. Mustafa Ali
 
-- 
-- 
-- 
+### **Backend Development**
+ 
+1. **Layered Architecture Implementation**  
+   - Established a well-organized layered architecture, creating Controller, Service, and Repository layers to promote scalability and maintainability.  
+   - Designed and implemented 16 highly efficient and modular RESTful APIs for smooth interaction with the frontend.  
+
+2. **Error Handling and Logging**  
+   - Integrated comprehensive error handling mechanisms to gracefully manage exceptions, enhancing system stability.  
+   - Implemented structured logging with dynamic log levels, enabling effective monitoring and debugging across environments.  
+
+3. **Code Documentation and Readability**  
+   - Wrote extensive inline comments and method-level documentation, improving code readability and maintainability for future developers.  
+   - Adhered to clean code principles and followed consistent naming conventions.  
+
+4. **Unit Testing and Code Coverage**  
+   - Authored 55 robust unit tests using JUnit and Mockito, achieving **86% code coverage**, ensuring the reliability and quality of the backend codebase.  
+   - Conducted regular test-driven development (TDD) cycles, identifying and fixing potential issues early in the development lifecycle.  
+
+---
+
+### **Database Design and Implementation**
+
+1. **Schema Design**  
+   - Designed normalized and optimized schemas for various collections, such as `featuresList`, `packingList`, `userDetails`, and `userItinerary`, to efficiently store and retrieve data.  
+   - Established relationships and indexing strategies to enable faster query execution.  
+
+2. **Data Population**  
+   - Populated database collections with meaningful and well-structured sample data for development, testing, and demonstration purposes.  
+
+3. **Advanced Querying and Aggregation**  
+   - Developed complex MongoDB queries and aggregation pipelines to handle data analytics and reporting requirements.  
+   - Ensured query efficiency through proper indexing and query optimization techniques.  
+
+4. **AWS S3 Integration for Static Assets**  
+   - Integrated AWS S3 for storing and managing static images, ensuring rapid retrieval and reducing database load.  
+   - Designed the architecture to handle seamless integration between MongoDB and AWS S3 for file references and metadata.  
+
+
 
 ## 4. Vanshika Agrawal
 
