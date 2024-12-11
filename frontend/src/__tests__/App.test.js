@@ -5,6 +5,7 @@ import App from '../App';
 import backend from '../components/Utils/backend';
 
 // Mock dependencies
+// Mock dependencies
 jest.mock('../components/Utils/backend', () => ({
   getHolidays: jest.fn(),
   getExchangeRates: jest.fn()
@@ -46,30 +47,30 @@ jest.mock('../components/Utils/Loader', () => {
 describe('App Component', () => {
   // Mock data
   const mockHolidays = [
-    { date: '2024-01-01', name: 'New Year' },
-    { date: '2024-07-04', name: 'Independence Day',
-        date: '2024-07-05', name: 'Independence Day'
-     }
+    { date: '2024-01-05', name: 'Friday Holiday' },
+    { date: '2024-01-06', name: 'Saturday' },
+    { date: '2024-01-07', name: 'Sunday' },
+    { date: '2024-07-04', name: 'Independence Day' }
   ];
 
   const mockExchangeRates = {
-    rates: {
-      USD: 1,
-      EUR: 0.85,
-      GBP: 0.75
+    data: {
+      rates: {
+        USD: 1,
+        EUR: 0.85,
+        GBP: 0.75
+      }
     }
   };
 
   beforeEach(() => {
     // Reset mocks before each test
     jest.clearAllMocks();
+    jest.useFakeTimers();
 
     // Setup mock implementations
     backend.getHolidays.mockResolvedValue({ data: mockHolidays });
-    backend.getExchangeRates.mockResolvedValue({ data: mockExchangeRates });
-
-    // Mock timer functions to control loading state
-    jest.useFakeTimers();
+    backend.getExchangeRates.mockResolvedValue(mockExchangeRates);
   });
 
   afterEach(() => {
@@ -140,21 +141,6 @@ describe('App Component', () => {
     });
   });
 
-  describe('Long Weekend Calculation', () => {
-    test('findLongWeekends calculates correctly', () => {
-      // This would require accessing the internal function
-      // You might need to export it or use a different testing strategy
-      const longWeekendDates = [
-        '2024-01-05', // Friday
-        '2024-01-06', // Saturday
-        '2024-01-07'  // Sunday
-      ];
-      
-      // You can add more specific assertions based on your implementation
-      expect(longWeekendDates).toHaveLength(3);
-    });
-  });
-
   describe('Error Handling', () => {
     test('handles holiday fetch error', async () => {
       // Mock console.error to suppress error logging
@@ -169,10 +155,10 @@ describe('App Component', () => {
 
       // Wait for async operations
       await waitFor(() => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(
-          'Error fetching holidays:', 
-          expect.any(Error)
-        );
+        // Check if error message is displayed
+        const errorAlert = screen.queryByRole('alert');
+        expect(errorAlert).toBeInTheDocument();
+        expect(errorAlert).toHaveTextContent('Error fetching holidays');
       });
 
       consoleErrorSpy.mockRestore();
@@ -191,10 +177,10 @@ describe('App Component', () => {
 
       // Wait for async operations
       await waitFor(() => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(
-          'Error fetching exchange rates:', 
-          expect.any(Error)
-        );
+        // Check if error message is displayed
+        const errorAlert = screen.queryByRole('alert');
+        expect(errorAlert).toBeInTheDocument();
+        expect(errorAlert).toHaveTextContent('Error fetching exchange rates');
       });
 
       consoleErrorSpy.mockRestore();
