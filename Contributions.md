@@ -31,9 +31,10 @@
   2. Created another API (`http://127.0.0.1:5050/api/v1/packingList/create`) for generating packing lists for any saved itinerary.
 - Optimized and tested AI outputs to ensure alignment with user expectations, including improving prompt designs for better results.
 
+
 ## 3. Mustafa Ali
 
-### **Backend Development**
+#### **Backend Development**
  
 1. **Layered Architecture Implementation**  
    - Established a well-organized layered architecture, creating Controller, Service, and Repository layers to promote scalability and maintainability.  
@@ -53,7 +54,7 @@
 
 ---
 
-### **Database Design and Implementation**
+#### **Database Design and Implementation**
 
 1. **Schema Design**  
    - Designed normalized and optimized schemas for various collections, such as `featuresList`, `packingList`, `userDetails`, and `userItinerary`, to efficiently store and retrieve data.  
@@ -91,10 +92,30 @@
 - Wrote comprehensive unit tests using Jest and React Testing Library, achieving approximately 55% test coverage across key application components.
 - Implemented robust error handling strategies, ensuring the application gracefully manages server failures, form validation errors, and network issues.
 
+
 ## 5. Devyani Goil
 
-- 
-- 
+#### Backend
+- **Spring Boot Application Setup** - Set up the core Spring Boot application for the backend, enabling a robust foundation for development.
+
+- **Integrated CORS** - Configured Cross-Origin Resource Sharing (CORS) to facilitate smooth communication between the backend and frontend, resolving issues related to restricted resource access.
+
+- **Layered Architecture Implementation** - Implemented a clean layered architecture, separating concerns into distinct layers such as controller, service, and repository for better scalability and maintainability.
+
+- **Documentation and Comments** - Added detailed documentation and in-line comments across the backend codebase to ensure clarity and ease of understanding for future development.
+
+
+#### Database
+- **MongoDB Setup** - Installed and configured MongoDB to serve as the database for the application.
+
+- **Schema Design** - Designed the database schema to support efficient storage and retrieval of application data.
+
+
+#### Frontend
+- **Designed the Admin Page** - Created an admin dashboard displaying key user statistics, such as total number of users, number of upcoming trips, heatmap visualizing the distribution of users across countries. Integrated the dashboard with backend APIs for real-time data visualization.
+
+- **Designed the User Profile Page** - Developed the user profile page to showcase user details and trip history, user-specific statistics. Integrated the page with appropriate backend APIs to fetch and display the required data.
+
 
 ## General Contributions
 
