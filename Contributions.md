@@ -42,7 +42,7 @@
 
 - **Code Documentation and Readability**: Wrote extensive inline comments and method-level documentation, improving code readability and maintainability for future developers. Adhered to clean code principles and followed consistent naming conventions.
 
-- **Unit Testing and Code Coverage**: Authored 55 robust unit tests using JUnit and Mockito, achieving **86% code coverage**, ensuring the reliability and quality of the backend codebase. Conducted regular test-driven development (TDD) cycles, identifying and fixing potential issues early in the development lifecycle.
+- **Unit Testing and Code Coverage**: Authored 55 robust unit tests using JUnit and Mockito, achieving **90% code coverage**, ensuring the reliability and quality of the backend codebase. Conducted regular test-driven development (TDD) cycles, identifying and fixing potential issues early in the development lifecycle.
 
 #### **Database Design and Implementation**
 
