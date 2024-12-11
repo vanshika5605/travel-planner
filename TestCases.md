@@ -5,13 +5,15 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ## Code Coverage (Unit Testing)
 
-UI: 55.12%
+**UI**: 55.12%
 
 ![image](https://github.com/user-attachments/assets/21c900e9-f2f6-4895-b08a-04357356513e)
 
-Flask Backend: 
+**Flask Backend**: 60%
 
-SpringBoot Backend: 
+![WhatsApp Image 2024-12-10 at 20 45 36_e5d19836](https://github.com/user-attachments/assets/cfcc4258-6e7f-4b34-b49f-9a90d1c5b56b)
+
+**SpringBoot Backend**: 
 
 ## Test Cases
 
