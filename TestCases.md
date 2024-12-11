@@ -13,7 +13,9 @@ This document outlines test cases designed to ensure the smooth functionality of
 
 ![WhatsApp Image 2024-12-10 at 20 45 36_e5d19836](https://github.com/user-attachments/assets/cfcc4258-6e7f-4b34-b49f-9a90d1c5b56b)
 
-**SpringBoot Backend**: 
+**SpringBoot Backend**: 90%
+<img width="1438" alt="Screenshot 2024-12-10 at 10 00 43 PM" src="https://github.com/user-attachments/assets/66d7848d-e08e-4f7f-ad81-53824c7f3193">
+
 
 ## Test Cases
 
