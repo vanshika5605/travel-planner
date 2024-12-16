@@ -120,7 +120,7 @@ DATABASE_NAME=your_database_name
 ```
 Now, navigate to IntelliJ and start the backend from TravelPlannerApplication class. Optionally, start the project from command line:
 ```
-cd /travel-planner //Navigate to the Project Directory
+//Navigate to the Project Directory
 mvn clean install //Clean and Build the Project
 mvn spring-boot:run //Run the Application
 ```
