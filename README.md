@@ -113,7 +113,7 @@ Navigate to the backend directory:
 cd backend\travelPlanner
 ```
 Set Environment Variables <br>
-Create a .env file in the this directory with the following variables:
+Create a .env file in the this directory with the following variables/download from (https://drive.google.com/file/d/1ct0vfgmHVftrIatkKILbZx6J7iR5nxpe/view?usp=sharing):
 ```
 MONGODB_URI=your_database_url
 DATABASE_NAME=your_database_name
@@ -131,7 +131,7 @@ Navigate to the ai-recommender-new directory:
 cd ai-recommender-new
 ```
 Set Environment Variables<br>
-Create a .env file in the this directory with the following variables:
+Create a .env file in the this directory with the following variables/download from (https://drive.google.com/file/d/1qWQtXzVKMix1u3TZqsfN0HSLWWAc9PC7/view?usp=sharing):
 ```
 FLASK_ENV=development
 HUGGINGFACE_API_KEY=<your-token>
